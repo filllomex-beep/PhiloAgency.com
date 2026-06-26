@@ -157,70 +157,175 @@
     }
 
     /* ─── BUTTONS ─── */
-    .btn-dark {
+    .btn-dark,
+    .btn-glass {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: #111;
-      color: #fff;
-      padding: 13px 26px;
       border-radius: 999px;
+      height: 48px;
+      padding: 4px 56px 4px 24px;
       font-weight: 600;
       font-size: 14px;
       border: none;
       cursor: pointer;
-      transition: all 0.2s;
+      overflow: hidden;
+      transition: padding 0.5s;
+      width: fit-content;
+      white-space: nowrap;
+      box-sizing: border-box;
     }
 
-    .btn-dark:hover {
-      background: #222;
-      transform: translateY(-1px);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+    .btn-dark {
+      background: #111;
+      color: #fff;
     }
 
     .btn-glass {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 26px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 14px;
-      color: #333;
-      cursor: pointer;
       background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1.5px solid rgba(0, 0, 0, 0.08);
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      transition: all 0.2s;
+      color: #333;
+    }
+
+    .btn-dark:hover,
+    .btn-glass:hover {
+      padding: 4px 24px 4px 56px;
     }
 
     .btn-glass:hover {
       background: rgba(255, 255, 255, 0.92);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 10;
+      transition: all 0.5s;
+    }
+
+    .btn-icon {
+      position: absolute;
+      right: 4px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: right 0.5s, transform 0.5s;
+      flex-shrink: 0;
+    }
+
+    .btn-dark .btn-icon {
+      background: #fff;
+      color: #111;
+    }
+
+    .btn-glass .btn-icon {
+      background: #111;
+      color: #fff;
+    }
+
+    .btn-dark:hover .btn-icon,
+    .btn-glass:hover .btn-icon {
+      right: calc(100% - 44px);
+      transform: rotate(45deg);
     }
 
     .btn-orange {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: #c0392b;
-      color: #fff;
-      padding: 15px 32px;
       border-radius: 999px;
+      height: 52px;
+      padding: 4px 60px 4px 28px;
       font-weight: 700;
       font-size: 15px;
       border: none;
       cursor: pointer;
-      transition: all 0.22s;
+      overflow: hidden;
+      transition: padding 0.5s;
+      width: fit-content;
+      white-space: nowrap;
+      box-sizing: border-box;
+      background: #c0392b;
+      color: #fff;
     }
 
     .btn-orange:hover {
-      background: #962d22;
-      transform: translateY(-2px);
-      box-shadow: 0 14px 32px rgba(192, 57, 43, 0.38);
+      padding: 4px 28px 4px 60px;
+    }
+
+    .btn-orange .btn-icon {
+      background: #fff;
+      color: #c0392b;
+    }
+
+    .btn-orange:hover .btn-icon {
+      right: calc(100% - 44px);
+      transform: rotate(45deg);
+    }
+
+    /* ─── SERVICES SLIDER ─── */
+    .svc-track {
+      position: relative;
+      display: flex;
+      background: rgba(0,0,0,0.05);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 2px;
+    }
+
+    .svc-indicator {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      height: calc(100% - 8px);
+      background: #fff;
+      border-radius: 999px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+      transition: left 0.28s cubic-bezier(0.4,0,0.2,1), width 0.28s cubic-bezier(0.4,0,0.2,1);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .svc-seg {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 7px 4px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #aaa;
+      transition: color 0.18s, box-shadow 0.18s;
+      white-space: nowrap;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .svc-seg:not(.active):hover {
+      color: #555;
+      box-shadow: 0 0 0 1.5px rgba(0,0,0,0.13);
+    }
+
+    .svc-seg.active {
+      color: #111;
+      font-weight: 600;
+    }
+
+    .svc-desc-box {
+      min-height: 34px;
+      margin-top: 10px;
+      font-size: 11px;
+      color: #888;
+      line-height: 1.55;
+      transition: opacity 0.15s ease, transform 0.18s ease;
     }
 
     /* ─── PROGRESS BAR ─── */
@@ -346,7 +451,10 @@
         <a href="#faq" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Časté
           dotazy</a>
       </div>
-      <button class="btn-dark text-[13px] py-2.5 px-5">Chci bezplatný návrh</button>
+      <button class="btn-dark">
+        <span class="btn-text">Chci bezplatný návrh</span>
+        <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+      </button>
     </div>
   </nav>
 
@@ -411,12 +519,13 @@
           <!-- CTA Buttons -->
           <div id="hero-btns" class="flex flex-col sm:flex-row gap-3" style="opacity:0">
             <button class="btn-dark">
-              Chci bezplatný návrh webu
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.45">
-                <path d="M6 9L2 4h8L6 9z" fill="currentColor" />
-              </svg>
+              <span class="btn-text">Chci bezplatný návrh webu</span>
+              <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
             </button>
-            <button class="btn-glass">Zobrazit ukázky</button>
+            <button class="btn-glass">
+              <span class="btn-text">Zobrazit ukázky</span>
+              <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+            </button>
           </div>
 
           <!-- Social proof -->
@@ -472,15 +581,16 @@
                   <div class="text-sm text-gray-400">Spokojených klientů</div>
                 </div>
               </div>
-              <!-- Progress -->
+              <!-- Services Slider -->
               <div class="mb-7">
-                <div class="flex justify-between text-sm mb-2.5">
-                  <span class="text-gray-400">Spokojenost klientů</span>
-                  <span class="text-gray-900 font-semibold">98%</span>
+                <div class="svc-track">
+                  <button class="svc-seg active" data-desc="Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru — od designu po spuštění do 14 dní.">Weby</button>
+                  <button class="svc-seg" data-desc="SEO, PPC kampaně a správa sociálních sítí — přivádíme k vám zákazníky, kteří kupují.">Marketing</button>
+                  <button class="svc-seg" data-desc="Propojujeme nástroje a procesy, aby váš byznys fungoval na autopilotu bez zbytečné práce.">Automatizace</button>
+                  <button class="svc-seg" data-desc="Inteligentní AI agenti pro péči o zákazníky, tvorbu obsahu a analýzu dat.">AI agenti</button>
+                  <button class="svc-seg" data-desc="Profesionální fotografie produktů, které zaujmou na první pohled a zvýší vaše prodeje.">Fotografie</button>
                 </div>
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width:98%"></div>
-                </div>
+                <p class="svc-desc-box" id="svc-desc">Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru — od designu po spuštění do 14 dní.</p>
               </div>
               <!-- Divider -->
               <div class="h-px w-full mb-6" style="background:rgba(0,0,0,0.06)"></div>
@@ -749,10 +859,8 @@
 
       <div class="reveal">
         <button class="btn-dark">
-          Chci bezplatný návrh webu
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.45">
-            <path d="M6 9L2 4h8L6 9z" fill="currentColor" />
-          </svg>
+          <span class="btn-text">Chci bezplatný návrh webu</span>
+          <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
         </button>
       </div>
     </div>
@@ -873,10 +981,8 @@
 
       <div class="reveal">
         <button class="btn-dark">
-          Chci bezplatný návrh webu
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.45">
-            <path d="M6 9L2 4h8L6 9z" fill="currentColor" />
-          </svg>
+          <span class="btn-text">Chci bezplatný návrh webu</span>
+          <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
         </button>
       </div>
     </div>
@@ -1117,10 +1223,8 @@
 
       <div class="reveal">
         <button class="btn-dark">
-          Chci bezplatný návrh webu
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.45">
-            <path d="M6 9L2 4h8L6 9z" fill="currentColor" />
-          </svg>
+          <span class="btn-text">Chci bezplatný návrh webu</span>
+          <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
         </button>
       </div>
     </div>
@@ -1228,7 +1332,10 @@
       <p class="text-gray-400 text-[16px] mb-10 max-w-xl mx-auto reveal">První návrh zdarma do 24 hodin. Neriskujete nic
         — platíte pouze když jste spokojeni a jen od 399 €.</p>
       <div class="reveal">
-        <button class="btn-orange">Objednejte návrh webu</button>
+        <button class="btn-orange">
+          <span class="btn-text">Objednejte návrh webu</span>
+          <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+        </button>
       </div>
     </div>
   </section>
@@ -1275,7 +1382,7 @@
       </div>
     </div>
     <div class="max-w-5xl mx-auto mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between gap-3">
-      <p class="text-gray-600 text-[12px]">© 2024 Philo Agency. Všechna práva vyhrazena.</p>
+      <p class="text-gray-600 text-[12px]">© 2026 Philo Agency. Všechna práva vyhrazena.</p>
       <div class="flex gap-5">
         <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors">Ochrana soukromí</a>
         <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors">Podmínky použití</a>
@@ -1391,7 +1498,7 @@
 
     // Nav active link highlight
     const navLinks = document.querySelectorAll('nav a[href^="#"]');
-    const sections = [...navLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const sections = [...navLinks].map(a => { try { return document.querySelector(a.getAttribute('href')); } catch(e) { return null; } }).filter(Boolean);
     window.addEventListener('scroll', () => {
       const y = window.scrollY + 80;
       sections.forEach((sec, i) => {
@@ -1401,6 +1508,55 @@
         }
       });
     }, { passive: true });
+
+    // Services slider — sliding indicator
+    (function () {
+      const track = document.querySelector('.svc-track');
+      const segs = [...document.querySelectorAll('.svc-seg')];
+      const svcDesc = document.getElementById('svc-desc');
+
+      // Inject the sliding pill
+      const indicator = document.createElement('div');
+      indicator.className = 'svc-indicator';
+      track.prepend(indicator);
+
+      function moveToSeg(seg) {
+        const trackLeft = track.getBoundingClientRect().left;
+        const r = seg.getBoundingClientRect();
+        indicator.style.left = (r.left - trackLeft) + 'px';
+        indicator.style.width = r.width + 'px';
+      }
+
+      // Init on first active
+      const first = segs.find(s => s.classList.contains('active')) || segs[0];
+      // Wait one frame so layout is ready
+      requestAnimationFrame(() => {
+        indicator.style.transition = 'none';
+        moveToSeg(first);
+        requestAnimationFrame(() => { indicator.style.transition = ''; });
+      });
+
+      segs.forEach(seg => {
+        seg.addEventListener('click', () => {
+          segs.forEach(s => s.classList.remove('active'));
+          seg.classList.add('active');
+          moveToSeg(seg);
+          svcDesc.style.opacity = '0';
+          svcDesc.style.transform = 'translateY(4px)';
+          setTimeout(() => {
+            svcDesc.textContent = seg.dataset.desc;
+            svcDesc.style.opacity = '1';
+            svcDesc.style.transform = 'translateY(0)';
+          }, 80);
+        });
+      });
+
+      // Re-position on resize
+      window.addEventListener('resize', () => {
+        const active = segs.find(s => s.classList.contains('active'));
+        if (active) { indicator.style.transition = 'none'; moveToSeg(active); requestAnimationFrame(() => { indicator.style.transition = ''; }); }
+      }, { passive: true });
+    })();
   </script>
 
   <script type="module">
