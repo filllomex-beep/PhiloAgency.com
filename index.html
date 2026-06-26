@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Philo Agency — Vytvoříme vám nový web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=inter:wght@100..900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { fontFamily: { sans: ['inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] } } }</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    html body,
+    html body * {
+      font-family: 'inter', ui-sans-serif, system-ui, sans-serif !important;
+    }
+
+    /* ─── GLASS SYSTEM ─── */
+    .glass {
+      background: rgba(255, 255, 255, 0.62);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    .glass-sm {
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .glass-dark {
+      background: rgba(255, 255, 255, 0.11);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    }
+
+    /* ─── HERO BG ─── */
+    .hero-bg {
+      background: #f9f8f6;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── BLOB ─── */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── GRADIENT TEXT ─── */
+    .gradient-text {
+      background: linear-gradient(135deg, #c0392b 0%, #d9453a 55%, #d9453a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── MARQUEE ─── */
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @keyframes marquee-reverse {
+      from {
+        transform: translateX(-50%);
+      }
+
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .animate-marquee {
+      animation: marquee 28s linear infinite;
+    }
+
+    .animate-marquee-reverse {
+      animation: marquee-reverse 32s linear infinite;
+    }
+
+    /* ─── PING ─── */
+    @keyframes ping {
+
+      75%,
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    .animate-ping {
+      animation: ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    /* ─── FLIP WORDS ─── */
+    .fw-letter {
+      display: inline-block;
+      opacity: 0;
+      animation: fw-in 0.2s ease forwards;
+    }
+
+    @keyframes fw-in {
+      from {
+        opacity: 0;
+        filter: blur(8px);
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fw-out {
+      from {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0) translateX(0) scale(1);
+      }
+
+      to {
+        opacity: 0;
+        filter: blur(8px);
+        transform: translateY(-40px) translateX(40px) scale(2);
+      }
+    }
+
+    .fw-ghost-exit {
+      animation: fw-out 0.35s cubic-bezier(0.4, 0, 1, 1) forwards !important;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #111;
+      color: #fff;
+      padding: 13px 26px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-dark:hover {
+      background: #222;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .btn-glass {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 26px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      transition: all 0.2s;
+    }
+
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.92);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    .btn-orange {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #c0392b;
+      color: #fff;
+      padding: 15px 32px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.22s;
+    }
+
+    .btn-orange:hover {
+      background: #962d22;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(192, 57, 43, 0.38);
+    }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-bar {
+      height: 6px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.07);
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #c0392b, #d9453a);
+    }
+
+    /* ─── GLASS TAG ─── */
+    .glass-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 999px;
+      padding: 5px 13px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      color: #666;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+    }
+
+    .faq-icon {
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    /* ─── STEP CONNECTOR ─── */
+    .step-connector {
+      position: absolute;
+      top: 27px;
+      left: calc(50% + 36px);
+      width: calc(100% - 72px);
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ─── PORTFOLIO CARD ─── */
+    .portfolio-card {
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 52px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    /* ─── GLASS CARD HOVER ─── */
+    .glass-hover {
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .glass-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    /* ─── DARK CTA ─── */
+    .dark-cta-bg {
+      background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(192, 57, 43, 0.28) 0%, transparent 60%), #0d0d0d;
+    }
+
+    /* ─── AVATAR STACK ─── */
+    .avatar-stack img {
+      border: 2.5px solid rgba(255, 255, 255, 0.9);
+    }
+
+    /* ─── REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    /* ─── MASK HELPERS ─── */
+    .mask-fade-r {
+      -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    }
+  </style>
+</head>
+
+<body class="bg-white overflow-x-hidden">
+
+  <!-- ───── NAV ───── -->
+  <nav class="glass-nav fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <span class="font-bold text-[17px] text-gray-900 tracking-tight">Philo Agency</span>
+      </a>
+      <div class="hidden md:flex items-center gap-7">
+        <a href="#" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Domů</a>
+        <a href="#cena" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Cena</a>
+        <a href="#ukazky"
+          class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Ukázky</a>
+        <a href="#referencie"
+          class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Reference</a>
+        <a href="#faq" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Časté
+          dotazy</a>
+      </div>
+      <button class="btn-dark text-[13px] py-2.5 px-5">Chci bezplatný návrh</button>
+    </div>
+  </nav>
+
+  <!-- ───── HERO ───── -->
+  <section class="hero-bg pt-36 pb-28 px-6">
+    <!-- Wave background -->
+    <div id="hero-waves" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0"></div>
+    <!-- Colored blobs for glass effect -->
+    <div class="blob"
+      style="width:720px;height:720px;background:radial-gradient(circle,rgba(192,57,43,0.13),transparent 65%);top:-200px;right:-120px;filter:blur(90px)">
+    </div>
+    <div class="blob"
+      style="width:560px;height:560px;background:radial-gradient(circle,rgba(139,92,246,0.08),transparent 65%);top:60px;left:-160px;filter:blur(90px)">
+    </div>
+    <div class="blob"
+      style="width:420px;height:420px;background:radial-gradient(circle,rgba(244,114,182,0.07),transparent 65%);bottom:-40px;right:280px;filter:blur(80px)">
+    </div>
+
+    <div class="max-w-6xl mx-auto relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-8 items-start">
+
+        <!-- ── LEFT ── -->
+        <div class="lg:col-span-7 flex flex-col gap-7 pt-4">
+
+          <!-- Glass badge -->
+          <div id="hero-badge" style="opacity:0">
+            <div class="inline-flex items-center gap-2.5 rounded-full px-4 py-2"
+              style="background:rgba(255,255,255,0.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.65);box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                  style="background:#c0392b"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2" style="background:#c0392b"></span>
+              </span>
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-600">První návrh zdarma do 24
+                hodin</span>
+              <svg class="w-3.5 h-3.5" fill="#d9453a" viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- H1 -->
+          <h1 id="hero-title" class="text-[52px] md:text-[66px] font-black leading-[1.02] tracking-tight text-gray-900"
+            style="opacity:0">
+            Zařídíme vám
+            <span id="fw-wrap" style="position:relative;display:inline-block;vertical-align:baseline;color:#c0392b">
+              <span id="fw-active"></span>
+              <span id="fw-ghost"
+                style="position:absolute;top:0;left:0;pointer-events:none;white-space:nowrap;opacity:0"></span>
+            </span><br>
+            <span class="text-gray-900">První návrh zdarma</span><br>
+            <span class="text-gray-900">do 24 hodin.</span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p id="hero-sub" class="text-gray-400 text-[17px] max-w-lg leading-relaxed" style="opacity:0">
+            Rozhodli jste se pro nový web, který vám pomůže získat více zákazníků. Pokud se vám návrh líbí, zaplatíte
+            jen od <strong class="text-gray-700 font-semibold">399 €</strong>, pokud ne, nic neplatíte.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div id="hero-btns" class="flex flex-col sm:flex-row gap-3" style="opacity:0">
+            <button class="btn-dark">
+              Chci bezplatný návrh webu
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.45">
+                <path d="M6 9L2 4h8L6 9z" fill="currentColor" />
+              </svg>
+            </button>
+            <button class="btn-glass">Zobrazit ukázky</button>
+          </div>
+
+          <!-- Social proof -->
+          <div id="hero-proof" class="flex flex-col sm:flex-row items-start sm:items-center gap-5" style="opacity:0">
+            <div class="flex items-center gap-3">
+              <div class="avatar-stack flex -space-x-2.5">
+                <img src="https://placehold.co/38x38/e8d5b7/a0784d?text=A" class="w-9 h-9 rounded-full object-cover"
+                  alt="">
+                <img src="https://placehold.co/38x38/d4c4f0/7c5cbf?text=B" class="w-9 h-9 rounded-full object-cover"
+                  alt="">
+                <img src="https://placehold.co/38x38/fccb9e/c05621?text=C" class="w-9 h-9 rounded-full object-cover"
+                  alt="">
+                <img src="https://placehold.co/38x38/c9f0e8/276749?text=D" class="w-9 h-9 rounded-full object-cover"
+                  alt="">
+                <img src="https://placehold.co/38x38/fed7e2/97266d?text=E" class="w-9 h-9 rounded-full object-cover"
+                  alt="">
+              </div>
+              <div>
+                <div class="text-sm leading-none" style="color:#c0392b">★★★★★</div>
+                <div class="text-xs text-gray-400 mt-0.5">50+ spokojených klientů</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-5 text-[13px] text-gray-400 flex-wrap">
+              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> Doručení do 14
+                dní</span>
+              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> Platba po
+                dokončení</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── RIGHT ── -->
+        <div class="lg:col-span-5 space-y-4 lg:mt-8">
+
+          <!-- Stats Glass Card -->
+          <div id="hero-card" class="glass rounded-3xl p-7 relative overflow-hidden" style="opacity:0">
+            <div class="blob"
+              style="width:200px;height:200px;background:radial-gradient(circle,rgba(192,57,43,0.1),transparent);top:-60px;right:-60px;filter:blur(30px)">
+            </div>
+            <div class="relative z-10">
+              <!-- Main stat -->
+              <div class="flex items-center gap-4 mb-7">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl"
+                  style="background:rgba(192,57,43,0.09);border:1px solid rgba(192,57,43,0.12)">
+                  <svg class="w-6 h-6" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="6" />
+                    <circle cx="12" cy="12" r="2" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-3xl font-black text-gray-900 tracking-tight">50+</div>
+                  <div class="text-sm text-gray-400">Spokojených klientů</div>
+                </div>
+              </div>
+              <!-- Progress -->
+              <div class="mb-7">
+                <div class="flex justify-between text-sm mb-2.5">
+                  <span class="text-gray-400">Spokojenost klientů</span>
+                  <span class="text-gray-900 font-semibold">98%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width:98%"></div>
+                </div>
+              </div>
+              <!-- Divider -->
+              <div class="h-px w-full mb-6" style="background:rgba(0,0,0,0.06)"></div>
+              <!-- Mini stats -->
+              <div class="flex items-start justify-between mb-7">
+                <div class="flex flex-col items-center flex-1">
+                  <span class="text-[22px] font-black text-gray-900 tracking-tight">24h</span>
+                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5">První návrh</span>
+                </div>
+                <div class="w-px self-stretch" style="background:rgba(0,0,0,0.07)"></div>
+                <div class="flex flex-col items-center flex-1">
+                  <span class="text-[22px] font-black text-gray-900 tracking-tight">14d</span>
+                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5">Doručení</span>
+                </div>
+                <div class="w-px self-stretch" style="background:rgba(0,0,0,0.07)"></div>
+                <div class="flex flex-col items-center flex-1">
+                  <span class="text-[22px] font-black text-gray-900 tracking-tight">399€</span>
+                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5">Cena od</span>
+                </div>
+              </div>
+              <!-- Tags -->
+              <div class="flex gap-2 flex-wrap">
+                <div class="glass-tag">
+                  <span class="relative flex h-2 w-2">
+                    <span
+                      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                  AKTIVNÍ
+                </div>
+                <div class="glass-tag">
+                  <svg class="w-3 h-3" fill="#d9453a" viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  PRÉMIOVÝ
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust Marquee Glass Card -->
+          <div id="hero-marquee" class="glass rounded-3xl py-6 relative overflow-hidden" style="opacity:0">
+
+            <!-- Strip 1: Záruky → left -->
+            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">Naše záruky pro klienty
+            </h3>
+            <div class="relative flex overflow-hidden mask-fade-r mb-5">
+              <div class="animate-marquee flex gap-8 whitespace-nowrap pl-4">
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> První návrh zdarma</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Doručení do 14 dní</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Platba po dokončení</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> 25+ spokojených klientů</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Responzivní design</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Základní SEO</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> První návrh zdarma</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Doručení do 14 dní</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Platba po dokončení</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> 25+ spokojených klientů</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Responzivní design</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Základní SEO</span>
+                <span class="text-gray-300">·</span>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="mx-7 mb-5 h-px" style="background:rgba(0,0,0,0.06)"></div>
+
+            <!-- Strip 2: Spolupráce → right (reverse) -->
+            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">S kým spolupracujeme</h3>
+            <div class="relative flex overflow-hidden mask-fade-r">
+              <div class="animate-marquee-reverse flex gap-10 whitespace-nowrap pl-4">
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#6366f1">A</span> Acme Corp
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#0ea5e9">T</span> TechNova
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#d9453a">B</span> BuildCraft
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#10b981">S</span> Summit Pro
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#3b82f6">N</span> Nordic Labs
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#ec4899">P</span> Pixel Studio
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#22c55e">G</span> GreenPath
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#c0392b">Q</span> QuadraMedia
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#8b5cf6">A</span> AuraDesign
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#14b8a6">C</span> CoreSystems
+                </span>
+                <span class="text-gray-200">·</span>
+                <!-- duplicate for seamless loop -->
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#6366f1">A</span> Acme Corp
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#0ea5e9">T</span> TechNova
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#d9453a">B</span> BuildCraft
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#10b981">S</span> Summit Pro
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#3b82f6">N</span> Nordic Labs
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#ec4899">P</span> Pixel Studio
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#22c55e">G</span> GreenPath
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#c0392b">Q</span> QuadraMedia
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#8b5cf6">A</span> AuraDesign
+                </span>
+                <span class="text-gray-200">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
+                  <span
+                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
+                    style="background:#14b8a6">C</span> CoreSystems
+                </span>
+                <span class="text-gray-200">·</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── HOW IT WORKS ───── -->
+  <section style="background:#c0392b" class="py-20 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <p class="text-red-100 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal">Jak to funguje</p>
+      <h2 class="text-white text-4xl md:text-5xl font-black mb-16 reveal" style="line-height:1.08">Jednodušeji to<br>už
+        nejde</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+
+        <!-- Step 1 -->
+        <div class="glass-dark rounded-2xl p-7 text-left relative reveal">
+          <div class="hidden md:block step-connector"></div>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5 font-black text-white text-base"
+            style="background:#111">01</div>
+          <h3 class="text-white font-bold text-[17px] mb-2.5">Napište nám o sobě</h3>
+          <p class="text-red-100 text-[13.5px] leading-relaxed">Řekněte nám o svém podnikání. Připravíme bezplatný návrh
+            do 24 hodin — bez závazků.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-dark rounded-2xl p-7 text-left relative reveal">
+          <div class="hidden md:block step-connector"></div>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5 font-black text-white text-base"
+            style="background:#111">02</div>
+          <h3 class="text-white font-bold text-[17px] mb-2.5">Připravíme návrh</h3>
+          <p class="text-red-100 text-[13.5px] leading-relaxed">Náš tým navrhne moderní web přizpůsobený vašemu
+            podnikání, brandingu a zákazníkům.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-dark rounded-2xl p-7 text-left reveal">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5 font-black text-white text-base"
+            style="background:#111">03</div>
+          <h3 class="text-white font-bold text-[17px] mb-2.5">Dokončíme web</h3>
+          <p class="text-red-100 text-[13.5px] leading-relaxed">Po vašem schválení web dokončíme a spustíme online.
+            Platíte jen tehdy, když jste spokojeni.</p>
+        </div>
+
+      </div>
+
+      <div class="reveal">
+        <button class="btn-dark">
+          Chci bezplatný návrh webu
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.45">
+            <path d="M6 9L2 4h8L6 9z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── FEATURES / PACKAGE ───── -->
+  <section id="cena" class="py-24 px-6 relative overflow-hidden"
+    style="background:linear-gradient(135deg,#fefbff 0%,#fffcfa 60%,#f7fcff 100%)">
+    <!-- blobs -->
+    <div class="blob"
+      style="width:500px;height:500px;background:radial-gradient(circle,rgba(139,92,246,0.07),transparent 65%);top:-100px;right:-100px;filter:blur(80px)">
+    </div>
+    <div class="blob"
+      style="width:400px;height:400px;background:radial-gradient(circle,rgba(192,57,43,0.07),transparent 65%);bottom:-80px;left:-80px;filter:blur(80px)">
+    </div>
+
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b">Co dostanete
+      </p>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08">
+        Vše, co potřebujete<br>
+        <span class="gradient-text">v jednom balíčku</span>
+      </h2>
+      <p class="text-gray-400 text-[16px] mb-16 reveal">Cena webu začíná od <strong
+          class="text-gray-800 font-semibold">399 €</strong> a platíte jen když jste spokojeni.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-12">
+
+        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
+          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Responzivní design</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed">Web bude skvěle vypadat na počítači, tabletu i
+              mobilu.</p>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
+          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Až 5 podstránek</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed">Hlavní stránka s podstránkami podle vašich potřeb a
+              obsahu.</p>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
+          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Základní SEO</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed">Optimalizace pro vyhledávače, aby vás zákazníci snáze
+              našli na Googlu.</p>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
+          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.1-1.1m-.757-4.9a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Připojení domény</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed">Pomůžeme vám připojit vlastní doménu a nastavit
+              hosting.</p>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
+          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Kontaktní formulář</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed">Zákazníci vás mohou jednoduše kontaktovat přímo z
+              webu.</p>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
+          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">a další možnosti</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed">Blog, galerie, rezervace a další funkce podle vašich
+              potřeb.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="reveal">
+        <button class="btn-dark">
+          Chci bezplatný návrh webu
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.45">
+            <path d="M6 9L2 4h8L6 9z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── PORTFOLIO ───── -->
+  <section id="ukazky" class="py-24 px-6 relative overflow-hidden"
+    style="background:linear-gradient(135deg,#f6f4f2 0%,#f9f7f5 100%)">
+    <div class="blob"
+      style="width:450px;height:450px;background:radial-gradient(circle,rgba(192,57,43,0.06),transparent 65%);top:-80px;left:-80px;filter:blur(70px)">
+    </div>
+    <div class="blob"
+      style="width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,0.06),transparent 65%);bottom:-60px;right:-60px;filter:blur(70px)">
+    </div>
+
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b">Naše práce</p>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08">
+        Jak by mohl vypadat<br>
+        <span class="gradient-text">váš nový web</span>
+      </h2>
+      <p class="text-gray-400 text-[16px] mb-16 reveal">Inspirujte se ukázkami webů, které jsme vytvořili. Každý web
+        děláme na míru.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-left">
+
+        <!-- Card 1 -->
+        <div class="portfolio-card glass rounded-2xl overflow-hidden cursor-pointer reveal">
+          <div class="h-52 relative" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#fff7ed)">
+            <div class="absolute inset-3 rounded-xl bg-white shadow-sm overflow-hidden flex flex-col">
+              <div class="h-7 flex items-center px-3 gap-2" style="background:#f43f8e">
+                <div class="w-14 h-1.5 rounded bg-white/80"></div>
+                <div class="flex-1"></div>
+                <div class="flex gap-1">
+                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
+                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
+                </div>
+              </div>
+              <div class="flex-1 p-3 flex flex-col gap-2">
+                <div class="rounded-lg flex-1 flex items-center justify-center text-xs font-bold"
+                  style="background:#fce7f3;color:#be185d">Kozmetický salón Bellavu</div>
+                <div class="h-1.5 rounded bg-gray-100 w-3/4"></div>
+                <div class="h-1.5 rounded bg-gray-100 w-1/2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-gray-900 mb-1">Kosmetický salón Bellavu</h3>
+            <p class="text-gray-400 text-[13px]">Elegantní web s online rezervací termínů a galerií prací</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="portfolio-card glass rounded-2xl overflow-hidden cursor-pointer reveal">
+          <div class="h-52 relative" style="background:linear-gradient(135deg,#1c1008,#3d2008,#1a0c00)">
+            <div class="absolute inset-3 rounded-xl overflow-hidden flex flex-col shadow-md" style="background:#1a0e00">
+              <div class="h-7 flex items-center px-3 gap-2" style="background:#92400e">
+                <div class="w-14 h-1.5 rounded bg-white/80"></div>
+                <div class="flex-1"></div>
+                <div class="flex gap-1">
+                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
+                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
+                </div>
+              </div>
+              <div class="flex-1 p-3 flex flex-col gap-2">
+                <div class="rounded-lg flex-1 flex items-center justify-center text-xs font-bold"
+                  style="background:#2d1800;color:#fbbf24">Reštaurácia La Maison</div>
+                <div class="h-1.5 rounded w-3/4" style="background:#3d2800"></div>
+                <div class="h-1.5 rounded w-1/2" style="background:#3d2800"></div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-gray-900 mb-1">Restaurace La Maison</h3>
+            <p class="text-gray-400 text-[13px]">Prémiový web s online menu a systémem rezervací stolů</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="portfolio-card glass rounded-2xl overflow-hidden cursor-pointer reveal">
+          <div class="h-52 relative" style="background:linear-gradient(135deg,#eff6ff,#dbeafe,#f0f9ff)">
+            <div class="absolute inset-3 rounded-xl bg-white shadow-sm overflow-hidden flex flex-col">
+              <div class="h-7 flex items-center px-3 gap-2" style="background:#2563eb">
+                <div class="w-14 h-1.5 rounded bg-white/80"></div>
+                <div class="flex-1"></div>
+                <div class="flex gap-1">
+                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
+                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
+                </div>
+              </div>
+              <div class="flex-1 p-3 flex flex-col gap-2">
+                <div class="rounded-lg flex-1 flex items-center justify-center text-xs font-bold"
+                  style="background:#dbeafe;color:#1d4ed8">PureDental — Zubná klinika</div>
+                <div class="h-1.5 rounded bg-gray-100 w-3/4"></div>
+                <div class="h-1.5 rounded bg-gray-100 w-1/2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-gray-900 mb-1">Zubní klinika PureDental</h3>
+            <p class="text-gray-400 text-[13px]">Důvěryhodný web s online objednávkovým systémem</p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="portfolio-card glass rounded-2xl overflow-hidden cursor-pointer reveal">
+          <div class="h-52 relative" style="background:linear-gradient(135deg,#0d0d0d,#1a0000,#0d0d0d)">
+            <div class="absolute inset-3 rounded-xl overflow-hidden flex flex-col shadow-md" style="background:#111">
+              <div class="h-7 flex items-center px-3 gap-2" style="background:#c0392b">
+                <div class="w-14 h-1.5 rounded bg-white/80"></div>
+                <div class="flex-1"></div>
+                <div class="flex gap-1">
+                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
+                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
+                </div>
+              </div>
+              <div class="flex-1 p-3 flex flex-col gap-2">
+                <div class="rounded-lg flex-1 flex items-center justify-center text-xs font-bold"
+                  style="background:#1f1f1f;color:#f87171">AutoServis Pro</div>
+                <div class="h-1.5 rounded w-3/4" style="background:#2a2a2a"></div>
+                <div class="h-1.5 rounded w-1/2" style="background:#2a2a2a"></div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 flex items-start justify-between">
+            <div>
+              <h3 class="font-bold text-gray-900 mb-1">Autoservis</h3>
+              <p class="text-gray-400 text-[13px]">Moderní web s ceníkem a kontaktním formulářem</p>
+            </div>
+            <span class="text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5"
+              style="background:#c0392b">Nové</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── TESTIMONIALS ───── -->
+  <section id="referencie" class="py-24 px-6 relative overflow-hidden"
+    style="background:linear-gradient(160deg,#fffbf7 0%,#ffffff 50%,#faf9ff 100%)">
+    <div class="blob"
+      style="width:500px;height:500px;background:radial-gradient(circle,rgba(192,57,43,0.07),transparent 65%);top:-80px;right:-80px;filter:blur(80px)">
+    </div>
+    <div class="blob"
+      style="width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,0.06),transparent 65%);bottom:-60px;left:100px;filter:blur(80px)">
+    </div>
+
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b">Reference</p>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08">
+        Co říkají <span class="gradient-text">naši klienti</span>
+      </h2>
+      <p class="text-gray-400 text-[16px] mb-16 reveal">Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili
+        profesionální web.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+
+        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
+          <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Byl jsem velmi spokojený s prací. První návrh
+            přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2 týdny."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://placehold.co/40x40/e8d5b7/a0784d?text=M" class="w-10 h-10 rounded-full" alt="">
+            <div>
+              <div class="font-semibold text-gray-900 text-sm">Martin K.</div>
+              <div class="text-gray-400 text-xs">Kosmetický salón</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
+          <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Profesionální přístup od začátku do konce. Vše
+            jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://placehold.co/40x40/d4c4f0/7c5cbf?text=P" class="w-10 h-10 rounded-full" alt="">
+            <div>
+              <div class="font-semibold text-gray-900 text-sm">Petr S.</div>
+              <div class="text-gray-400 text-xs">Restaurace</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
+          <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Velmi rychlé dodání a kvalitní zpracování. Web
+            nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"</p>
+          <div class="flex items-center gap-3">
+            <img src="https://placehold.co/40x40/c9f0e8/276749?text=Z" class="w-10 h-10 rounded-full" alt="">
+            <div>
+              <div class="font-semibold text-gray-900 text-sm">Zuzana M.</div>
+              <div class="text-gray-400 text-xs">Zubní klinika</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
+          <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Chtěl jsem moderní web, který bude dohledatelný.
+            Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://placehold.co/40x40/fccb9e/c05621?text=L" class="w-10 h-10 rounded-full" alt="">
+            <div>
+              <div class="font-semibold text-gray-900 text-sm">Lukáš R.</div>
+              <div class="text-gray-400 text-xs">Autoservis</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
+          <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Skvělé! Web vypadá přesně tak, jak jsem si
+            představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"</p>
+          <div class="flex items-center gap-3">
+            <img src="https://placehold.co/40x40/fed7e2/97266d?text=J" class="w-10 h-10 rounded-full" alt="">
+            <div>
+              <div class="font-semibold text-gray-900 text-sm">Jana P.</div>
+              <div class="text-gray-400 text-xs">Fitness studio</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
+          <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Výborná práce za rozumnou cenu. Web funguje
+            bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://placehold.co/40x40/bee3f8/2a69ac?text=M" class="w-10 h-10 rounded-full" alt="">
+            <div>
+              <div class="font-semibold text-gray-900 text-sm">Marek B.</div>
+              <div class="text-gray-400 text-xs">Stavební firma</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="reveal">
+        <button class="btn-dark">
+          Chci bezplatný návrh webu
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.45">
+            <path d="M6 9L2 4h8L6 9z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── FAQ ───── -->
+  <section id="faq" class="py-24 px-6 relative overflow-hidden"
+    style="background:linear-gradient(160deg,#faf9f7 0%,#fff7f4 50%,#fafbff 100%)">
+    <div class="blob"
+      style="width:400px;height:400px;background:radial-gradient(circle,rgba(192,57,43,0.07),transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(80px)">
+    </div>
+
+    <div class="max-w-3xl mx-auto relative z-10">
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-14 text-center reveal">Časté dotazy</h2>
+
+      <div class="space-y-3">
+
+        <div class="faq-item glass rounded-2xl overflow-hidden reveal">
+          <button
+            class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
+            Jak dlouho trvá vytvoření webu?
+            <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">První návrh dostanete do 24 hodin. Celý
+              hotový web obvykle dokončíme do 7–14 dní od schválení designu.</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden reveal">
+          <button
+            class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
+            Proč poskytujete první návrh zdarma?
+            <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Chceme vám ukázat, jak váš web může vypadat,
+              ještě předtím než nás objednáte. Věříme, že když uvidíte kvalitu, budete chtít pokračovat.</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden reveal">
+          <button
+            class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
+            Musím platit předem?
+            <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Ne, platíte až po dokončení a schválení webu.
+              První návrh dostanete zdarma a bez závazků.</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden reveal">
+          <button
+            class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
+            Co když se mi návrh nelíbí?
+            <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Bez problémů. Pokud se vám návrh nelíbí,
+              neplatíte nic. Můžeme se pokusit o úpravu nebo jednoduše jdeme každý svou cestou.</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden reveal">
+          <button
+            class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
+            Co když budu potřebovat něco změnit?
+            <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Menší úpravy (text, obrázky) jsou zahrnuty v
+              ceně po dobu 30 dní po spuštění. Větší změny řešíme individuálně za dohodnutou cenu.</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden reveal">
+          <button
+            class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
+            Jaká je cena?
+            <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Cena webu začíná od 399 €. Konečná cena
+              závisí na rozsahu a funkcionalitě. Všechny detaily probereme při bezplatné konzultaci.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── DARK CTA ───── -->
+  <section class="dark-cta-bg py-28 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute w-96 h-96 rounded-full opacity-10"
+        style="background:#c0392b;filter:blur(120px);bottom:-4rem;left:50%;transform:translateX(-50%)"></div>
+    </div>
+    <div class="max-w-3xl mx-auto text-center relative z-10">
+      <h2 class="text-white text-4xl md:text-[56px] font-black leading-tight mb-6 reveal">
+        Jste jen kousek od svého<br>
+        <span class="gradient-text">nového webu</span>
+      </h2>
+      <p class="text-gray-400 text-[16px] mb-10 max-w-xl mx-auto reveal">První návrh zdarma do 24 hodin. Neriskujete nic
+        — platíte pouze když jste spokojeni a jen od 399 €.</p>
+      <div class="reveal">
+        <button class="btn-orange">Objednejte návrh webu</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── FOOTER ───── -->
+  <footer class="bg-black py-14 px-6 border-t border-white/5">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between gap-10">
+      <div class="max-w-xs">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#c0392b">
+            <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+              <rect x="1" y="1" width="6.5" height="6.5" rx="1.2" fill="white" />
+              <rect x="10.5" y="1" width="6.5" height="6.5" rx="1.2" fill="white" />
+              <rect x="1" y="10.5" width="6.5" height="6.5" rx="1.2" fill="white" />
+              <rect x="10.5" y="10.5" width="6.5" height="6.5" rx="1.2" fill="white" />
+            </svg>
+          </div>
+          <span class="font-bold text-white text-[16px]">Philo Agency</span>
+        </div>
+        <p class="text-gray-500 text-[13.5px] leading-relaxed">Tvoříme weby pro malé firmy a podnikatele v České
+          republice. První návrh zdarma.</p>
+      </div>
+      <div class="flex gap-14">
+        <div>
+          <h4 class="text-white font-semibold text-[13px] mb-4">Navigace</h4>
+          <div class="space-y-2.5">
+            <a href="#" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Domů</a>
+            <a href="#cena" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Cena</a>
+            <a href="#ukazky" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Ukázky</a>
+            <a href="#referencie"
+              class="block text-gray-500 text-[13px] hover:text-white transition-colors">Reference</a>
+            <a href="#faq" class="block text-gray-500 text-[13px] hover:text-white transition-colors">FAQ</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-[13px] mb-4">Kontakt</h4>
+          <div class="space-y-2.5">
+            <a href="mailto:info@philoagency.cz"
+              class="block text-gray-500 text-[13px] hover:text-white transition-colors">info@philoagency.cz</a>
+            <a href="tel:+420900000000" class="block text-gray-500 text-[13px] hover:text-white transition-colors">+420
+              900 000 000</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-5xl mx-auto mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between gap-3">
+      <p class="text-gray-600 text-[12px]">© 2024 Philo Agency. Všechna práva vyhrazena.</p>
+      <div class="flex gap-5">
+        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors">Ochrana soukromí</a>
+        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors">Podmínky použití</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+
+    // Hero staggered entrance
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    heroTl
+      .to('#hero-badge', { opacity: 1, y: 0, duration: 0.7, from: { y: 20 } })
+      .to('#hero-title', { opacity: 1, y: 0, duration: 0.85 }, '-=0.5')
+      .to('#hero-sub', { opacity: 1, y: 0, duration: 0.7 }, '-=0.55')
+      .to('#hero-btns', { opacity: 1, y: 0, duration: 0.65 }, '-=0.5')
+      .to('#hero-proof', { opacity: 1, y: 0, duration: 0.6 }, '-=0.45')
+      .to('#hero-card', { opacity: 1, y: 0, duration: 0.75 }, '-=0.7')
+      .to('#hero-marquee', { opacity: 1, y: 0, duration: 0.65 }, '-=0.5');
+
+    // Fix: gsap.to needs fromVars set separately for initial state
+    gsap.set(['#hero-badge', '#hero-title', '#hero-sub', '#hero-btns', '#hero-proof', '#hero-card', '#hero-marquee'], { y: 28 });
+
+    // Scroll-triggered reveals
+    gsap.utils.toArray('.reveal').forEach(el => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1, y: 0, duration: 0.65, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+        }
+      );
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        const target = id && id !== '#' ? document.querySelector(id) : null;
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+
+    // FlipWords hero headline
+    (function () {
+      const WORDS = ['moderní web.', 'online marketing.', 'automatizace.', 'ai agenty.', 'photo/video.'];
+      const DURATION = 3000;
+      let idx = 0, busy = false;
+      const active = document.getElementById('fw-active');
+      const ghost = document.getElementById('fw-ghost');
+      if (!active || !ghost) return;
+
+      function letterSpans(text) {
+        const frag = document.createDocumentFragment();
+        text.split(' ').forEach(function (w, wi) {
+          const ws = document.createElement('span');
+          ws.style.cssText = 'display:inline-block;white-space:nowrap';
+          w.split('').forEach(function (ch, ci) {
+            const s = document.createElement('span');
+            s.className = 'fw-letter';
+            s.style.animationDelay = (wi * 0.3 + ci * 0.05).toFixed(3) + 's';
+            s.textContent = ch;
+            ws.appendChild(s);
+          });
+          const sp = document.createElement('span');
+          sp.style.cssText = 'display:inline-block';
+          sp.innerHTML = '&nbsp;';
+          ws.appendChild(sp);
+          frag.appendChild(ws);
+        });
+        return frag;
+      }
+
+      function flip() {
+        if (busy) return;
+        busy = true;
+
+        ghost.innerHTML = active.innerHTML;
+        ghost.querySelectorAll('.fw-letter').forEach(function (l) {
+          l.style.animation = 'none'; l.style.opacity = '1';
+          l.style.filter = 'none'; l.style.transform = 'none';
+        });
+        ghost.style.opacity = '1';
+        ghost.classList.add('fw-ghost-exit');
+        ghost.addEventListener('animationend', function done() {
+          ghost.removeEventListener('animationend', done);
+          ghost.classList.remove('fw-ghost-exit');
+          ghost.style.opacity = '0';
+          busy = false;
+        }, { once: true });
+
+        idx = (idx + 1) % WORDS.length;
+        active.innerHTML = '';
+        active.appendChild(letterSpans(WORDS[idx]));
+      }
+
+      // Show first word immediately (no animation — GSAP will fade the parent in)
+      active.textContent = WORDS[0];
+      setInterval(flip, DURATION);
+    })();
+
+    // Nav active link highlight
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    const sections = [...navLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY + 80;
+      sections.forEach((sec, i) => {
+        if (y >= sec.offsetTop && (i === sections.length - 1 || y < sections[i + 1].offsetTop)) {
+          navLinks.forEach(l => l.style.color = '');
+          navLinks[i].style.color = '#c0392b';
+        }
+      });
+    }, { passive: true });
+  </script>
+
+  <script type="module">
+    import { createNoise2D } from 'https://cdn.jsdelivr.net/npm/simplex-noise@4.0.1/+esm';
+
+    const container = document.getElementById('hero-waves');
+    if (container) {
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      svg.style.cssText = 'display:block;width:100%;height:100%;';
+      container.appendChild(svg);
+
+      const strokeColor = 'rgba(15,23,42,1)';
+      const mouse = { x: -10, y: 0, lx: 0, ly: 0, sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false };
+      let paths = [], lines = [];
+      const noise = createNoise2D();
+      let bounding = null;
+
+      function setSize() {
+        bounding = container.getBoundingClientRect();
+        svg.style.width = bounding.width + 'px';
+        svg.style.height = bounding.height + 'px';
+      }
+
+      function setLines() {
+        const { width, height } = bounding;
+        lines = [];
+        paths.forEach(p => p.remove());
+        paths = [];
+        const xGap = 8, yGap = 8;
+        const totalLines = Math.ceil((width + 200) / xGap);
+        const totalPoints = Math.ceil((height + 30) / yGap);
+        const xStart = (width - xGap * totalLines) / 2;
+        const yStart = (height - yGap * totalPoints) / 2;
+
+        for (let i = 0; i < totalLines; i++) {
+          const points = [];
+          for (let j = 0; j < totalPoints; j++) {
+            points.push({ x: xStart + xGap * i, y: yStart + yGap * j, wave: { x: 0, y: 0 }, cursor: { x: 0, y: 0, vx: 0, vy: 0 } });
+          }
+          const path = document.createElementNS(ns, 'path');
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke', strokeColor);
+          path.setAttribute('stroke-width', '1');
+          path.setAttribute('stroke-opacity', '0.1');
+          svg.appendChild(path);
+          paths.push(path);
+          lines.push(points);
+        }
+      }
+
+      function onMouseMove(e) {
+        if (!bounding) return;
+        mouse.x = e.clientX - bounding.left;
+        mouse.y = e.clientY - bounding.top + window.scrollY;
+        if (!mouse.set) { mouse.sx = mouse.x; mouse.sy = mouse.y; mouse.lx = mouse.x; mouse.ly = mouse.y; mouse.set = true; }
+      }
+
+      function movePoints(time) {
+        lines.forEach(points => {
+          points.forEach(p => {
+            const move = noise((p.x + time * 0.008) * 0.003, (p.y + time * 0.003) * 0.002) * 8;
+            p.wave.x = Math.cos(move) * 12;
+            p.wave.y = Math.sin(move) * 6;
+            const dx = p.x - mouse.sx, dy = p.y - mouse.sy;
+            const d = Math.hypot(dx, dy), l = Math.max(175, mouse.vs);
+            if (d < l) {
+              const s = 1 - d / l;
+              const f = Math.cos(d * 0.001) * s;
+              p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00035;
+              p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00035;
+            }
+            p.cursor.vx += (0 - p.cursor.x) * 0.01; p.cursor.vy += (0 - p.cursor.y) * 0.01;
+            p.cursor.vx *= 0.95; p.cursor.vy *= 0.95;
+            p.cursor.x += p.cursor.vx; p.cursor.y += p.cursor.vy;
+            p.cursor.x = Math.min(50, Math.max(-50, p.cursor.x));
+            p.cursor.y = Math.min(50, Math.max(-50, p.cursor.y));
+          });
+        });
+      }
+
+      function moved(p, withCursor = true) {
+        return { x: p.x + p.wave.x + (withCursor ? p.cursor.x : 0), y: p.y + p.wave.y + (withCursor ? p.cursor.y : 0) };
+      }
+
+      function drawLines() {
+        lines.forEach((points, i) => {
+          if (points.length < 2 || !paths[i]) return;
+          const f = moved(points[0], false);
+          let d = `M ${f.x} ${f.y}`;
+          for (let j = 1; j < points.length; j++) { const c = moved(points[j]); d += ` L ${c.x} ${c.y}`; }
+          paths[i].setAttribute('d', d);
+        });
+      }
+
+      function tick(time) {
+        mouse.sx += (mouse.x - mouse.sx) * 0.1;
+        mouse.sy += (mouse.y - mouse.sy) * 0.1;
+        const dx = mouse.x - mouse.lx, dy = mouse.y - mouse.ly;
+        mouse.v = Math.hypot(dx, dy);
+        mouse.vs += (mouse.v - mouse.vs) * 0.1;
+        mouse.vs = Math.min(100, mouse.vs);
+        mouse.lx = mouse.x; mouse.ly = mouse.y;
+        mouse.a = Math.atan2(dy, dx);
+        movePoints(time);
+        drawLines();
+        requestAnimationFrame(tick);
+      }
+
+      setSize();
+      setLines();
+      window.addEventListener('resize', () => { setSize(); setLines(); });
+      window.addEventListener('mousemove', onMouseMove);
+      requestAnimationFrame(tick);
+    }
+  </script>
+</body>
+
+</html>
