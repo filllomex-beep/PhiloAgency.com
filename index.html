@@ -389,14 +389,124 @@
       background: rgba(255, 255, 255, 0.2);
     }
 
-    /* ─── PORTFOLIO CARD ─── */
-    .portfolio-card {
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    /* ─── SHOWCASE CAROUSEL ─── */
+    .showcase-viewport {
+      overflow: hidden;
     }
 
-    .portfolio-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 24px 52px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    .showcase-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .showcase-card {
+      flex: 0 0 calc(50% - 10px);
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    @media (max-width: 640px) {
+      .showcase-card { flex: 0 0 100%; }
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.1);
+    }
+
+    .showcase-img-wrap {
+      height: 240px;
+      overflow: hidden;
+      background: #ede8e4;
+    }
+
+    .showcase-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.42s;
+    }
+
+    .showcase-card:hover .showcase-img {
+      transform: scale(1.04);
+    }
+
+    .showcase-info {
+      padding: 20px 22px;
+      text-align: left;
+    }
+
+    .showcase-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #c0392b;
+    }
+
+    .showcase-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #111;
+      margin: 5px 0 4px;
+    }
+
+    .showcase-desc {
+      font-size: 12.5px;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    .showcase-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .showcase-arrow {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, opacity 0.2s;
+      flex-shrink: 0;
+    }
+
+    .showcase-arrow:hover { background: #333; }
+    .showcase-arrow:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
+
+    .showcase-dots {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .showcase-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.15);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s, width 0.2s;
+    }
+
+    .showcase-dot.active {
+      background: #111;
+      width: 20px;
     }
 
     /* ─── GLASS CARD HOVER ─── */
@@ -1034,116 +1144,72 @@
       <p class="text-gray-400 text-[16px] mb-16 reveal">Inspirujte se ukázkami webů, které jsme vytvořili. Každý web
         děláme na míru.</p>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-left">
+      <!-- Showcase Carousel -->
+      <div class="mt-12 reveal">
+        <div class="showcase-viewport">
+          <div class="showcase-track" id="showcase-track">
 
-        <!-- Card 1 -->
-        <div class="portfolio-card glass rounded-2xl overflow-hidden cursor-pointer reveal">
-          <div class="h-52 relative" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#fff7ed)">
-            <div class="absolute inset-3 rounded-xl bg-white shadow-sm overflow-hidden flex flex-col">
-              <div class="h-7 flex items-center px-3 gap-2" style="background:#f43f8e">
-                <div class="w-14 h-1.5 rounded bg-white/80"></div>
-                <div class="flex-1"></div>
-                <div class="flex gap-1">
-                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
-                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
-                </div>
+            <!-- Card 1 -->
+            <div class="showcase-card glass">
+              <div class="showcase-img-wrap">
+                <img src="https://placehold.co/800x480/fce7f3/be185d?text=Bellavu+Beauty" alt="Bellavu Beauty Studio" class="showcase-img">
               </div>
-              <div class="flex-1 p-3 flex flex-col gap-2">
-                <div class="rounded-lg flex-1 flex items-center justify-center text-xs font-bold"
-                  style="background:#fce7f3;color:#be185d">Kozmetický salón Bellavu</div>
-                <div class="h-1.5 rounded bg-gray-100 w-3/4"></div>
-                <div class="h-1.5 rounded bg-gray-100 w-1/2"></div>
+              <div class="showcase-info">
+                <span class="showcase-tag">Kosmetický salón</span>
+                <h3 class="showcase-title">Bellavu Beauty Studio</h3>
+                <p class="showcase-desc">Elegantní web s online rezervací termínů a galerií prací</p>
               </div>
             </div>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-gray-900 mb-1">Kosmetický salón Bellavu</h3>
-            <p class="text-gray-400 text-[13px]">Elegantní web s online rezervací termínů a galerií prací</p>
+
+            <!-- Card 2 -->
+            <div class="showcase-card glass">
+              <div class="showcase-img-wrap">
+                <img src="https://placehold.co/800x480/1a0e00/fbbf24?text=La+Maison" alt="Restaurace La Maison" class="showcase-img">
+              </div>
+              <div class="showcase-info">
+                <span class="showcase-tag">Restaurace</span>
+                <h3 class="showcase-title">Restaurace La Maison</h3>
+                <p class="showcase-desc">Prémiový web s online menu a systémem rezervací stolů</p>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="showcase-card glass">
+              <div class="showcase-img-wrap">
+                <img src="https://placehold.co/800x480/dbeafe/1d4ed8?text=PureDental" alt="PureDental" class="showcase-img">
+              </div>
+              <div class="showcase-info">
+                <span class="showcase-tag">Zdravotnictví</span>
+                <h3 class="showcase-title">Zubní klinika PureDental</h3>
+                <p class="showcase-desc">Důvěryhodný web s online objednávkovým systémem</p>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="showcase-card glass">
+              <div class="showcase-img-wrap">
+                <img src="https://placehold.co/800x480/111111/f87171?text=AutoServis+Pro" alt="AutoServis Pro" class="showcase-img">
+              </div>
+              <div class="showcase-info">
+                <span class="showcase-tag">Autoservis</span>
+                <h3 class="showcase-title">AutoServis Pro</h3>
+                <p class="showcase-desc">Moderní web s ceníkem a kontaktním formulářem</p>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="portfolio-card glass rounded-2xl overflow-hidden cursor-pointer reveal">
-          <div class="h-52 relative" style="background:linear-gradient(135deg,#1c1008,#3d2008,#1a0c00)">
-            <div class="absolute inset-3 rounded-xl overflow-hidden flex flex-col shadow-md" style="background:#1a0e00">
-              <div class="h-7 flex items-center px-3 gap-2" style="background:#92400e">
-                <div class="w-14 h-1.5 rounded bg-white/80"></div>
-                <div class="flex-1"></div>
-                <div class="flex gap-1">
-                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
-                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
-                </div>
-              </div>
-              <div class="flex-1 p-3 flex flex-col gap-2">
-                <div class="rounded-lg flex-1 flex items-center justify-center text-xs font-bold"
-                  style="background:#2d1800;color:#fbbf24">Reštaurácia La Maison</div>
-                <div class="h-1.5 rounded w-3/4" style="background:#3d2800"></div>
-                <div class="h-1.5 rounded w-1/2" style="background:#3d2800"></div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-gray-900 mb-1">Restaurace La Maison</h3>
-            <p class="text-gray-400 text-[13px]">Prémiový web s online menu a systémem rezervací stolů</p>
-          </div>
+        <!-- Navigation -->
+        <div class="showcase-nav">
+          <button class="showcase-arrow" id="showcase-prev" aria-label="Předchozí">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <div class="showcase-dots" id="showcase-dots"></div>
+          <button class="showcase-arrow" id="showcase-next" aria-label="Další">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
         </div>
-
-        <!-- Card 3 -->
-        <div class="portfolio-card glass rounded-2xl overflow-hidden cursor-pointer reveal">
-          <div class="h-52 relative" style="background:linear-gradient(135deg,#eff6ff,#dbeafe,#f0f9ff)">
-            <div class="absolute inset-3 rounded-xl bg-white shadow-sm overflow-hidden flex flex-col">
-              <div class="h-7 flex items-center px-3 gap-2" style="background:#2563eb">
-                <div class="w-14 h-1.5 rounded bg-white/80"></div>
-                <div class="flex-1"></div>
-                <div class="flex gap-1">
-                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
-                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
-                </div>
-              </div>
-              <div class="flex-1 p-3 flex flex-col gap-2">
-                <div class="rounded-lg flex-1 flex items-center justify-center text-xs font-bold"
-                  style="background:#dbeafe;color:#1d4ed8">PureDental — Zubná klinika</div>
-                <div class="h-1.5 rounded bg-gray-100 w-3/4"></div>
-                <div class="h-1.5 rounded bg-gray-100 w-1/2"></div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-gray-900 mb-1">Zubní klinika PureDental</h3>
-            <p class="text-gray-400 text-[13px]">Důvěryhodný web s online objednávkovým systémem</p>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="portfolio-card glass rounded-2xl overflow-hidden cursor-pointer reveal">
-          <div class="h-52 relative" style="background:linear-gradient(135deg,#0d0d0d,#1a0000,#0d0d0d)">
-            <div class="absolute inset-3 rounded-xl overflow-hidden flex flex-col shadow-md" style="background:#111">
-              <div class="h-7 flex items-center px-3 gap-2" style="background:#c0392b">
-                <div class="w-14 h-1.5 rounded bg-white/80"></div>
-                <div class="flex-1"></div>
-                <div class="flex gap-1">
-                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
-                  <div class="w-5 h-1.5 rounded bg-white/60"></div>
-                </div>
-              </div>
-              <div class="flex-1 p-3 flex flex-col gap-2">
-                <div class="rounded-lg flex-1 flex items-center justify-center text-xs font-bold"
-                  style="background:#1f1f1f;color:#f87171">AutoServis Pro</div>
-                <div class="h-1.5 rounded w-3/4" style="background:#2a2a2a"></div>
-                <div class="h-1.5 rounded w-1/2" style="background:#2a2a2a"></div>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 flex items-start justify-between">
-            <div>
-              <h3 class="font-bold text-gray-900 mb-1">Autoservis</h3>
-              <p class="text-gray-400 text-[13px]">Moderní web s ceníkem a kontaktním formulářem</p>
-            </div>
-            <span class="text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5"
-              style="background:#c0392b">Nové</span>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -1543,6 +1609,49 @@
         }
       });
     }, { passive: true });
+
+    // Showcase carousel
+    (function () {
+      const track = document.getElementById('showcase-track');
+      const prevBtn = document.getElementById('showcase-prev');
+      const nextBtn = document.getElementById('showcase-next');
+      const dotsEl = document.getElementById('showcase-dots');
+      if (!track) return;
+
+      const cards = [...track.children];
+      let current = 0;
+
+      function pv() { return window.innerWidth >= 640 ? 2 : 1; }
+      function maxIdx() { return Math.max(0, cards.length - pv()); }
+
+      function buildDots() {
+        dotsEl.innerHTML = '';
+        for (let i = 0; i <= maxIdx(); i++) {
+          const d = document.createElement('button');
+          d.className = 'showcase-dot' + (i === current ? ' active' : '');
+          d.setAttribute('aria-label', 'Přejít na ' + (i + 1));
+          d.addEventListener('click', () => goTo(i));
+          dotsEl.appendChild(d);
+        }
+      }
+
+      function goTo(idx) {
+        current = Math.max(0, Math.min(idx, maxIdx()));
+        const gap = 20;
+        const offset = current * (cards[0].offsetWidth + gap);
+        track.style.transform = `translateX(-${offset}px)`;
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current >= maxIdx();
+        [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === current));
+      }
+
+      buildDots();
+      goTo(0);
+
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
+      window.addEventListener('resize', () => { buildDots(); goTo(Math.min(current, maxIdx())); }, { passive: true });
+    })();
 
     // Services slider — sliding indicator
     (function () {
