@@ -571,6 +571,88 @@
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
 
+    /* ─── CONTACT FORM ─── */
+    .form-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(0, 0, 0, 0.07);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #111;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+      box-sizing: border-box;
+      appearance: none;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: #bbb;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: rgba(192, 57, 43, 0.5);
+      box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.07);
+    }
+
+    .form-textarea {
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-color: rgba(255, 255, 255, 0.65);
+      padding-right: 44px;
+      cursor: pointer;
+    }
+
+    .form-check-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1.5px solid rgba(0, 0, 0, 0.07);
+      border-radius: 16px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .form-check-card:hover {
+      border-color: rgba(192, 57, 43, 0.25);
+    }
+
+    .form-check-card input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      accent-color: #c0392b;
+      cursor: pointer;
+      margin-top: 2px;
+    }
+
     /* ─── DARK CTA ─── */
     .dark-cta-bg {
       background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(192, 57, 43, 0.28) 0%, transparent 60%), #0d0d0d;
@@ -1583,6 +1665,90 @@
     </div>
   </section>
 
+  <!-- ───── CONTACT FORM ───── -->
+  <section id="kontakt" class="py-24 px-6 relative overflow-hidden" style="background:linear-gradient(160deg,#faf9f7 0%,#fff7f4 50%,#fafbff 100%)">
+    <div class="blob" style="width:500px;height:500px;background:radial-gradient(circle,rgba(192,57,43,0.07),transparent 65%);top:-80px;left:50%;transform:translateX(-50%);filter:blur(80px)"></div>
+    <div class="blob" style="width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,0.06),transparent 65%);bottom:-60px;right:-60px;filter:blur(70px)"></div>
+
+    <div class="max-w-2xl mx-auto relative z-10">
+      <!-- Header -->
+      <div class="text-center mb-12 reveal">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3" style="color:#c0392b" data-i18n="contact-label">Nezávazná poptávka</p>
+        <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4" style="line-height:1.08" data-i18n-html="contact-title">Chcete bezplatný návrh<br><span class="gradient-text">webu na míru?</span></h2>
+        <p class="text-gray-400 text-[16px]" data-i18n="contact-sub">Popište nám váš projekt a do 24 hodin vám zašleme konkrétní návrh zcela zdarma.</p>
+      </div>
+
+      <!-- Form glass card -->
+      <div class="glass rounded-3xl p-8 md:p-10 reveal">
+        <form id="contact-form" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <!-- JMÉNO -->
+            <div>
+              <label class="form-label" data-i18n="form-name-label">Jméno</label>
+              <input type="text" class="form-input" id="cf-name" data-i18n-placeholder="form-name-ph" placeholder="Vaše jméno" required>
+            </div>
+            <!-- EMAIL -->
+            <div>
+              <label class="form-label" data-i18n="form-email-label">Email</label>
+              <input type="email" class="form-input" id="cf-email" data-i18n-placeholder="form-email-ph" placeholder="Váš email" required>
+            </div>
+          </div>
+
+          <!-- FIRMA NEBO WEB -->
+          <div class="mb-5">
+            <label class="form-label" data-i18n="form-company-label">Firma nebo web</label>
+            <input type="text" class="form-input" id="cf-company" data-i18n-placeholder="form-company-ph" placeholder="Název firmy nebo web (volitelné)">
+          </div>
+
+          <!-- JAKÁ SLUŽBA VÁS ZAJÍMÁ -->
+          <div class="mb-5">
+            <label class="form-label" data-i18n="form-service-label">Jaká služba vás zajímá</label>
+            <select class="form-select" id="cf-service">
+              <option value="" data-i18n="form-service-ph">Vyberte službu…</option>
+              <option data-i18n="form-svc-1">Tvorba webu</option>
+              <option data-i18n="form-svc-2">Online marketing</option>
+              <option data-i18n="form-svc-3">Automatizace</option>
+              <option data-i18n="form-svc-4">AI agenti</option>
+              <option data-i18n="form-svc-5">Fotografie</option>
+              <option data-i18n="form-svc-6">Nevím, poradíte mi</option>
+            </select>
+          </div>
+
+          <!-- POPIS PROJEKTU -->
+          <div class="mb-6">
+            <label class="form-label" data-i18n="form-desc-label">Popis projektu</label>
+            <textarea class="form-textarea" id="cf-desc" data-i18n-placeholder="form-desc-ph" placeholder="Čím více napíšete, tím přesnější návrh dostanete — např. obor podnikání, styl, funkce…"></textarea>
+          </div>
+
+          <!-- Checkbox card -->
+          <label class="form-check-card mb-8 block">
+            <input type="checkbox" id="cf-free" checked>
+            <div>
+              <div class="font-semibold text-gray-900 text-[14px] mb-1" data-i18n="form-check-title">Chci první návrh webu zcela zdarma</div>
+              <div class="text-gray-400 text-[13px] leading-relaxed" data-i18n="form-check-desc">Připravíme vám návrh webu do 24 hodin zdarma a bez závazků — abyste viděli kvalitu na vlastní oči.</div>
+            </div>
+          </label>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-orange" style="width:100%;justify-content:center">
+            <span class="btn-text" data-i18n="form-submit">Odeslat poptávku</span>
+            <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+          </button>
+          <p class="text-center text-gray-400 text-[13px] mt-4" data-i18n="form-response">Odpovíme do 24 hodin</p>
+        </form>
+
+        <!-- Success state (hidden by default) -->
+        <div id="contact-success" class="hidden text-center py-8">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5" style="background:rgba(192,57,43,0.1)">
+            <svg class="w-7 h-7" fill="none" stroke="#c0392b" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h3 class="text-xl font-black text-gray-900 mb-2" data-i18n="form-success-title">Poptávka odeslána!</h3>
+          <p class="text-gray-400 text-[14px]" data-i18n="form-success-sub">Ozveme se vám do 24 hodin s bezplatným návrhem webu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ───── FOOTER ───── -->
   <footer class="bg-black py-14 px-6 border-t border-white/5">
     <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between gap-10">
@@ -1947,7 +2113,23 @@
           'foot-desc': 'Tvoříme weby pro malé firmy a podnikatele v České republice. První návrh zdarma.',
           'foot-nav': 'Navigace', 'foot-contact': 'Kontakt',
           'foot-copy': '© 2026 Philo Agency. Všechna práva vyhrazena.',
-          'foot-privacy': 'Ochrana soukromí', 'foot-terms': 'Podmínky použití'
+          'foot-privacy': 'Ochrana soukromí', 'foot-terms': 'Podmínky použití',
+          'contact-label': 'Nezávazná poptávka',
+          'contact-title': 'Chcete bezplatný návrh<br><span class="gradient-text">webu na míru?</span>',
+          'contact-sub': 'Popište nám váš projekt a do 24 hodin dostanete bezplatný návrh webu přímo na e-mail.',
+          'form-name-label': 'Jméno', 'form-name-ph': 'Vaše jméno',
+          'form-email-label': 'Email', 'form-email-ph': 'vas@email.cz',
+          'form-company-label': 'Firma nebo web', 'form-company-ph': 'Název firmy nebo web (volitelné)',
+          'form-service-label': 'Jaká služba vás zajímá', 'form-service-ph': 'Vyberte službu…',
+          'form-svc-1': 'Tvorba webu', 'form-svc-2': 'Online marketing',
+          'form-svc-3': 'Automatizace', 'form-svc-4': 'AI agenti',
+          'form-svc-5': 'Fotografie', 'form-svc-6': 'Nevím, poradíte mi',
+          'form-desc-label': 'Popis projektu', 'form-desc-ph': 'Čím více napíšete, tím lépe vám poradíme…',
+          'form-check-title': 'Chci první návrh webu zcela zdarma',
+          'form-check-desc': 'Připravíme vám návrh webu do 24 hodin zdarma a bez závazků. Neplatíte nic, dokud nebudete spokojeni.',
+          'form-submit': 'Odeslat poptávku', 'form-response': 'Odpovíme do 24 hodin',
+          'form-success-title': 'Poptávka odeslána!',
+          'form-success-sub': 'Ozveme se vám do 24 hodin s bezplatným návrhem webu.'
         },
         en: {
           'page-title': 'Philo Agency — We\'ll build your new website',
@@ -2018,7 +2200,23 @@
           'foot-desc': 'We create websites for small businesses and entrepreneurs. First design free.',
           'foot-nav': 'Navigation', 'foot-contact': 'Contact',
           'foot-copy': '© 2026 Philo Agency. All rights reserved.',
-          'foot-privacy': 'Privacy Policy', 'foot-terms': 'Terms of use'
+          'foot-privacy': 'Privacy Policy', 'foot-terms': 'Terms of use',
+          'contact-label': 'Non-binding inquiry',
+          'contact-title': 'Want a free custom<br><span class="gradient-text">website design?</span>',
+          'contact-sub': 'Describe your project and within 24 hours you\'ll receive a free website design straight to your email.',
+          'form-name-label': 'Name', 'form-name-ph': 'Your name',
+          'form-email-label': 'Email', 'form-email-ph': 'you@email.com',
+          'form-company-label': 'Company or website', 'form-company-ph': 'Company name or website (optional)',
+          'form-service-label': 'Which service interests you', 'form-service-ph': 'Select a service…',
+          'form-svc-1': 'Website creation', 'form-svc-2': 'Online marketing',
+          'form-svc-3': 'Automation', 'form-svc-4': 'AI agents',
+          'form-svc-5': 'Photography', 'form-svc-6': 'Not sure, advise me',
+          'form-desc-label': 'Project description', 'form-desc-ph': 'The more you write, the better we can advise you…',
+          'form-check-title': 'I want the first website design completely free',
+          'form-check-desc': 'We\'ll prepare a website design for you within 24 hours, free of charge and with no commitment. You pay nothing until you\'re satisfied.',
+          'form-submit': 'Send inquiry', 'form-response': 'We respond within 24 hours',
+          'form-success-title': 'Inquiry sent!',
+          'form-success-sub': 'We\'ll get back to you within 24 hours with a free website design.'
         },
         de: {
           'page-title': 'Philo Agency — Wir erstellen Ihnen eine neue Website',
@@ -2089,7 +2287,23 @@
           'foot-desc': 'Wir erstellen Websites für kleine Unternehmen und Selbstständige. Erster Entwurf kostenlos.',
           'foot-nav': 'Navigation', 'foot-contact': 'Kontakt',
           'foot-copy': '© 2026 Philo Agency. Alle Rechte vorbehalten.',
-          'foot-privacy': 'Datenschutz', 'foot-terms': 'Nutzungsbedingungen'
+          'foot-privacy': 'Datenschutz', 'foot-terms': 'Nutzungsbedingungen',
+          'contact-label': 'Unverbindliche Anfrage',
+          'contact-title': 'Möchten Sie einen kostenlosen<br><span class="gradient-text">Website-Entwurf?</span>',
+          'contact-sub': 'Beschreiben Sie Ihr Projekt und erhalten Sie innerhalb von 24 Stunden einen kostenlosen Website-Entwurf direkt per E-Mail.',
+          'form-name-label': 'Name', 'form-name-ph': 'Ihr Name',
+          'form-email-label': 'E-Mail', 'form-email-ph': 'sie@email.de',
+          'form-company-label': 'Firma oder Website', 'form-company-ph': 'Firmenname oder Website (optional)',
+          'form-service-label': 'Welche Leistung interessiert Sie', 'form-service-ph': 'Leistung auswählen…',
+          'form-svc-1': 'Website-Erstellung', 'form-svc-2': 'Online-Marketing',
+          'form-svc-3': 'Automatisierung', 'form-svc-4': 'KI-Agenten',
+          'form-svc-5': 'Fotografie', 'form-svc-6': 'Weiß nicht, beraten Sie mich',
+          'form-desc-label': 'Projektbeschreibung', 'form-desc-ph': 'Je mehr Sie schreiben, desto besser können wir Sie beraten…',
+          'form-check-title': 'Ich möchte den ersten Website-Entwurf völlig kostenlos',
+          'form-check-desc': 'Wir bereiten Ihnen innerhalb von 24 Stunden einen Website-Entwurf kostenlos und unverbindlich vor. Sie zahlen nichts, bis Sie zufrieden sind.',
+          'form-submit': 'Anfrage senden', 'form-response': 'Wir antworten innerhalb von 24 Stunden',
+          'form-success-title': 'Anfrage gesendet!',
+          'form-success-sub': 'Wir melden uns innerhalb von 24 Stunden mit einem kostenlosen Website-Entwurf.'
         }
       };
 
@@ -2136,6 +2350,12 @@
         // FlipWords
         if (t['flip-words'] && window._flipWordsSet) window._flipWordsSet(t['flip-words']);
 
+        // Placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+          const key = el.dataset.i18nPlaceholder;
+          if (t[key] !== undefined) el.placeholder = t[key];
+        });
+
         // Update switcher buttons
         document.querySelectorAll('.lang-btn').forEach(btn => {
           btn.classList.toggle('active', btn.dataset.lang === lang);
@@ -2153,6 +2373,27 @@
       // Restore saved language
       const saved = localStorage.getItem('philoLang');
       if (saved && saved !== 'cs' && TRANSLATIONS[saved]) setLang(saved);
+
+      // Contact form submit
+      const contactForm = document.getElementById('contact-form');
+      const contactSuccess = document.getElementById('contact-success');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          contactForm.style.opacity = '0';
+          contactForm.style.transform = 'translateY(8px)';
+          contactForm.style.transition = 'opacity 0.3s, transform 0.3s';
+          setTimeout(() => {
+            contactForm.style.display = 'none';
+            contactSuccess.classList.remove('hidden');
+            contactSuccess.style.opacity = '0';
+            requestAnimationFrame(() => {
+              contactSuccess.style.transition = 'opacity 0.4s';
+              contactSuccess.style.opacity = '1';
+            });
+          }, 300);
+        });
+      }
     })();
   </script>
 
