@@ -571,6 +571,27 @@
       mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
     }
 
+    /* ─── NAV BUTTON (30% smaller) ─── */
+    .btn-nav {
+      height: 34px;
+      padding: 3px 39px 3px 17px;
+      font-size: 10px;
+    }
+
+    .btn-nav .btn-icon {
+      width: 28px;
+      height: 28px;
+      right: 3px;
+    }
+
+    .btn-nav:hover {
+      padding: 3px 17px 3px 39px;
+    }
+
+    .btn-nav:hover .btn-icon {
+      right: calc(100% - 31px);
+    }
+
     /* ─── LANG SWITCHER ─── */
     .lang-switcher {
       display: flex;
@@ -619,19 +640,21 @@
         <a href="#referencie" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-ref">Reference</a>
         <a href="#faq" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-faq">Časté dotazy</a>
       </div>
-      <div class="lang-switcher" id="lang-switcher">
-        <button class="lang-btn active" data-lang="cs">CZ</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="de">DE</button>
+      <div class="flex items-center gap-3">
+        <button class="btn-dark btn-nav">
+          <span class="btn-text" data-i18n="nav-cta">Chci bezplatný návrh</span>
+          <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 7h10v10" />
+              <path d="M7 17 17 7" />
+            </svg></div>
+        </button>
+        <div class="lang-switcher" id="lang-switcher">
+          <button class="lang-btn active" data-lang="cs">CZ</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="de">DE</button>
+        </div>
       </div>
-      <button class="btn-dark">
-        <span class="btn-text" data-i18n="nav-cta">Chci bezplatný návrh</span>
-        <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 7h10v10" />
-            <path d="M7 17 17 7" />
-          </svg></div>
-      </button>
     </div>
   </nav>
 
