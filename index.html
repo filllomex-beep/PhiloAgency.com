@@ -395,22 +395,31 @@
       position: relative;
     }
 
+    .showcase-viewport::before,
     .showcase-viewport::after {
       content: '';
       position: absolute;
       top: 0;
-      right: 0;
-      width: 100px;
+      width: 90px;
       height: 100%;
-      background: linear-gradient(to right, transparent, #f7f5f3);
       pointer-events: none;
       z-index: 2;
       transition: opacity 0.3s;
     }
 
-    .showcase-viewport.at-end::after {
+    .showcase-viewport::before {
+      left: 0;
+      background: linear-gradient(to left, transparent, #f7f5f3);
       opacity: 0;
     }
+
+    .showcase-viewport::after {
+      right: 0;
+      background: linear-gradient(to right, transparent, #f7f5f3);
+    }
+
+    .showcase-viewport.has-prev::before { opacity: 1; }
+    .showcase-viewport.at-end::after    { opacity: 0; }
 
     .showcase-track {
       display: flex;
@@ -1639,11 +1648,21 @@
       const dotsEl = document.getElementById('showcase-dots');
       if (!track) return;
 
+      const viewport = track.closest('.showcase-viewport');
       const cards = [...track.children];
       let current = 0;
+      const GAP = 20;
 
-      function pv() { return window.innerWidth >= 640 ? 2 : 1; }
-      function maxIdx() { return Math.max(0, cards.length - pv()); }
+      function maxIdx() { return cards.length - 1; }
+
+      // idx 0 → left-aligned (2 cards visible + right peek).
+      // idx 1+ → centre the active card so both neighbours peek equally.
+      function calcOffset(idx) {
+        const cardW = cards[0].offsetWidth;
+        const viewW = viewport.offsetWidth;
+        if (idx === 0) return 0;
+        return idx * (cardW + GAP) - (viewW - cardW) / 2;
+      }
 
       function buildDots() {
         dotsEl.innerHTML = '';
@@ -1656,17 +1675,14 @@
         }
       }
 
-      const viewport = track.closest('.showcase-viewport');
-
       function goTo(idx) {
         current = Math.max(0, Math.min(idx, maxIdx()));
-        const gap = 20;
-        const offset = current * (cards[0].offsetWidth + gap);
-        track.style.transform = `translateX(-${offset}px)`;
+        track.style.transform = `translateX(-${calcOffset(current)}px)`;
         prevBtn.disabled = current === 0;
         nextBtn.disabled = current >= maxIdx();
         [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === current));
-        viewport.classList.toggle('at-end', current >= maxIdx());
+        viewport.classList.toggle('has-prev', current > 0);
+        viewport.classList.toggle('at-end',   current >= maxIdx());
       }
 
       buildDots();
@@ -1674,7 +1690,7 @@
 
       prevBtn.addEventListener('click', () => goTo(current - 1));
       nextBtn.addEventListener('click', () => goTo(current + 1));
-      window.addEventListener('resize', () => { buildDots(); goTo(Math.min(current, maxIdx())); }, { passive: true });
+      window.addEventListener('resize', () => { goTo(current); }, { passive: true });
     })();
 
     // Services slider — sliding indicator
