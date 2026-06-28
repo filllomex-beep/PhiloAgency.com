@@ -392,6 +392,24 @@
     /* ─── SHOWCASE CAROUSEL ─── */
     .showcase-viewport {
       overflow: hidden;
+      position: relative;
+    }
+
+    .showcase-viewport::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100%;
+      background: linear-gradient(to right, transparent, #f7f5f3);
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.3s;
+    }
+
+    .showcase-viewport.at-end::after {
+      opacity: 0;
     }
 
     .showcase-track {
@@ -402,7 +420,7 @@
     }
 
     .showcase-card {
-      flex: 0 0 calc(50% - 10px);
+      flex: 0 0 calc(44% - 10px);
       border-radius: 20px;
       overflow: hidden;
       cursor: pointer;
@@ -413,7 +431,7 @@
     }
 
     @media (max-width: 640px) {
-      .showcase-card { flex: 0 0 100%; }
+      .showcase-card { flex: 0 0 85%; }
     }
 
     .showcase-card:hover {
@@ -1638,6 +1656,8 @@
         }
       }
 
+      const viewport = track.closest('.showcase-viewport');
+
       function goTo(idx) {
         current = Math.max(0, Math.min(idx, maxIdx()));
         const gap = 20;
@@ -1646,6 +1666,7 @@
         prevBtn.disabled = current === 0;
         nextBtn.disabled = current >= maxIdx();
         [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === current));
+        viewport.classList.toggle('at-end', current >= maxIdx());
       }
 
       buildDots();
