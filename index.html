@@ -1650,13 +1650,14 @@
 
       const viewport = track.closest('.showcase-viewport');
       const cards = [...track.children];
-      let current = 0;
       const GAP = 20;
+      // Navigable positions: 0 = 2-card view, then each subsequent card centred.
+      // Position 1 is skipped by arrows so card 1 is gone after first click.
+      const STEPS = [0, 2, 3];
+      let current = STEPS[0];
 
-      function maxIdx() { return cards.length - 1; }
-
-      // idx 0 → left-aligned (2 cards visible + right peek).
-      // idx 1+ → centre the active card so both neighbours peek equally.
+      // idx 0 → left-aligned (2 cards + right peek).
+      // idx 1+ → centre the active card with both neighbours peeking.
       function calcOffset(idx) {
         const cardW = cards[0].offsetWidth;
         const viewW = viewport.offsetWidth;
@@ -1666,30 +1667,37 @@
 
       function buildDots() {
         dotsEl.innerHTML = '';
-        for (let i = 0; i <= maxIdx(); i++) {
+        STEPS.forEach((pos, i) => {
           const d = document.createElement('button');
-          d.className = 'showcase-dot' + (i === current ? ' active' : '');
+          d.className = 'showcase-dot' + (pos === current ? ' active' : '');
           d.setAttribute('aria-label', 'Přejít na ' + (i + 1));
-          d.addEventListener('click', () => goTo(i));
+          d.addEventListener('click', () => goTo(pos));
           dotsEl.appendChild(d);
-        }
+        });
       }
 
       function goTo(idx) {
-        current = Math.max(0, Math.min(idx, maxIdx()));
+        current = idx;
         track.style.transform = `translateX(-${calcOffset(current)}px)`;
-        prevBtn.disabled = current === 0;
-        nextBtn.disabled = current >= maxIdx();
-        [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === current));
+        const si = STEPS.indexOf(current);
+        prevBtn.disabled = si <= 0;
+        nextBtn.disabled = si >= STEPS.length - 1;
+        [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', STEPS[i] === current));
         viewport.classList.toggle('has-prev', current > 0);
-        viewport.classList.toggle('at-end',   current >= maxIdx());
+        viewport.classList.toggle('at-end',   si >= STEPS.length - 1);
       }
 
       buildDots();
-      goTo(0);
+      goTo(STEPS[0]);
 
-      prevBtn.addEventListener('click', () => goTo(current - 1));
-      nextBtn.addEventListener('click', () => goTo(current + 1));
+      prevBtn.addEventListener('click', () => {
+        const i = STEPS.indexOf(current);
+        if (i > 0) goTo(STEPS[i - 1]);
+      });
+      nextBtn.addEventListener('click', () => {
+        const i = STEPS.indexOf(current);
+        if (i < STEPS.length - 1) goTo(STEPS[i + 1]);
+      });
       window.addEventListener('resize', () => { goTo(current); }, { passive: true });
     })();
 
