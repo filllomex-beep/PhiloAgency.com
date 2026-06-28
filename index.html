@@ -2405,6 +2405,13 @@
         });
       });
 
+      // Scroll-to-showcase for "Zobrazit ukázky" button
+      document.querySelectorAll('[data-i18n="btn-showcase"]').forEach(el => {
+        el.closest('button, a').addEventListener('click', () => {
+          document.getElementById('ukazky').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
       // Contact form submit
       const contactForm = document.getElementById('contact-form');
       const contactSuccess = document.getElementById('contact-success');
