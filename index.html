@@ -570,6 +570,37 @@
       -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
       mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
     }
+
+    /* ─── LANG SWITCHER ─── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 1px;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #888;
+      transition: background 0.2s, color 0.2s;
+      line-height: 1;
+    }
+
+    .lang-btn.active {
+      background: #fff;
+      color: #111;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
   </style>
 </head>
 
@@ -582,17 +613,19 @@
         <span class="font-bold text-[17px] text-gray-900 tracking-tight">Philo Agency</span>
       </a>
       <div class="hidden md:flex items-center gap-7">
-        <a href="#" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Domů</a>
-        <a href="#cena" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Cena</a>
-        <a href="#ukazky"
-          class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Ukázky</a>
-        <a href="#referencie"
-          class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Reference</a>
-        <a href="#faq" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Časté
-          dotazy</a>
+        <a href="#" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-home">Domů</a>
+        <a href="#cena" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-price">Cena</a>
+        <a href="#ukazky" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-showcase">Ukázky</a>
+        <a href="#referencie" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-ref">Reference</a>
+        <a href="#faq" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-faq">Časté dotazy</a>
+      </div>
+      <div class="lang-switcher" id="lang-switcher">
+        <button class="lang-btn active" data-lang="cs">CZ</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="de">DE</button>
       </div>
       <button class="btn-dark">
-        <span class="btn-text">Chci bezplatný návrh</span>
+        <span class="btn-text" data-i18n="nav-cta">Chci bezplatný návrh</span>
         <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M7 7h10v10" />
@@ -632,8 +665,7 @@
                   style="background:#c0392b"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2" style="background:#c0392b"></span>
               </span>
-              <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-600">První návrh zdarma do 24
-                hodin</span>
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-600" data-i18n="badge">První návrh zdarma do 24 hodin</span>
               <svg class="w-3.5 h-3.5" fill="#d9453a" viewBox="0 0 20 20">
                 <path
                   d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -644,18 +676,18 @@
           <!-- H1 -->
           <h1 id="hero-title" class="text-[52px] md:text-[66px] font-black leading-[1.02] tracking-tight text-gray-900"
             style="opacity:0">
-            Zařídíme vám
+            <span data-i18n="h1-line1">Zařídíme vám</span>
             <span id="fw-wrap" style="position:relative;display:inline-block;vertical-align:baseline;color:#c0392b">
               <span id="fw-active"></span>
               <span id="fw-ghost"
                 style="position:absolute;top:0;left:0;pointer-events:none;white-space:nowrap;opacity:0"></span>
             </span><br>
-            <span class="text-gray-900">První návrh zdarma</span><br>
-            <span class="text-gray-900">do 24 hodin.</span>
+            <span class="text-gray-900" data-i18n="h1-line2">První návrh zdarma</span><br>
+            <span class="text-gray-900" data-i18n="h1-line3">do 24 hodin.</span>
           </h1>
 
           <!-- Subtitle -->
-          <p id="hero-sub" class="text-gray-400 text-[17px] max-w-lg leading-relaxed" style="opacity:0">
+          <p id="hero-sub" class="text-gray-400 text-[17px] max-w-lg leading-relaxed" style="opacity:0" data-i18n-html="hero-sub">
             Rozhodli jste se pro nový web, který vám pomůže získat více zákazníků. Pokud se vám návrh líbí, zaplatíte
             jen od <strong class="text-gray-700 font-semibold">399 €</strong>, pokud ne, nic neplatíte.
           </p>
@@ -663,7 +695,7 @@
           <!-- CTA Buttons -->
           <div id="hero-btns" class="flex flex-col sm:flex-row gap-3" style="opacity:0">
             <button class="btn-dark">
-              <span class="btn-text">Chci bezplatný návrh webu</span>
+              <span class="btn-text" data-i18n="btn-main">Chci bezplatný návrh webu</span>
               <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                   fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M7 7h10v10" />
@@ -671,7 +703,7 @@
                 </svg></div>
             </button>
             <button class="btn-glass">
-              <span class="btn-text">Zobrazit ukázky</span>
+              <span class="btn-text" data-i18n="btn-showcase">Zobrazit ukázky</span>
               <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                   fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M7 7h10v10" />
@@ -697,14 +729,12 @@
               </div>
               <div>
                 <div class="text-sm leading-none" style="color:#c0392b">★★★★★</div>
-                <div class="text-xs text-gray-400 mt-0.5">50 spokojených klientů</div>
+                <div class="text-xs text-gray-400 mt-0.5" data-i18n="proof-clients">50 spokojených klientů</div>
               </div>
             </div>
             <div class="flex items-center gap-5 text-[13px] text-gray-400 flex-wrap">
-              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> Doručení do 14
-                dní</span>
-              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> Platba po
-                dokončení</span>
+              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> <span data-i18n="proof-delivery">Doručení do 14 dní</span></span>
+              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> <span data-i18n="proof-payment">Platba po dokončení</span></span>
             </div>
           </div>
         </div>
@@ -729,8 +759,8 @@
                   </svg>
                 </div>
                 <div>
-                  <div class="text-3xl font-black text-gray-900 tracking-tight">Objevte naše služby</div>
-                  <div class="text-sm text-gray-400">Již 70 spokojených klientů</div>
+                  <div class="text-3xl font-black text-gray-900 tracking-tight" data-i18n="card-title">Objevte naše služby</div>
+                  <div class="text-sm text-gray-400" data-i18n="card-subtitle">Již 70 spokojených klientů</div>
                 </div>
               </div>
               <!-- Services Slider -->
@@ -757,17 +787,17 @@
               <div class="flex items-start justify-between mb-7">
                 <div class="flex flex-col items-center flex-1">
                   <span class="text-[22px] font-black text-gray-900 tracking-tight">24h</span>
-                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5">První návrh</span>
+                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5" data-i18n="stat-first">První návrh</span>
                 </div>
                 <div class="w-px self-stretch" style="background:rgba(0,0,0,0.07)"></div>
                 <div class="flex flex-col items-center flex-1">
                   <span class="text-[22px] font-black text-gray-900 tracking-tight">14d</span>
-                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5">Doručení</span>
+                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5" data-i18n="stat-delivery">Doručení</span>
                 </div>
                 <div class="w-px self-stretch" style="background:rgba(0,0,0,0.07)"></div>
                 <div class="flex flex-col items-center flex-1">
                   <span class="text-[22px] font-black text-gray-900 tracking-tight">399€</span>
-                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5">Cena od</span>
+                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5" data-i18n="stat-price">Cena od</span>
                 </div>
               </div>
               <!-- Tags -->
@@ -778,14 +808,14 @@
                       class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                   </span>
-                  AKTIVNÍ
+                  <span data-i18n="tag-active">AKTIVNÍ</span>
                 </div>
                 <div class="glass-tag">
                   <svg class="w-3 h-3" fill="#d9453a" viewBox="0 0 20 20">
                     <path
                       d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
-                  PRÉMIOVÝ
+                  <span data-i18n="tag-premium">PRÉMIOVÝ</span>
                 </div>
               </div>
             </div>
@@ -795,10 +825,9 @@
           <div id="hero-marquee" class="glass rounded-3xl py-6 relative overflow-hidden" style="opacity:0">
 
             <!-- Strip 1: Záruky → left -->
-            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">Naše záruky pro klienty
-            </h3>
+            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4" data-i18n="marquee-title-1">Naše záruky pro klienty</h3>
             <div class="relative flex overflow-hidden mask-fade-r mb-5">
-              <div class="animate-marquee flex gap-8 whitespace-nowrap pl-4">
+              <div class="animate-marquee flex gap-8 whitespace-nowrap pl-4" id="marquee-strip-1">
                 <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
                     style="color:#c0392b">✓</span> První návrh zdarma</span>
                 <span class="text-gray-300">·</span>
@@ -842,7 +871,7 @@
             <div class="mx-7 mb-5 h-px" style="background:rgba(0,0,0,0.06)"></div>
 
             <!-- Strip 2: Spolupráce → right (reverse) -->
-            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">S kým spolupracujeme</h3>
+            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4" data-i18n="marquee-title-2">S kým spolupracujeme</h3>
             <div class="relative flex overflow-hidden mask-fade-r">
               <div class="animate-marquee-reverse flex gap-10 whitespace-nowrap pl-4">
                 <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
@@ -979,9 +1008,8 @@
   <!-- ───── HOW IT WORKS ───── -->
   <section style="background:#c0392b" class="py-20 px-6">
     <div class="max-w-5xl mx-auto text-center">
-      <p class="text-red-100 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal">Jak to funguje</p>
-      <h2 class="text-white text-4xl md:text-5xl font-black mb-16 reveal" style="line-height:1.08">Jednodušeji to<br>už
-        nejde</h2>
+      <p class="text-red-100 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" data-i18n="hiw-label">Jak to funguje</p>
+      <h2 class="text-white text-4xl md:text-5xl font-black mb-16 reveal" style="line-height:1.08" data-i18n-html="hiw-title">Jednodušeji to<br>už nejde</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
 
@@ -990,9 +1018,8 @@
           <div class="hidden md:block step-connector"></div>
           <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5 font-black text-white text-base"
             style="background:#111">01</div>
-          <h3 class="text-white font-bold text-[17px] mb-2.5">Napište nám o sobě</h3>
-          <p class="text-red-100 text-[13.5px] leading-relaxed">Řekněte nám o svém podnikání. Připravíme bezplatný návrh
-            do 24 hodin — bez závazků.</p>
+          <h3 class="text-white font-bold text-[17px] mb-2.5" data-i18n="step1-title">Napište nám o sobě</h3>
+          <p class="text-red-100 text-[13.5px] leading-relaxed" data-i18n="step1-desc">Řekněte nám o svém podnikání. Připravíme bezplatný návrh do 24 hodin — bez závazků.</p>
         </div>
 
         <!-- Step 2 -->
@@ -1000,18 +1027,16 @@
           <div class="hidden md:block step-connector"></div>
           <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5 font-black text-white text-base"
             style="background:#111">02</div>
-          <h3 class="text-white font-bold text-[17px] mb-2.5">Připravíme návrh</h3>
-          <p class="text-red-100 text-[13.5px] leading-relaxed">Náš tým navrhne moderní web přizpůsobený vašemu
-            podnikání, brandingu a zákazníkům.</p>
+          <h3 class="text-white font-bold text-[17px] mb-2.5" data-i18n="step2-title">Připravíme návrh</h3>
+          <p class="text-red-100 text-[13.5px] leading-relaxed" data-i18n="step2-desc">Náš tým navrhne moderní web přizpůsobený vašemu podnikání, brandingu a zákazníkům.</p>
         </div>
 
         <!-- Step 3 -->
         <div class="glass-dark rounded-2xl p-7 text-left reveal">
           <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5 font-black text-white text-base"
             style="background:#111">03</div>
-          <h3 class="text-white font-bold text-[17px] mb-2.5">Dokončíme web</h3>
-          <p class="text-red-100 text-[13.5px] leading-relaxed">Po vašem schválení web dokončíme a spustíme online.
-            Platíte jen tehdy, když jste spokojeni.</p>
+          <h3 class="text-white font-bold text-[17px] mb-2.5" data-i18n="step3-title">Dokončíme web</h3>
+          <p class="text-red-100 text-[13.5px] leading-relaxed" data-i18n="step3-desc">Po vašem schválení web dokončíme a spustíme online. Platíte jen tehdy, když jste spokojeni.</p>
         </div>
 
       </div>
@@ -1041,14 +1066,12 @@
     </div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10">
-      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b">Co dostanete
-      </p>
-      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b" data-i18n="feat-label">Co dostanete</p>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08" data-i18n-html="feat-title">
         Vše, co potřebujete<br>
         <span class="gradient-text">v jednom balíčku</span>
       </h2>
-      <p class="text-gray-400 text-[16px] mb-16 reveal">Cena webu začíná od <strong
-          class="text-gray-800 font-semibold">399 €</strong> a platíte jen když jste spokojeni.</p>
+      <p class="text-gray-400 text-[16px] mb-16 reveal" data-i18n-html="feat-sub">Cena webu začíná od <strong class="text-gray-800 font-semibold">399 €</strong> a platíte jen když jste spokojeni.</p>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-12">
 
@@ -1061,9 +1084,8 @@
             </svg>
           </div>
           <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Responzivní design</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed">Web bude skvěle vypadat na počítači, tabletu i
-              mobilu.</p>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat1-title">Responzivní design</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat1-desc">Web bude skvěle vypadat na počítači, tabletu i mobilu.</p>
           </div>
         </div>
 
@@ -1075,9 +1097,8 @@
             </svg>
           </div>
           <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Až 5 podstránek</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed">Hlavní stránka s podstránkami podle vašich potřeb a
-              obsahu.</p>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat2-title">Až 5 podstránek</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat2-desc">Hlavní stránka s podstránkami podle vašich potřeb a obsahu.</p>
           </div>
         </div>
 
@@ -1090,9 +1111,8 @@
             </svg>
           </div>
           <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Základní SEO</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed">Optimalizace pro vyhledávače, aby vás zákazníci snáze
-              našli na Googlu.</p>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat3-title">Základní SEO</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat3-desc">Optimalizace pro vyhledávače, aby vás zákazníci snáze našli na Googlu.</p>
           </div>
         </div>
 
@@ -1105,9 +1125,8 @@
             </svg>
           </div>
           <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Připojení domény</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed">Pomůžeme vám připojit vlastní doménu a nastavit
-              hosting.</p>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat4-title">Připojení domény</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat4-desc">Pomůžeme vám připojit vlastní doménu a nastavit hosting.</p>
           </div>
         </div>
 
@@ -1120,9 +1139,8 @@
             </svg>
           </div>
           <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">Kontaktní formulář</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed">Zákazníci vás mohou jednoduše kontaktovat přímo z
-              webu.</p>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat5-title">Kontaktní formulář</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat5-desc">Zákazníci vás mohou jednoduše kontaktovat přímo z webu.</p>
           </div>
         </div>
 
@@ -1134,9 +1152,8 @@
             </svg>
           </div>
           <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]">a další možnosti</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed">Blog, galerie, rezervace a další funkce podle vašich
-              potřeb.</p>
+            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat6-title">a další možnosti</h3>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat6-desc">Blog, galerie, rezervace a další funkce podle vašich potřeb.</p>
           </div>
         </div>
 
@@ -1166,13 +1183,12 @@
     </div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10">
-      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b">Naše práce</p>
-      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b" data-i18n="port-label">Naše práce</p>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08" data-i18n-html="port-title">
         Jak by mohl vypadat<br>
         <span class="gradient-text">váš nový web</span>
       </h2>
-      <p class="text-gray-400 text-[16px] mb-16 reveal">Inspirujte se ukázkami webů, které jsme vytvořili. Každý web
-        děláme na míru.</p>
+      <p class="text-gray-400 text-[16px] mb-16 reveal" data-i18n="port-sub">Inspirujte se ukázkami webů, které jsme vytvořili. Každý web děláme na míru.</p>
 
       <!-- Showcase Carousel -->
       <div class="mt-12 reveal">
@@ -1185,9 +1201,9 @@
                 <img src="img/emspulse.jpg" alt="EMS Pulse" class="showcase-img">
               </div>
               <div class="showcase-info">
-                <span class="showcase-tag">Fitness & zdraví</span>
+                <span class="showcase-tag" data-i18n="card1-tag">Fitness & zdraví</span>
                 <h3 class="showcase-title">EMS Pulse</h3>
-                <p class="showcase-desc">Prémiový web pro EMS studio s rezervací lekcí a ceníkem tréninků</p>
+                <p class="showcase-desc" data-i18n="card1-desc">Prémiový web pro EMS studio s rezervací lekcí a ceníkem tréninků</p>
               </div>
             </a>
 
@@ -1197,9 +1213,9 @@
                 <img src="img/danenula.jpg" alt="DaněNula.cz" class="showcase-img">
               </div>
               <div class="showcase-info">
-                <span class="showcase-tag">Účetnictví & daně</span>
+                <span class="showcase-tag" data-i18n="card2-tag">Účetnictví & daně</span>
                 <h3 class="showcase-title">DaněNula.cz</h3>
-                <p class="showcase-desc">Moderní web pro daňové přiznání OSVČ a s.r.o. — jednoduše a bez stresu</p>
+                <p class="showcase-desc" data-i18n="card2-desc">Moderní web pro daňové přiznání OSVČ a s.r.o. — jednoduše a bez stresu</p>
               </div>
             </a>
 
@@ -1209,9 +1225,9 @@
                 <img src="img/longvacation.jpg" alt="Long Vacation" class="showcase-img">
               </div>
               <div class="showcase-info">
-                <span class="showcase-tag">SaaS & produkty</span>
+                <span class="showcase-tag" data-i18n="card3-tag">SaaS & produkty</span>
                 <h3 class="showcase-title">Long Vacation</h3>
-                <p class="showcase-desc">Chytrý plánovač dovolené — optimalizace volných dní podle svátků v 30+ zemích</p>
+                <p class="showcase-desc" data-i18n="card3-desc">Chytrý plánovač dovolené — optimalizace volných dní podle svátků v 30+ zemích</p>
               </div>
             </a>
 
@@ -1221,9 +1237,9 @@
                 <img src="img/absolutestudio.jpg" alt="Absolute Studio" class="showcase-img">
               </div>
               <div class="showcase-info">
-                <span class="showcase-tag">Fitness & wellness</span>
+                <span class="showcase-tag" data-i18n="card4-tag">Fitness & wellness</span>
                 <h3 class="showcase-title">Absolute Studio</h3>
-                <p class="showcase-desc">Moderní web pro EMS & kryolipolýza studio s rezervací lekcí a ceníkem</p>
+                <p class="showcase-desc" data-i18n="card4-desc">Moderní web pro EMS & kryolipolýza studio s rezervací lekcí a ceníkem</p>
               </div>
             </a>
 
@@ -1255,89 +1271,82 @@
     </div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10">
-      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b">Reference</p>
-      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b" data-i18n="test-label">Reference</p>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08" data-i18n-html="test-title">
         Co říkají <span class="gradient-text">naši klienti</span>
       </h2>
-      <p class="text-gray-400 text-[16px] mb-16 reveal">Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili
-        profesionální web.</p>
+      <p class="text-gray-400 text-[16px] mb-16 reveal" data-i18n="test-sub">Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili profesionální web.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Byl jsem velmi spokojený s prací. První návrh
-            přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2 týdny."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review1">"Byl jsem velmi spokojený s prací. První návrh přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2 týdny."</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/e8d5b7/a0784d?text=M" class="w-10 h-10 rounded-full" alt="">
             <div>
               <div class="font-semibold text-gray-900 text-sm">Martin K.</div>
-              <div class="text-gray-400 text-xs">Kosmetický salón</div>
+              <div class="text-gray-400 text-xs" data-i18n="review1-prof">Kosmetický salón</div>
             </div>
           </div>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Profesionální přístup od začátku do konce. Vše
-            jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review2">"Profesionální přístup od začátku do konce. Vše jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/d4c4f0/7c5cbf?text=P" class="w-10 h-10 rounded-full" alt="">
             <div>
               <div class="font-semibold text-gray-900 text-sm">Petr S.</div>
-              <div class="text-gray-400 text-xs">Restaurace</div>
+              <div class="text-gray-400 text-xs" data-i18n="review2-prof">Restaurace</div>
             </div>
           </div>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Velmi rychlé dodání a kvalitní zpracování. Web
-            nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review3">"Velmi rychlé dodání a kvalitní zpracování. Web nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/c9f0e8/276749?text=Z" class="w-10 h-10 rounded-full" alt="">
             <div>
               <div class="font-semibold text-gray-900 text-sm">Zuzana M.</div>
-              <div class="text-gray-400 text-xs">Zubní klinika</div>
+              <div class="text-gray-400 text-xs" data-i18n="review3-prof">Zubní klinika</div>
             </div>
           </div>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Chtěl jsem moderní web, který bude dohledatelný.
-            Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review4">"Chtěl jsem moderní web, který bude dohledatelný. Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/fccb9e/c05621?text=L" class="w-10 h-10 rounded-full" alt="">
             <div>
               <div class="font-semibold text-gray-900 text-sm">Lukáš R.</div>
-              <div class="text-gray-400 text-xs">Autoservis</div>
+              <div class="text-gray-400 text-xs" data-i18n="review4-prof">Autoservis</div>
             </div>
           </div>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Skvělé! Web vypadá přesně tak, jak jsem si
-            představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review5">"Skvělé! Web vypadá přesně tak, jak jsem si představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/fed7e2/97266d?text=J" class="w-10 h-10 rounded-full" alt="">
             <div>
               <div class="font-semibold text-gray-900 text-sm">Jana P.</div>
-              <div class="text-gray-400 text-xs">Fitness studio</div>
+              <div class="text-gray-400 text-xs" data-i18n="review5-prof">Fitness studio</div>
             </div>
           </div>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5">"Výborná práce za rozumnou cenu. Web funguje
-            bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review6">"Výborná práce za rozumnou cenu. Web funguje bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/bee3f8/2a69ac?text=M" class="w-10 h-10 rounded-full" alt="">
             <div>
               <div class="font-semibold text-gray-900 text-sm">Marek B.</div>
-              <div class="text-gray-400 text-xs">Stavební firma</div>
+              <div class="text-gray-400 text-xs" data-i18n="review6-prof">Stavební firma</div>
             </div>
           </div>
         </div>
@@ -1365,79 +1374,73 @@
     </div>
 
     <div class="max-w-3xl mx-auto relative z-10">
-      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-14 text-center reveal">Časté dotazy</h2>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-14 text-center reveal" data-i18n="faq-title">Časté dotazy</h2>
 
       <div class="space-y-3">
 
         <div class="faq-item glass rounded-2xl overflow-hidden reveal">
           <button
             class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
-            Jak dlouho trvá vytvoření webu?
+            <span data-i18n="faq1-q">Jak dlouho trvá vytvoření webu?</span>
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">První návrh dostanete do 24 hodin. Celý
-              hotový web obvykle dokončíme do 7–14 dní od schválení designu.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq1-a">První návrh dostanete do 24 hodin. Celý hotový web obvykle dokončíme do 7–14 dní od schválení designu.</p>
           </div>
         </div>
 
         <div class="faq-item glass rounded-2xl overflow-hidden reveal">
           <button
             class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
-            Proč poskytujete první návrh zdarma?
+            <span data-i18n="faq2-q">Proč poskytujete první návrh zdarma?</span>
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Chceme vám ukázat, jak váš web může vypadat,
-              ještě předtím než nás objednáte. Věříme, že když uvidíte kvalitu, budete chtít pokračovat.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq2-a">Chceme vám ukázat, jak váš web může vypadat, ještě předtím než nás objednáte. Věříme, že když uvidíte kvalitu, budete chtít pokračovat.</p>
           </div>
         </div>
 
         <div class="faq-item glass rounded-2xl overflow-hidden reveal">
           <button
             class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
-            Musím platit předem?
+            <span data-i18n="faq3-q">Musím platit předem?</span>
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Ne, platíte až po dokončení a schválení webu.
-              První návrh dostanete zdarma a bez závazků.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq3-a">Ne, platíte až po dokončení a schválení webu. První návrh dostanete zdarma a bez závazků.</p>
           </div>
         </div>
 
         <div class="faq-item glass rounded-2xl overflow-hidden reveal">
           <button
             class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
-            Co když se mi návrh nelíbí?
+            <span data-i18n="faq4-q">Co když se mi návrh nelíbí?</span>
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Bez problémů. Pokud se vám návrh nelíbí,
-              neplatíte nic. Můžeme se pokusit o úpravu nebo jednoduše jdeme každý svou cestou.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq4-a">Bez problémů. Pokud se vám návrh nelíbí, neplatíte nic. Můžeme se pokusit o úpravu nebo jednoduše jdeme každý svou cestou.</p>
           </div>
         </div>
 
         <div class="faq-item glass rounded-2xl overflow-hidden reveal">
           <button
             class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
-            Co když budu potřebovat něco změnit?
+            <span data-i18n="faq5-q">Co když budu potřebovat něco změnit?</span>
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Menší úpravy (text, obrázky) jsou zahrnuty v
-              ceně po dobu 30 dní po spuštění. Větší změny řešíme individuálně za dohodnutou cenu.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq5-a">Menší úpravy (text, obrázky) jsou zahrnuty v ceně po dobu 30 dní po spuštění. Větší změny řešíme individuálně za dohodnutou cenu.</p>
           </div>
         </div>
 
         <div class="faq-item glass rounded-2xl overflow-hidden reveal">
           <button
             class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-gray-900 text-[15px] hover:bg-white/40 transition-colors">
-            Jaká je cena?
+            <span data-i18n="faq6-q">Jaká je cena?</span>
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed">Cena webu začíná od 399 €. Konečná cena
-              závisí na rozsahu a funkcionalitě. Všechny detaily probereme při bezplatné konzultaci.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq6-a">Cena webu začíná od 399 €. Konečná cena závisí na rozsahu a funkcionalitě. Všechny detaily probereme při bezplatné konzultaci.</p>
           </div>
         </div>
 
@@ -1452,15 +1455,14 @@
         style="background:#c0392b;filter:blur(120px);bottom:-4rem;left:50%;transform:translateX(-50%)"></div>
     </div>
     <div class="max-w-3xl mx-auto text-center relative z-10">
-      <h2 class="text-white text-4xl md:text-[56px] font-black leading-tight mb-6 reveal">
+      <h2 class="text-white text-4xl md:text-[56px] font-black leading-tight mb-6 reveal" data-i18n-html="cta-title">
         Jste jen kousek od svého<br>
         <span class="gradient-text">nového webu</span>
       </h2>
-      <p class="text-gray-400 text-[16px] mb-10 max-w-xl mx-auto reveal">První návrh zdarma do 24 hodin. Neriskujete nic
-        — platíte pouze když jste spokojeni a jen od 399 €.</p>
+      <p class="text-gray-400 text-[16px] mb-10 max-w-xl mx-auto reveal" data-i18n="cta-sub">První návrh zdarma do 24 hodin. Neriskujete nic — platíte pouze když jste spokojeni a jen od 399 €.</p>
       <div class="reveal">
         <button class="btn-orange">
-          <span class="btn-text">Objednejte návrh webu</span>
+          <span class="btn-text" data-i18n="btn-orange-cta">Objednejte návrh webu</span>
           <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M7 7h10v10" />
@@ -1486,23 +1488,21 @@
           </div>
           <span class="font-bold text-white text-[16px]">Philo Agency</span>
         </div>
-        <p class="text-gray-500 text-[13.5px] leading-relaxed">Tvoříme weby pro malé firmy a podnikatele v České
-          republice. První návrh zdarma.</p>
+        <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="foot-desc">Tvoříme weby pro malé firmy a podnikatele v České republice. První návrh zdarma.</p>
       </div>
       <div class="flex gap-14">
         <div>
-          <h4 class="text-white font-semibold text-[13px] mb-4">Navigace</h4>
+          <h4 class="text-white font-semibold text-[13px] mb-4" data-i18n="foot-nav">Navigace</h4>
           <div class="space-y-2.5">
-            <a href="#" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Domů</a>
-            <a href="#cena" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Cena</a>
-            <a href="#ukazky" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Ukázky</a>
-            <a href="#referencie"
-              class="block text-gray-500 text-[13px] hover:text-white transition-colors">Reference</a>
+            <a href="#" class="block text-gray-500 text-[13px] hover:text-white transition-colors" data-i18n="nav-home">Domů</a>
+            <a href="#cena" class="block text-gray-500 text-[13px] hover:text-white transition-colors" data-i18n="nav-price">Cena</a>
+            <a href="#ukazky" class="block text-gray-500 text-[13px] hover:text-white transition-colors" data-i18n="nav-showcase">Ukázky</a>
+            <a href="#referencie" class="block text-gray-500 text-[13px] hover:text-white transition-colors" data-i18n="nav-ref">Reference</a>
             <a href="#faq" class="block text-gray-500 text-[13px] hover:text-white transition-colors">FAQ</a>
           </div>
         </div>
         <div>
-          <h4 class="text-white font-semibold text-[13px] mb-4">Kontakt</h4>
+          <h4 class="text-white font-semibold text-[13px] mb-4" data-i18n="foot-contact">Kontakt</h4>
           <div class="space-y-2.5">
             <a href="mailto:info@philoagency.cz"
               class="block text-gray-500 text-[13px] hover:text-white transition-colors">info@philoagency.cz</a>
@@ -1513,10 +1513,10 @@
       </div>
     </div>
     <div class="max-w-5xl mx-auto mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between gap-3">
-      <p class="text-gray-600 text-[12px]">© 2026 Philo Agency. Všechna práva vyhrazena.</p>
+      <p class="text-gray-600 text-[12px]" data-i18n="foot-copy">© 2026 Philo Agency. Všechna práva vyhrazena.</p>
       <div class="flex gap-5">
-        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors">Ochrana soukromí</a>
-        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors">Podmínky použití</a>
+        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors" data-i18n="foot-privacy">Ochrana soukromí</a>
+        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors" data-i18n="foot-terms">Podmínky použití</a>
       </div>
     </div>
   </footer>
@@ -1570,13 +1570,19 @@
     });
 
     // FlipWords hero headline
+    window._flipWordsSet = null;
     (function () {
-      const WORDS = ['moderní web.', 'online marketing.', 'automatizace.', 'ai agenty.', 'photo/video.'];
+      let WORDS = ['moderní web.', 'online marketing.', 'automatizace.', 'ai agenty.', 'photo/video.'];
       const DURATION = 3000;
       let idx = 0, busy = false;
       const active = document.getElementById('fw-active');
       const ghost = document.getElementById('fw-ghost');
       if (!active || !ghost) return;
+      window._flipWordsSet = function(newWords) {
+        WORDS = newWords;
+        idx = 0;
+        active.textContent = WORDS[0];
+      };
 
       function letterSpans(text) {
         const frag = document.createDocumentFragment();
@@ -1748,6 +1754,288 @@
         const active = segs.find(s => s.classList.contains('active'));
         if (active) { indicator.style.transition = 'none'; moveToSeg(active); requestAnimationFrame(() => { indicator.style.transition = ''; }); }
       }, { passive: true });
+    })();
+  </script>
+
+  <!-- ─── LANGUAGE SWITCHER ─── -->
+  <script>
+    (function () {
+      const TRANSLATIONS = {
+        cs: {
+          'page-title': 'Philo Agency — Vytvoříme vám nový web',
+          'nav-home': 'Domů', 'nav-price': 'Cena', 'nav-showcase': 'Ukázky',
+          'nav-ref': 'Reference', 'nav-faq': 'Časté dotazy', 'nav-cta': 'Chci bezplatný návrh',
+          'badge': 'První návrh zdarma do 24 hodin',
+          'h1-line1': 'Zařídíme vám', 'h1-line2': 'První návrh zdarma', 'h1-line3': 'do 24 hodin.',
+          'hero-sub': 'Rozhodli jste se pro nový web, který vám pomůže získat více zákazníků. Pokud se vám návrh líbí, zaplatíte jen od <strong class="text-gray-700 font-semibold">399 €</strong>, pokud ne, nic neplatíte.',
+          'btn-main': 'Chci bezplatný návrh webu', 'btn-showcase': 'Zobrazit ukázky', 'btn-orange-cta': 'Objednejte návrh webu',
+          'proof-clients': '50 spokojených klientů', 'proof-delivery': 'Doručení do 14 dní', 'proof-payment': 'Platba po dokončení',
+          'card-title': 'Objevte naše služby', 'card-subtitle': 'Již 70 spokojených klientů',
+          'stat-first': 'První návrh', 'stat-delivery': 'Doručení', 'stat-price': 'Cena od',
+          'tag-active': 'AKTIVNÍ', 'tag-premium': 'PRÉMIOVÝ',
+          'marquee-title-1': 'Naše záruky pro klienty', 'marquee-title-2': 'S kým spolupracujeme',
+          'marquee-items': ['První návrh zdarma', 'Doručení do 14 dní', 'Platba po dokončení', '25+ spokojených klientů', 'Responzivní design', 'Základní SEO'],
+          'flip-words': ['moderní web.', 'online marketing.', 'automatizace.', 'ai agenty.', 'photo/video.'],
+          'svc-segments': [
+            { label: 'Weby', desc: 'Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru — od designu po spuštění do 14 dní.' },
+            { label: 'Marketing', desc: 'SEO, PPC kampaně a správa sociálních sítí — přivádíme k vám zákazníky, kteří kupují.' },
+            { label: 'Automatizace', desc: 'Propojujeme nástroje a procesy, aby váš byznys fungoval na autopilotu bez zbytečné práce.' },
+            { label: 'AI agenti', desc: 'Inteligentní AI agenti pro péči o zákazníky, tvorbu obsahu a analýzu dat.' },
+            { label: 'Fotografie', desc: 'Profesionální fotografie produktů, které zaujmou na první pohled a zvýší vaše prodeje.' }
+          ],
+          'hiw-label': 'Jak to funguje', 'hiw-title': 'Jednodušeji to<br>už nejde',
+          'step1-title': 'Napište nám o sobě', 'step1-desc': 'Řekněte nám o svém podnikání. Připravíme bezplatný návrh do 24 hodin — bez závazků.',
+          'step2-title': 'Připravíme návrh', 'step2-desc': 'Náš tým navrhne moderní web přizpůsobený vašemu podnikání, brandingu a zákazníkům.',
+          'step3-title': 'Dokončíme web', 'step3-desc': 'Po vašem schválení web dokončíme a spustíme online. Platíte jen tehdy, když jste spokojeni.',
+          'feat-label': 'Co dostanete',
+          'feat-title': 'Vše, co potřebujete<br><span class="gradient-text">v jednom balíčku</span>',
+          'feat-sub': 'Cena webu začíná od <strong class="text-gray-800 font-semibold">399 €</strong> a platíte jen když jste spokojeni.',
+          'feat1-title': 'Responzivní design', 'feat1-desc': 'Web bude skvěle vypadat na počítači, tabletu i mobilu.',
+          'feat2-title': 'Až 5 podstránek', 'feat2-desc': 'Hlavní stránka s podstránkami podle vašich potřeb a obsahu.',
+          'feat3-title': 'Základní SEO', 'feat3-desc': 'Optimalizace pro vyhledávače, aby vás zákazníci snáze našli na Googlu.',
+          'feat4-title': 'Připojení domény', 'feat4-desc': 'Pomůžeme vám připojit vlastní doménu a nastavit hosting.',
+          'feat5-title': 'Kontaktní formulář', 'feat5-desc': 'Zákazníci vás mohou jednoduše kontaktovat přímo z webu.',
+          'feat6-title': 'a další možnosti', 'feat6-desc': 'Blog, galerie, rezervace a další funkce podle vašich potřeb.',
+          'port-label': 'Naše práce',
+          'port-title': 'Jak by mohl vypadat<br><span class="gradient-text">váš nový web</span>',
+          'port-sub': 'Inspirujte se ukázkami webů, které jsme vytvořili. Každý web děláme na míru.',
+          'card1-tag': 'Fitness & zdraví', 'card1-desc': 'Prémiový web pro EMS studio s rezervací lekcí a ceníkem tréninků',
+          'card2-tag': 'Účetnictví & daně', 'card2-desc': 'Moderní web pro daňové přiznání OSVČ a s.r.o. — jednoduše a bez stresu',
+          'card3-tag': 'SaaS & produkty', 'card3-desc': 'Chytrý plánovač dovolené — optimalizace volných dní podle svátků v 30+ zemích',
+          'card4-tag': 'Fitness & wellness', 'card4-desc': 'Moderní web pro EMS & kryolipolýza studio s rezervací lekcí a ceníkem',
+          'test-label': 'Reference',
+          'test-title': 'Co říkají <span class="gradient-text">naši klienti</span>',
+          'test-sub': 'Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili profesionální web.',
+          'review1': '"Byl jsem velmi spokojený s prací. První návrh přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2 týdny."',
+          'review1-prof': 'Kosmetický salón',
+          'review2': '"Profesionální přístup od začátku do konce. Vše jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."',
+          'review2-prof': 'Restaurace',
+          'review3': '"Velmi rychlé dodání a kvalitní zpracování. Web nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"',
+          'review3-prof': 'Zubní klinika',
+          'review4': '"Chtěl jsem moderní web, který bude dohledatelný. Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."',
+          'review4-prof': 'Autoservis',
+          'review5': '"Skvělé! Web vypadá přesně tak, jak jsem si představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"',
+          'review5-prof': 'Fitness studio',
+          'review6': '"Výborná práce za rozumnou cenu. Web funguje bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."',
+          'review6-prof': 'Stavební firma',
+          'faq-title': 'Časté dotazy',
+          'faq1-q': 'Jak dlouho trvá vytvoření webu?', 'faq1-a': 'První návrh dostanete do 24 hodin. Celý hotový web obvykle dokončíme do 7–14 dní od schválení designu.',
+          'faq2-q': 'Proč poskytujete první návrh zdarma?', 'faq2-a': 'Chceme vám ukázat, jak váš web může vypadat, ještě předtím než nás objednáte. Věříme, že když uvidíte kvalitu, budete chtít pokračovat.',
+          'faq3-q': 'Musím platit předem?', 'faq3-a': 'Ne, platíte až po dokončení a schválení webu. První návrh dostanete zdarma a bez závazků.',
+          'faq4-q': 'Co když se mi návrh nelíbí?', 'faq4-a': 'Bez problémů. Pokud se vám návrh nelíbí, neplatíte nic. Můžeme se pokusit o úpravu nebo jednoduše jdeme každý svou cestou.',
+          'faq5-q': 'Co když budu potřebovat něco změnit?', 'faq5-a': 'Menší úpravy (text, obrázky) jsou zahrnuty v ceně po dobu 30 dní po spuštění. Větší změny řešíme individuálně za dohodnutou cenu.',
+          'faq6-q': 'Jaká je cena?', 'faq6-a': 'Cena webu začíná od 399 €. Konečná cena závisí na rozsahu a funkcionalitě. Všechny detaily probereme při bezplatné konzultaci.',
+          'cta-title': 'Jste jen kousek od svého<br><span class="gradient-text">nového webu</span>',
+          'cta-sub': 'První návrh zdarma do 24 hodin. Neriskujete nic — platíte pouze když jste spokojeni a jen od 399 €.',
+          'foot-desc': 'Tvoříme weby pro malé firmy a podnikatele v České republice. První návrh zdarma.',
+          'foot-nav': 'Navigace', 'foot-contact': 'Kontakt',
+          'foot-copy': '© 2026 Philo Agency. Všechna práva vyhrazena.',
+          'foot-privacy': 'Ochrana soukromí', 'foot-terms': 'Podmínky použití'
+        },
+        en: {
+          'page-title': 'Philo Agency — We\'ll build your new website',
+          'nav-home': 'Home', 'nav-price': 'Pricing', 'nav-showcase': 'Showcase',
+          'nav-ref': 'Testimonials', 'nav-faq': 'FAQ', 'nav-cta': 'Get a free design',
+          'badge': 'First design free within 24 hours',
+          'h1-line1': 'We\'ll build you', 'h1-line2': 'First design free', 'h1-line3': 'within 24 hours.',
+          'hero-sub': 'You\'ve decided to get a new website that helps you win more customers. If you like the design, you pay from just <strong class="text-gray-700 font-semibold">€399</strong> — if not, you pay nothing.',
+          'btn-main': 'Get a free website design', 'btn-showcase': 'View showcase', 'btn-orange-cta': 'Order your website design',
+          'proof-clients': '50 satisfied clients', 'proof-delivery': 'Delivery in 14 days', 'proof-payment': 'Pay after completion',
+          'card-title': 'Discover our services', 'card-subtitle': 'Already 70 satisfied clients',
+          'stat-first': 'First design', 'stat-delivery': 'Delivery', 'stat-price': 'From',
+          'tag-active': 'ACTIVE', 'tag-premium': 'PREMIUM',
+          'marquee-title-1': 'Our client guarantees', 'marquee-title-2': 'Who we work with',
+          'marquee-items': ['First design free', 'Delivery in 14 days', 'Pay after completion', '25+ satisfied clients', 'Responsive design', 'Basic SEO'],
+          'flip-words': ['a modern website.', 'online marketing.', 'automation.', 'AI agents.', 'photo/video.'],
+          'svc-segments': [
+            { label: 'Websites', desc: 'We design and develop fast, modern websites tailored to you — from design to launch in 14 days.' },
+            { label: 'Marketing', desc: 'SEO, PPC campaigns and social media management — we bring customers who buy to you.' },
+            { label: 'Automation', desc: 'We connect tools and processes so your business runs on autopilot without unnecessary work.' },
+            { label: 'AI Agents', desc: 'Intelligent AI agents for customer care, content creation and data analysis.' },
+            { label: 'Photography', desc: 'Professional product photography that catches attention at first glance and boosts your sales.' }
+          ],
+          'hiw-label': 'How it works', 'hiw-title': 'It couldn\'t<br>be simpler',
+          'step1-title': 'Tell us about yourself', 'step1-desc': 'Tell us about your business. We\'ll prepare a free design within 24 hours — no commitment.',
+          'step2-title': 'We\'ll prepare a design', 'step2-desc': 'Our team will design a modern website tailored to your business, branding and customers.',
+          'step3-title': 'We\'ll finish the website', 'step3-desc': 'After your approval we\'ll complete and launch the website. You only pay when you\'re satisfied.',
+          'feat-label': 'What you get',
+          'feat-title': 'Everything you need<br><span class="gradient-text">in one package</span>',
+          'feat-sub': 'Website price starts from <strong class="text-gray-800 font-semibold">€399</strong> and you only pay when you\'re satisfied.',
+          'feat1-title': 'Responsive design', 'feat1-desc': 'Your website will look great on desktop, tablet and mobile.',
+          'feat2-title': 'Up to 5 subpages', 'feat2-desc': 'Main page with subpages according to your needs and content.',
+          'feat3-title': 'Basic SEO', 'feat3-desc': 'Search engine optimization so customers can find you more easily on Google.',
+          'feat4-title': 'Domain connection', 'feat4-desc': 'We\'ll help you connect your own domain and set up hosting.',
+          'feat5-title': 'Contact form', 'feat5-desc': 'Customers can easily contact you directly from the website.',
+          'feat6-title': 'and more options', 'feat6-desc': 'Blog, gallery, booking and other features according to your needs.',
+          'port-label': 'Our work',
+          'port-title': 'What your new<br><span class="gradient-text">website could look like</span>',
+          'port-sub': 'Get inspired by websites we\'ve created. Every website is made to measure.',
+          'card1-tag': 'Fitness & health', 'card1-desc': 'Premium website for an EMS studio with class booking and training price list',
+          'card2-tag': 'Accounting & tax', 'card2-desc': 'Modern website for tax returns for freelancers and companies — simple and stress-free',
+          'card3-tag': 'SaaS & products', 'card3-desc': 'Smart vacation planner — optimize days off based on public holidays in 30+ countries',
+          'card4-tag': 'Fitness & wellness', 'card4-desc': 'Modern website for an EMS & cryolipolysis studio with class booking and price list',
+          'test-label': 'Testimonials',
+          'test-title': 'What our <span class="gradient-text">clients say</span>',
+          'test-sub': 'Read the experiences of entrepreneurs for whom we created a professional website.',
+          'review1': '"I was very satisfied with the work. The first design arrived within 24 hours and was exactly what I had in mind. The website launched in 2 weeks."',
+          'review1-prof': 'Beauty salon',
+          'review2': '"Professional approach from start to finish. We handled everything online and the website runs reliably. I recommend it to every entrepreneur."',
+          'review2-prof': 'Restaurant',
+          'review3': '"Very fast delivery and high quality work. The website brought us new customers right after launch. Great experience!"',
+          'review3-prof': 'Dental clinic',
+          'review4': '"I wanted a modern, findable website. We got that and more. The price matches the quality. I\'ll definitely work with them again."',
+          'review4-prof': 'Auto repair shop',
+          'review5': '"Excellent! The website looks exactly as I imagined. Communication was fast and friendly. I recommend it to everyone!"',
+          'review5-prof': 'Fitness studio',
+          'review6': '"Outstanding work at a reasonable price. The website works flawlessly and clients love it. I\'ll definitely be back for the next project."',
+          'review6-prof': 'Construction company',
+          'faq-title': 'Frequently Asked Questions',
+          'faq1-q': 'How long does it take to create a website?', 'faq1-a': 'You\'ll receive the first design within 24 hours. The complete website is usually finished within 7–14 days of design approval.',
+          'faq2-q': 'Why do you provide the first design for free?', 'faq2-a': 'We want to show you what your website could look like before you commit. We believe that once you see the quality, you\'ll want to proceed.',
+          'faq3-q': 'Do I need to pay upfront?', 'faq3-a': 'No, you pay only after the website is completed and approved. You receive the first design for free and with no commitment.',
+          'faq4-q': 'What if I don\'t like the design?', 'faq4-a': 'No problem. If you don\'t like the design, you pay nothing. We can try some adjustments or simply go our separate ways.',
+          'faq5-q': 'What if I need something changed?', 'faq5-a': 'Minor changes (text, images) are included in the price for 30 days after launch. Larger changes are handled individually at an agreed price.',
+          'faq6-q': 'What is the price?', 'faq6-a': 'Website prices start from €399. The final price depends on the scope and functionality. We\'ll discuss all the details during a free consultation.',
+          'cta-title': 'You\'re just a step away from your<br><span class="gradient-text">new website</span>',
+          'cta-sub': 'First design free within 24 hours. You risk nothing — you only pay when satisfied and from just €399.',
+          'foot-desc': 'We create websites for small businesses and entrepreneurs. First design free.',
+          'foot-nav': 'Navigation', 'foot-contact': 'Contact',
+          'foot-copy': '© 2026 Philo Agency. All rights reserved.',
+          'foot-privacy': 'Privacy Policy', 'foot-terms': 'Terms of use'
+        },
+        de: {
+          'page-title': 'Philo Agency — Wir erstellen Ihnen eine neue Website',
+          'nav-home': 'Startseite', 'nav-price': 'Preise', 'nav-showcase': 'Portfolio',
+          'nav-ref': 'Referenzen', 'nav-faq': 'FAQ', 'nav-cta': 'Kostenlosen Entwurf',
+          'badge': 'Erster Entwurf kostenlos in 24 Stunden',
+          'h1-line1': 'Wir erstellen Ihnen', 'h1-line2': 'Erster Entwurf kostenlos', 'h1-line3': 'in 24 Stunden.',
+          'hero-sub': 'Sie haben sich für eine neue Website entschieden, die Ihnen hilft, mehr Kunden zu gewinnen. Wenn Ihnen der Entwurf gefällt, zahlen Sie ab <strong class="text-gray-700 font-semibold">399 €</strong> — wenn nicht, zahlen Sie nichts.',
+          'btn-main': 'Kostenlosen Website-Entwurf', 'btn-showcase': 'Portfolio ansehen', 'btn-orange-cta': 'Website-Design beauftragen',
+          'proof-clients': '50 zufriedene Kunden', 'proof-delivery': 'Lieferung in 14 Tagen', 'proof-payment': 'Zahlung nach Fertigstellung',
+          'card-title': 'Unsere Leistungen entdecken', 'card-subtitle': 'Bereits 70 zufriedene Kunden',
+          'stat-first': 'Erster Entwurf', 'stat-delivery': 'Lieferung', 'stat-price': 'Ab',
+          'tag-active': 'AKTIV', 'tag-premium': 'PREMIUM',
+          'marquee-title-1': 'Unsere Garantien', 'marquee-title-2': 'Unsere Partner',
+          'marquee-items': ['Erster Entwurf kostenlos', 'Lieferung in 14 Tagen', 'Zahlung nach Fertigstellung', '25+ zufriedene Kunden', 'Responsives Design', 'Basis-SEO'],
+          'flip-words': ['eine moderne Website.', 'Online-Marketing.', 'Automatisierung.', 'KI-Agenten.', 'Foto/Video.'],
+          'svc-segments': [
+            { label: 'Webseiten', desc: 'Wir entwerfen und entwickeln schnelle, moderne Webseiten nach Maß — vom Design bis zum Launch in 14 Tagen.' },
+            { label: 'Marketing', desc: 'SEO, PPC-Kampagnen und Social-Media-Management — wir bringen Ihnen kaufbereite Kunden.' },
+            { label: 'Automatisierung', desc: 'Wir verbinden Tools und Prozesse, damit Ihr Business auf Autopilot läuft — ohne unnötige Arbeit.' },
+            { label: 'KI-Agenten', desc: 'Intelligente KI-Agenten für Kundenbetreuung, Content-Erstellung und Datenanalyse.' },
+            { label: 'Fotografie', desc: 'Professionelle Produktfotografie, die auf den ersten Blick überzeugt und Ihren Umsatz steigert.' }
+          ],
+          'hiw-label': 'Wie es funktioniert', 'hiw-title': 'Einfacher<br>geht\'s nicht',
+          'step1-title': 'Erzählen Sie uns von sich', 'step1-desc': 'Erzählen Sie uns von Ihrem Unternehmen. Wir bereiten einen kostenlosen Entwurf in 24 Stunden vor — unverbindlich.',
+          'step2-title': 'Wir bereiten einen Entwurf vor', 'step2-desc': 'Unser Team entwirft eine moderne Website, die auf Ihr Business, Ihre Marke und Ihre Kunden zugeschnitten ist.',
+          'step3-title': 'Wir vervollständigen die Website', 'step3-desc': 'Nach Ihrer Genehmigung stellen wir die Website fertig und bringen sie online. Sie zahlen nur, wenn Sie zufrieden sind.',
+          'feat-label': 'Was Sie bekommen',
+          'feat-title': 'Alles, was Sie brauchen<br><span class="gradient-text">in einem Paket</span>',
+          'feat-sub': 'Website-Preise beginnen ab <strong class="text-gray-800 font-semibold">399 €</strong> und Sie zahlen nur, wenn Sie zufrieden sind.',
+          'feat1-title': 'Responsives Design', 'feat1-desc': 'Ihre Website sieht auf Desktop, Tablet und Smartphone großartig aus.',
+          'feat2-title': 'Bis zu 5 Unterseiten', 'feat2-desc': 'Hauptseite mit Unterseiten entsprechend Ihren Bedürfnissen und Inhalten.',
+          'feat3-title': 'Basis-SEO', 'feat3-desc': 'Suchmaschinenoptimierung, damit Kunden Sie leichter auf Google finden.',
+          'feat4-title': 'Domain-Verbindung', 'feat4-desc': 'Wir helfen Ihnen, Ihre eigene Domain zu verbinden und das Hosting einzurichten.',
+          'feat5-title': 'Kontaktformular', 'feat5-desc': 'Kunden können Sie direkt von der Website aus einfach kontaktieren.',
+          'feat6-title': 'und weitere Optionen', 'feat6-desc': 'Blog, Galerie, Buchung und weitere Funktionen nach Ihren Bedürfnissen.',
+          'port-label': 'Unsere Arbeit',
+          'port-title': 'So könnte Ihre neue<br><span class="gradient-text">Website aussehen</span>',
+          'port-sub': 'Lassen Sie sich von Websites inspirieren, die wir erstellt haben. Jede Website wird nach Maß gefertigt.',
+          'card1-tag': 'Fitness & Gesundheit', 'card1-desc': 'Premium-Website für ein EMS-Studio mit Kursbuchung und Trainingspreisliste',
+          'card2-tag': 'Buchhaltung & Steuern', 'card2-desc': 'Moderne Website für Steuererklärungen — einfach und stressfrei',
+          'card3-tag': 'SaaS & Produkte', 'card3-desc': 'Smarter Urlaubsplaner — freie Tage nach Feiertagen in 30+ Ländern optimieren',
+          'card4-tag': 'Fitness & Wellness', 'card4-desc': 'Moderne Website für ein EMS & Kryolipolyse-Studio mit Kursbuchung und Preisliste',
+          'test-label': 'Referenzen',
+          'test-title': 'Was unsere <span class="gradient-text">Kunden sagen</span>',
+          'test-sub': 'Lesen Sie die Erfahrungen von Unternehmern, für die wir eine professionelle Website erstellt haben.',
+          'review1': '"Ich war sehr zufrieden mit der Arbeit. Der erste Entwurf kam innerhalb von 24 Stunden und war genau das, was ich mir vorgestellt hatte. Die Website wurde in 2 Wochen fertig."',
+          'review1-prof': 'Kosmetiksalon',
+          'review2': '"Professioneller Ansatz von Anfang bis Ende. Wir haben alles online geregelt und die Website läuft zuverlässig. Ich empfehle es jedem Unternehmer."',
+          'review2-prof': 'Restaurant',
+          'review3': '"Sehr schnelle Lieferung und hochwertige Arbeit. Die Website hat uns gleich nach dem Launch neue Kunden gebracht. Tolle Erfahrung!"',
+          'review3-prof': 'Zahnklinik',
+          'review4': '"Ich wollte eine moderne, auffindbare Website. Das haben wir bekommen und noch mehr. Der Preis entspricht der Qualität. Ich arbeite definitiv wieder mit ihnen."',
+          'review4-prof': 'Autowerkstatt',
+          'review5': '"Ausgezeichnet! Die Website sieht genau so aus, wie ich es mir vorgestellt habe. Die Kommunikation war schnell und freundlich. Ich empfehle es allen!"',
+          'review5-prof': 'Fitness-Studio',
+          'review6': '"Hervorragende Arbeit zu einem vernünftigen Preis. Die Website funktioniert einwandfrei und Kunden loben sie. Ich komme beim nächsten Projekt definitiv wieder."',
+          'review6-prof': 'Bauunternehmen',
+          'faq-title': 'Häufige Fragen',
+          'faq1-q': 'Wie lange dauert die Erstellung einer Website?', 'faq1-a': 'Den ersten Entwurf erhalten Sie innerhalb von 24 Stunden. Die fertige Website wird in der Regel 7–14 Tage nach der Designgenehmigung fertiggestellt.',
+          'faq2-q': 'Warum bieten Sie den ersten Entwurf kostenlos an?', 'faq2-a': 'Wir möchten Ihnen zeigen, wie Ihre Website aussehen könnte, bevor Sie uns beauftragen. Wir glauben, dass Sie die Qualität sehen und weitermachen möchten.',
+          'faq3-q': 'Muss ich im Voraus bezahlen?', 'faq3-a': 'Nein, Sie zahlen erst nach Fertigstellung und Genehmigung der Website. Den ersten Entwurf erhalten Sie kostenlos und ohne Verpflichtungen.',
+          'faq4-q': 'Was, wenn mir der Entwurf nicht gefällt?', 'faq4-a': 'Kein Problem. Wenn Ihnen der Entwurf nicht gefällt, zahlen Sie nichts. Wir können Anpassungen versuchen oder einfach getrennte Wege gehen.',
+          'faq5-q': 'Was, wenn ich etwas ändern möchte?', 'faq5-a': 'Kleinere Änderungen (Text, Bilder) sind 30 Tage nach dem Launch im Preis inbegriffen. Größere Änderungen regeln wir individuell zu einem vereinbarten Preis.',
+          'faq6-q': 'Was kostet es?', 'faq6-a': 'Website-Preise beginnen ab 399 €. Der Endpreis hängt vom Umfang und der Funktionalität ab. Alle Details besprechen wir bei einer kostenlosen Beratung.',
+          'cta-title': 'Sie sind nur einen Schritt von<br><span class="gradient-text">Ihrer neuen Website</span> entfernt',
+          'cta-sub': 'Erster Entwurf kostenlos in 24 Stunden. Sie riskieren nichts — Sie zahlen nur wenn Sie zufrieden sind und ab nur 399 €.',
+          'foot-desc': 'Wir erstellen Websites für kleine Unternehmen und Selbstständige. Erster Entwurf kostenlos.',
+          'foot-nav': 'Navigation', 'foot-contact': 'Kontakt',
+          'foot-copy': '© 2026 Philo Agency. Alle Rechte vorbehalten.',
+          'foot-privacy': 'Datenschutz', 'foot-terms': 'Nutzungsbedingungen'
+        }
+      };
+
+      const HTML_KEYS = new Set(['hero-sub','hiw-title','feat-title','feat-sub','port-title','test-title','cta-title']);
+
+      function buildMarqueeStrip(items) {
+        const doubled = [...items, ...items];
+        return doubled.map(text =>
+          `<span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span style="color:#c0392b">✓</span> ${text}</span><span class="text-gray-300">·</span>`
+        ).join('');
+      }
+
+      function setLang(lang) {
+        const t = TRANSLATIONS[lang];
+        if (!t) return;
+        document.documentElement.lang = lang;
+        document.title = t['page-title'] || document.title;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.dataset.i18n;
+          if (t[key] !== undefined) el.textContent = t[key];
+        });
+
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+          const key = el.dataset.i18nHtml;
+          if (t[key] !== undefined) el.innerHTML = t[key];
+        });
+
+        // Marquee strip 1
+        const strip1 = document.getElementById('marquee-strip-1');
+        if (strip1 && t['marquee-items']) strip1.innerHTML = buildMarqueeStrip(t['marquee-items']);
+
+        // Services slider
+        const svcSegs = document.querySelectorAll('.svc-seg');
+        const svcData = t['svc-segments'];
+        if (svcData) {
+          svcSegs.forEach((seg, i) => {
+            if (svcData[i]) { seg.textContent = svcData[i].label; seg.dataset.desc = svcData[i].desc; }
+          });
+          const activeSeg = document.querySelector('.svc-seg.active');
+          if (activeSeg) document.getElementById('svc-desc').textContent = activeSeg.dataset.desc;
+        }
+
+        // FlipWords
+        if (t['flip-words'] && window._flipWordsSet) window._flipWordsSet(t['flip-words']);
+
+        // Update switcher buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+
+        localStorage.setItem('philoLang', lang);
+      }
+
+      // Wire up buttons
+      document.getElementById('lang-switcher').addEventListener('click', function(e) {
+        const btn = e.target.closest('.lang-btn');
+        if (btn) setLang(btn.dataset.lang);
+      });
+
+      // Restore saved language
+      const saved = localStorage.getItem('philoLang');
+      if (saved && saved !== 'cs' && TRANSLATIONS[saved]) setLang(saved);
     })();
   </script>
 
