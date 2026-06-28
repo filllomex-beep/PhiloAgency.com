@@ -426,8 +426,13 @@
       background: linear-gradient(to right, transparent, #f7f5f3);
     }
 
-    .showcase-viewport.has-prev::before { opacity: 1; }
-    .showcase-viewport.at-end::after    { opacity: 0; }
+    .showcase-viewport.has-prev::before {
+      opacity: 1;
+    }
+
+    .showcase-viewport.at-end::after {
+      opacity: 0;
+    }
 
     .showcase-track {
       display: flex;
@@ -448,12 +453,14 @@
     }
 
     @media (max-width: 640px) {
-      .showcase-card { flex: 0 0 85%; }
+      .showcase-card {
+        flex: 0 0 85%;
+      }
     }
 
     .showcase-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 20px 48px rgba(0,0,0,0.1);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
     }
 
     .showcase-img-wrap {
@@ -522,8 +529,15 @@
       flex-shrink: 0;
     }
 
-    .showcase-arrow:hover { background: #333; }
-    .showcase-arrow:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
+    .showcase-arrow:hover {
+      background: #333;
+    }
+
+    .showcase-arrow:disabled {
+      opacity: 0.25;
+      cursor: default;
+      pointer-events: none;
+    }
 
     .showcase-dots {
       display: flex;
@@ -535,7 +549,7 @@
       width: 6px;
       height: 6px;
       border-radius: 999px;
-      background: rgba(0,0,0,0.15);
+      background: rgba(0, 0, 0, 0.15);
       border: none;
       cursor: pointer;
       padding: 0;
@@ -645,11 +659,16 @@
         <span class="font-bold text-[17px] text-gray-900 tracking-tight">Philo Agency</span>
       </a>
       <div class="hidden md:flex items-center gap-7">
-        <a href="#" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-home">Domů</a>
-        <a href="#cena" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-price">Cena</a>
-        <a href="#ukazky" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-showcase">Ukázky</a>
-        <a href="#referencie" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-ref">Reference</a>
-        <a href="#faq" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors" data-i18n="nav-faq">Časté dotazy</a>
+        <a href="#" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
+          data-i18n="nav-home">Domů</a>
+        <a href="#cena" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
+          data-i18n="nav-price">Cena</a>
+        <a href="#ukazky" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
+          data-i18n="nav-showcase">Ukázky</a>
+        <a href="#referencie" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
+          data-i18n="nav-ref">Reference</a>
+        <a href="#faq" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
+          data-i18n="nav-faq">Časté dotazy</a>
       </div>
       <div class="flex items-center gap-3">
         <button class="btn-dark btn-nav">
@@ -699,7 +718,8 @@
                   style="background:#c0392b"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2" style="background:#c0392b"></span>
               </span>
-              <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-600" data-i18n="badge">První návrh zdarma do 24 hodin</span>
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-600" data-i18n="badge">První
+                návrh zdarma do 24 hodin</span>
               <svg class="w-3.5 h-3.5" fill="#d9453a" viewBox="0 0 20 20">
                 <path
                   d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -721,7 +741,8 @@
           </h1>
 
           <!-- Subtitle -->
-          <p id="hero-sub" class="text-gray-400 text-[17px] max-w-lg leading-relaxed" style="opacity:0" data-i18n-html="hero-sub">
+          <p id="hero-sub" class="text-gray-400 text-[17px] max-w-lg leading-relaxed" style="opacity:0"
+            data-i18n-html="hero-sub">
             Rozhodli jste se pro nový web, který vám pomůže získat více zákazníků. Pokud se vám návrh líbí, zaplatíte
             jen od <strong class="text-gray-700 font-semibold">399 €</strong>, pokud ne, nic neplatíte.
           </p>
@@ -767,8 +788,10 @@
               </div>
             </div>
             <div class="flex items-center gap-5 text-[13px] text-gray-400 flex-wrap">
-              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> <span data-i18n="proof-delivery">Doručení do 14 dní</span></span>
-              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> <span data-i18n="proof-payment">Platba po dokončení</span></span>
+              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> <span
+                  data-i18n="proof-delivery">Doručení do 14 dní</span></span>
+              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> <span
+                  data-i18n="proof-payment">Platba po dokončení</span></span>
             </div>
           </div>
         </div>
@@ -793,7 +816,8 @@
                   </svg>
                 </div>
                 <div>
-                  <div class="text-3xl font-black text-gray-900 tracking-tight" data-i18n="card-title">Objevte naše služby</div>
+                  <div class="text-3xl font-black text-gray-900 tracking-tight" data-i18n="card-title">Objevte naše
+                    služby</div>
                   <div class="text-sm text-gray-400" data-i18n="card-subtitle">Již 70 spokojených klientů</div>
                 </div>
               </div>
@@ -821,17 +845,20 @@
               <div class="flex items-start justify-between mb-7">
                 <div class="flex flex-col items-center flex-1">
                   <span class="text-[22px] font-black text-gray-900 tracking-tight">24h</span>
-                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5" data-i18n="stat-first">První návrh</span>
+                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5"
+                    data-i18n="stat-first">První návrh</span>
                 </div>
                 <div class="w-px self-stretch" style="background:rgba(0,0,0,0.07)"></div>
                 <div class="flex flex-col items-center flex-1">
                   <span class="text-[22px] font-black text-gray-900 tracking-tight">14d</span>
-                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5" data-i18n="stat-delivery">Doručení</span>
+                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5"
+                    data-i18n="stat-delivery">Doručení</span>
                 </div>
                 <div class="w-px self-stretch" style="background:rgba(0,0,0,0.07)"></div>
                 <div class="flex flex-col items-center flex-1">
-                  <span class="text-[22px] font-black text-gray-900 tracking-tight">399€</span>
-                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5" data-i18n="stat-price">Cena od</span>
+                  <span class="text-[22px] font-black text-gray-900 tracking-tight">9900 kč</span>
+                  <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-0.5"
+                    data-i18n="stat-price">Cena od</span>
                 </div>
               </div>
               <!-- Tags -->
@@ -859,7 +886,8 @@
           <div id="hero-marquee" class="glass rounded-3xl py-6 relative overflow-hidden" style="opacity:0">
 
             <!-- Strip 1: Záruky → left -->
-            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4" data-i18n="marquee-title-1">Naše záruky pro klienty</h3>
+            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4"
+              data-i18n="marquee-title-1">Naše záruky pro klienty</h3>
             <div class="relative flex overflow-hidden mask-fade-r mb-5">
               <div class="animate-marquee flex gap-8 whitespace-nowrap pl-4" id="marquee-strip-1">
                 <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
@@ -905,7 +933,8 @@
             <div class="mx-7 mb-5 h-px" style="background:rgba(0,0,0,0.06)"></div>
 
             <!-- Strip 2: Spolupráce → right (reverse) -->
-            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4" data-i18n="marquee-title-2">S kým spolupracujeme</h3>
+            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4"
+              data-i18n="marquee-title-2">S kým spolupracujeme</h3>
             <div class="relative flex overflow-hidden mask-fade-r">
               <div class="animate-marquee-reverse flex gap-10 whitespace-nowrap pl-4">
                 <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
@@ -1042,8 +1071,10 @@
   <!-- ───── HOW IT WORKS ───── -->
   <section style="background:#c0392b" class="py-20 px-6">
     <div class="max-w-5xl mx-auto text-center">
-      <p class="text-red-100 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" data-i18n="hiw-label">Jak to funguje</p>
-      <h2 class="text-white text-4xl md:text-5xl font-black mb-16 reveal" style="line-height:1.08" data-i18n-html="hiw-title">Jednodušeji to<br>už nejde</h2>
+      <p class="text-red-100 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" data-i18n="hiw-label">
+        Jak to funguje</p>
+      <h2 class="text-white text-4xl md:text-5xl font-black mb-16 reveal" style="line-height:1.08"
+        data-i18n-html="hiw-title">Jednodušeji to<br>už nejde</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
 
@@ -1053,7 +1084,8 @@
           <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5 font-black text-white text-base"
             style="background:#111">01</div>
           <h3 class="text-white font-bold text-[17px] mb-2.5" data-i18n="step1-title">Napište nám o sobě</h3>
-          <p class="text-red-100 text-[13.5px] leading-relaxed" data-i18n="step1-desc">Řekněte nám o svém podnikání. Připravíme bezplatný návrh do 24 hodin — bez závazků.</p>
+          <p class="text-red-100 text-[13.5px] leading-relaxed" data-i18n="step1-desc">Řekněte nám o svém podnikání.
+            Připravíme bezplatný návrh do 24 hodin — bez závazků.</p>
         </div>
 
         <!-- Step 2 -->
@@ -1062,7 +1094,8 @@
           <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5 font-black text-white text-base"
             style="background:#111">02</div>
           <h3 class="text-white font-bold text-[17px] mb-2.5" data-i18n="step2-title">Připravíme návrh</h3>
-          <p class="text-red-100 text-[13.5px] leading-relaxed" data-i18n="step2-desc">Náš tým navrhne moderní web přizpůsobený vašemu podnikání, brandingu a zákazníkům.</p>
+          <p class="text-red-100 text-[13.5px] leading-relaxed" data-i18n="step2-desc">Náš tým navrhne moderní web
+            přizpůsobený vašemu podnikání, brandingu a zákazníkům.</p>
         </div>
 
         <!-- Step 3 -->
@@ -1070,7 +1103,8 @@
           <div class="w-12 h-12 rounded-full flex items-center justify-center mb-5 font-black text-white text-base"
             style="background:#111">03</div>
           <h3 class="text-white font-bold text-[17px] mb-2.5" data-i18n="step3-title">Dokončíme web</h3>
-          <p class="text-red-100 text-[13.5px] leading-relaxed" data-i18n="step3-desc">Po vašem schválení web dokončíme a spustíme online. Platíte jen tehdy, když jste spokojeni.</p>
+          <p class="text-red-100 text-[13.5px] leading-relaxed" data-i18n="step3-desc">Po vašem schválení web dokončíme
+            a spustíme online. Platíte jen tehdy, když jste spokojeni.</p>
         </div>
 
       </div>
@@ -1100,12 +1134,15 @@
     </div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10">
-      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b" data-i18n="feat-label">Co dostanete</p>
-      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08" data-i18n-html="feat-title">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b"
+        data-i18n="feat-label">Co dostanete</p>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08"
+        data-i18n-html="feat-title">
         Vše, co potřebujete<br>
         <span class="gradient-text">v jednom balíčku</span>
       </h2>
-      <p class="text-gray-400 text-[16px] mb-16 reveal" data-i18n-html="feat-sub">Cena webu začíná od <strong class="text-gray-800 font-semibold">399 €</strong> a platíte jen když jste spokojeni.</p>
+      <p class="text-gray-400 text-[16px] mb-16 reveal" data-i18n-html="feat-sub">Cena webu začíná od <strong
+          class="text-gray-800 font-semibold">399 €</strong> a platíte jen když jste spokojeni.</p>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-12">
 
@@ -1119,7 +1156,8 @@
           </div>
           <div>
             <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat1-title">Responzivní design</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat1-desc">Web bude skvěle vypadat na počítači, tabletu i mobilu.</p>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat1-desc">Web bude skvěle vypadat na
+              počítači, tabletu i mobilu.</p>
           </div>
         </div>
 
@@ -1132,7 +1170,8 @@
           </div>
           <div>
             <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat2-title">Až 5 podstránek</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat2-desc">Hlavní stránka s podstránkami podle vašich potřeb a obsahu.</p>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat2-desc">Hlavní stránka s podstránkami
+              podle vašich potřeb a obsahu.</p>
           </div>
         </div>
 
@@ -1146,7 +1185,8 @@
           </div>
           <div>
             <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat3-title">Základní SEO</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat3-desc">Optimalizace pro vyhledávače, aby vás zákazníci snáze našli na Googlu.</p>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat3-desc">Optimalizace pro vyhledávače,
+              aby vás zákazníci snáze našli na Googlu.</p>
           </div>
         </div>
 
@@ -1160,7 +1200,8 @@
           </div>
           <div>
             <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat4-title">Připojení domény</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat4-desc">Pomůžeme vám připojit vlastní doménu a nastavit hosting.</p>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat4-desc">Pomůžeme vám připojit vlastní
+              doménu a nastavit hosting.</p>
           </div>
         </div>
 
@@ -1174,7 +1215,8 @@
           </div>
           <div>
             <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat5-title">Kontaktní formulář</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat5-desc">Zákazníci vás mohou jednoduše kontaktovat přímo z webu.</p>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat5-desc">Zákazníci vás mohou jednoduše
+              kontaktovat přímo z webu.</p>
           </div>
         </div>
 
@@ -1187,7 +1229,8 @@
           </div>
           <div>
             <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat6-title">a další možnosti</h3>
-            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat6-desc">Blog, galerie, rezervace a další funkce podle vašich potřeb.</p>
+            <p class="text-gray-400 text-[13.5px] leading-relaxed" data-i18n="feat6-desc">Blog, galerie, rezervace a
+              další funkce podle vašich potřeb.</p>
           </div>
         </div>
 
@@ -1217,12 +1260,15 @@
     </div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10">
-      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b" data-i18n="port-label">Naše práce</p>
-      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08" data-i18n-html="port-title">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b"
+        data-i18n="port-label">Naše práce</p>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08"
+        data-i18n-html="port-title">
         Jak by mohl vypadat<br>
         <span class="gradient-text">váš nový web</span>
       </h2>
-      <p class="text-gray-400 text-[16px] mb-16 reveal" data-i18n="port-sub">Inspirujte se ukázkami webů, které jsme vytvořili. Každý web děláme na míru.</p>
+      <p class="text-gray-400 text-[16px] mb-16 reveal" data-i18n="port-sub">Inspirujte se ukázkami webů, které jsme
+        vytvořili. Každý web děláme na míru.</p>
 
       <!-- Showcase Carousel -->
       <div class="mt-12 reveal">
@@ -1237,7 +1283,8 @@
               <div class="showcase-info">
                 <span class="showcase-tag" data-i18n="card1-tag">Fitness & zdraví</span>
                 <h3 class="showcase-title">EMS Pulse</h3>
-                <p class="showcase-desc" data-i18n="card1-desc">Prémiový web pro EMS studio s rezervací lekcí a ceníkem tréninků</p>
+                <p class="showcase-desc" data-i18n="card1-desc">Prémiový web pro EMS studio s rezervací lekcí a ceníkem
+                  tréninků</p>
               </div>
             </a>
 
@@ -1249,7 +1296,8 @@
               <div class="showcase-info">
                 <span class="showcase-tag" data-i18n="card2-tag">Účetnictví & daně</span>
                 <h3 class="showcase-title">DaněNula.cz</h3>
-                <p class="showcase-desc" data-i18n="card2-desc">Moderní web pro daňové přiznání OSVČ a s.r.o. — jednoduše a bez stresu</p>
+                <p class="showcase-desc" data-i18n="card2-desc">Moderní web pro daňové přiznání OSVČ a s.r.o. —
+                  jednoduše a bez stresu</p>
               </div>
             </a>
 
@@ -1261,7 +1309,8 @@
               <div class="showcase-info">
                 <span class="showcase-tag" data-i18n="card3-tag">SaaS & produkty</span>
                 <h3 class="showcase-title">Long Vacation</h3>
-                <p class="showcase-desc" data-i18n="card3-desc">Chytrý plánovač dovolené — optimalizace volných dní podle svátků v 30+ zemích</p>
+                <p class="showcase-desc" data-i18n="card3-desc">Chytrý plánovač dovolené — optimalizace volných dní
+                  podle svátků v 30+ zemích</p>
               </div>
             </a>
 
@@ -1273,7 +1322,8 @@
               <div class="showcase-info">
                 <span class="showcase-tag" data-i18n="card4-tag">Fitness & wellness</span>
                 <h3 class="showcase-title">Absolute Studio</h3>
-                <p class="showcase-desc" data-i18n="card4-desc">Moderní web pro EMS & kryolipolýza studio s rezervací lekcí a ceníkem</p>
+                <p class="showcase-desc" data-i18n="card4-desc">Moderní web pro EMS & kryolipolýza studio s rezervací
+                  lekcí a ceníkem</p>
               </div>
             </a>
 
@@ -1283,11 +1333,17 @@
         <!-- Navigation -->
         <div class="showcase-nav">
           <button class="showcase-arrow" id="showcase-prev" aria-label="Předchozí">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
           </button>
           <div class="showcase-dots" id="showcase-dots"></div>
           <button class="showcase-arrow" id="showcase-next" aria-label="Další">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
           </button>
         </div>
       </div>
@@ -1305,17 +1361,22 @@
     </div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10">
-      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b" data-i18n="test-label">Reference</p>
-      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08" data-i18n-html="test-title">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b"
+        data-i18n="test-label">Reference</p>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08"
+        data-i18n-html="test-title">
         Co říkají <span class="gradient-text">naši klienti</span>
       </h2>
-      <p class="text-gray-400 text-[16px] mb-16 reveal" data-i18n="test-sub">Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili profesionální web.</p>
+      <p class="text-gray-400 text-[16px] mb-16 reveal" data-i18n="test-sub">Přečtěte si zkušenosti podnikatelů, pro
+        které jsme vytvořili profesionální web.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review1">"Byl jsem velmi spokojený s prací. První návrh přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2 týdny."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review1">"Byl jsem velmi spokojený s
+            prací. První návrh přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2
+            týdny."</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/e8d5b7/a0784d?text=M" class="w-10 h-10 rounded-full" alt="">
             <div>
@@ -1327,7 +1388,8 @@
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review2">"Profesionální přístup od začátku do konce. Vše jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review2">"Profesionální přístup od
+            začátku do konce. Vše jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/d4c4f0/7c5cbf?text=P" class="w-10 h-10 rounded-full" alt="">
             <div>
@@ -1339,7 +1401,8 @@
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review3">"Velmi rychlé dodání a kvalitní zpracování. Web nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review3">"Velmi rychlé dodání a
+            kvalitní zpracování. Web nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/c9f0e8/276749?text=Z" class="w-10 h-10 rounded-full" alt="">
             <div>
@@ -1351,7 +1414,8 @@
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review4">"Chtěl jsem moderní web, který bude dohledatelný. Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review4">"Chtěl jsem moderní web, který
+            bude dohledatelný. Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/fccb9e/c05621?text=L" class="w-10 h-10 rounded-full" alt="">
             <div>
@@ -1363,7 +1427,8 @@
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review5">"Skvělé! Web vypadá přesně tak, jak jsem si představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review5">"Skvělé! Web vypadá přesně
+            tak, jak jsem si představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/fed7e2/97266d?text=J" class="w-10 h-10 rounded-full" alt="">
             <div>
@@ -1375,7 +1440,8 @@
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="text-sm mb-3" style="color:#c0392b">★★★★★</div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review6">"Výborná práce za rozumnou cenu. Web funguje bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed mb-5" data-i18n="review6">"Výborná práce za rozumnou
+            cenu. Web funguje bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."</p>
           <div class="flex items-center gap-3">
             <img src="https://placehold.co/40x40/bee3f8/2a69ac?text=M" class="w-10 h-10 rounded-full" alt="">
             <div>
@@ -1408,7 +1474,8 @@
     </div>
 
     <div class="max-w-3xl mx-auto relative z-10">
-      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-14 text-center reveal" data-i18n="faq-title">Časté dotazy</h2>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-14 text-center reveal" data-i18n="faq-title">Časté
+        dotazy</h2>
 
       <div class="space-y-3">
 
@@ -1419,7 +1486,8 @@
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq1-a">První návrh dostanete do 24 hodin. Celý hotový web obvykle dokončíme do 7–14 dní od schválení designu.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq1-a">První návrh dostanete do
+              24 hodin. Celý hotový web obvykle dokončíme do 7–14 dní od schválení designu.</p>
           </div>
         </div>
 
@@ -1430,7 +1498,9 @@
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq2-a">Chceme vám ukázat, jak váš web může vypadat, ještě předtím než nás objednáte. Věříme, že když uvidíte kvalitu, budete chtít pokračovat.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq2-a">Chceme vám ukázat, jak váš
+              web může vypadat, ještě předtím než nás objednáte. Věříme, že když uvidíte kvalitu, budete chtít
+              pokračovat.</p>
           </div>
         </div>
 
@@ -1441,7 +1511,8 @@
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq3-a">Ne, platíte až po dokončení a schválení webu. První návrh dostanete zdarma a bez závazků.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq3-a">Ne, platíte až po
+              dokončení a schválení webu. První návrh dostanete zdarma a bez závazků.</p>
           </div>
         </div>
 
@@ -1452,7 +1523,8 @@
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq4-a">Bez problémů. Pokud se vám návrh nelíbí, neplatíte nic. Můžeme se pokusit o úpravu nebo jednoduše jdeme každý svou cestou.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq4-a">Bez problémů. Pokud se vám
+              návrh nelíbí, neplatíte nic. Můžeme se pokusit o úpravu nebo jednoduše jdeme každý svou cestou.</p>
           </div>
         </div>
 
@@ -1463,7 +1535,9 @@
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq5-a">Menší úpravy (text, obrázky) jsou zahrnuty v ceně po dobu 30 dní po spuštění. Větší změny řešíme individuálně za dohodnutou cenu.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq5-a">Menší úpravy (text,
+              obrázky) jsou zahrnuty v ceně po dobu 30 dní po spuštění. Větší změny řešíme individuálně za dohodnutou
+              cenu.</p>
           </div>
         </div>
 
@@ -1474,7 +1548,8 @@
             <span class="faq-icon text-gray-400 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq6-a">Cena webu začíná od 399 €. Konečná cena závisí na rozsahu a funkcionalitě. Všechny detaily probereme při bezplatné konzultaci.</p>
+            <p class="px-6 pb-5 text-gray-400 text-[14px] leading-relaxed" data-i18n="faq6-a">Cena webu začíná od 399 €.
+              Konečná cena závisí na rozsahu a funkcionalitě. Všechny detaily probereme při bezplatné konzultaci.</p>
           </div>
         </div>
 
@@ -1493,7 +1568,8 @@
         Jste jen kousek od svého<br>
         <span class="gradient-text">nového webu</span>
       </h2>
-      <p class="text-gray-400 text-[16px] mb-10 max-w-xl mx-auto reveal" data-i18n="cta-sub">První návrh zdarma do 24 hodin. Neriskujete nic — platíte pouze když jste spokojeni a jen od 399 €.</p>
+      <p class="text-gray-400 text-[16px] mb-10 max-w-xl mx-auto reveal" data-i18n="cta-sub">První návrh zdarma do 24
+        hodin. Neriskujete nic — platíte pouze když jste spokojeni a jen od 399 €.</p>
       <div class="reveal">
         <button class="btn-orange">
           <span class="btn-text" data-i18n="btn-orange-cta">Objednejte návrh webu</span>
@@ -1522,16 +1598,21 @@
           </div>
           <span class="font-bold text-white text-[16px]">Philo Agency</span>
         </div>
-        <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="foot-desc">Tvoříme weby pro malé firmy a podnikatele v České republice. První návrh zdarma.</p>
+        <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="foot-desc">Tvoříme weby pro malé firmy a
+          podnikatele v České republice. První návrh zdarma.</p>
       </div>
       <div class="flex gap-14">
         <div>
           <h4 class="text-white font-semibold text-[13px] mb-4" data-i18n="foot-nav">Navigace</h4>
           <div class="space-y-2.5">
-            <a href="#" class="block text-gray-500 text-[13px] hover:text-white transition-colors" data-i18n="nav-home">Domů</a>
-            <a href="#cena" class="block text-gray-500 text-[13px] hover:text-white transition-colors" data-i18n="nav-price">Cena</a>
-            <a href="#ukazky" class="block text-gray-500 text-[13px] hover:text-white transition-colors" data-i18n="nav-showcase">Ukázky</a>
-            <a href="#referencie" class="block text-gray-500 text-[13px] hover:text-white transition-colors" data-i18n="nav-ref">Reference</a>
+            <a href="#" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
+              data-i18n="nav-home">Domů</a>
+            <a href="#cena" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
+              data-i18n="nav-price">Cena</a>
+            <a href="#ukazky" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
+              data-i18n="nav-showcase">Ukázky</a>
+            <a href="#referencie" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
+              data-i18n="nav-ref">Reference</a>
             <a href="#faq" class="block text-gray-500 text-[13px] hover:text-white transition-colors">FAQ</a>
           </div>
         </div>
@@ -1549,8 +1630,10 @@
     <div class="max-w-5xl mx-auto mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between gap-3">
       <p class="text-gray-600 text-[12px]" data-i18n="foot-copy">© 2026 Philo Agency. Všechna práva vyhrazena.</p>
       <div class="flex gap-5">
-        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors" data-i18n="foot-privacy">Ochrana soukromí</a>
-        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors" data-i18n="foot-terms">Podmínky použití</a>
+        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors"
+          data-i18n="foot-privacy">Ochrana soukromí</a>
+        <a href="#" class="text-gray-600 text-[12px] hover:text-gray-400 transition-colors"
+          data-i18n="foot-terms">Podmínky použití</a>
       </div>
     </div>
   </footer>
@@ -1612,7 +1695,7 @@
       const active = document.getElementById('fw-active');
       const ghost = document.getElementById('fw-ghost');
       if (!active || !ghost) return;
-      window._flipWordsSet = function(newWords) {
+      window._flipWordsSet = function (newWords) {
         WORDS = newWords;
         idx = 0;
         active.textContent = WORDS[0];
@@ -1724,7 +1807,7 @@
         nextBtn.disabled = si >= STEPS.length - 1;
         [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', STEPS[i] === current));
         viewport.classList.toggle('has-prev', current > 0);
-        viewport.classList.toggle('at-end',   si >= STEPS.length - 1);
+        viewport.classList.toggle('at-end', si >= STEPS.length - 1);
       }
 
       buildDots();
@@ -2010,7 +2093,7 @@
         }
       };
 
-      const HTML_KEYS = new Set(['hero-sub','hiw-title','feat-title','feat-sub','port-title','test-title','cta-title']);
+      const HTML_KEYS = new Set(['hero-sub', 'hiw-title', 'feat-title', 'feat-sub', 'port-title', 'test-title', 'cta-title']);
 
       function buildMarqueeStrip(items) {
         const doubled = [...items, ...items];
@@ -2062,7 +2145,7 @@
       }
 
       // Wire up buttons
-      document.getElementById('lang-switcher').addEventListener('click', function(e) {
+      document.getElementById('lang-switcher').addEventListener('click', function (e) {
         const btn = e.target.closest('.lang-btn');
         if (btn) setLang(btn.dataset.lang);
       });
