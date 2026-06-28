@@ -2398,6 +2398,13 @@
       const saved = localStorage.getItem('philoLang');
       if (saved && saved !== 'cs' && TRANSLATIONS[saved]) setLang(saved);
 
+      // Scroll-to-form for all CTA buttons
+      document.querySelectorAll('[data-i18n="btn-main"], [data-i18n="nav-cta"], [data-i18n="btn-orange-cta"]').forEach(el => {
+        el.closest('button, a').addEventListener('click', () => {
+          document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
       // Contact form submit
       const contactForm = document.getElementById('contact-form');
       const contactSuccess = document.getElementById('contact-success');
