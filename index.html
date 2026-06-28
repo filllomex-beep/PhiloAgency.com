@@ -1687,17 +1687,38 @@
               <label class="form-label" data-i18n="form-name-label">Jméno</label>
               <input type="text" class="form-input" id="cf-name" data-i18n-placeholder="form-name-ph" placeholder="Vaše jméno" required>
             </div>
-            <!-- EMAIL -->
+            <!-- PŘÍJMENÍ -->
             <div>
-              <label class="form-label" data-i18n="form-email-label">Email</label>
-              <input type="email" class="form-input" id="cf-email" data-i18n-placeholder="form-email-ph" placeholder="Váš email" required>
+              <label class="form-label" data-i18n="form-lastname-label">Příjmení</label>
+              <input type="text" class="form-input" id="cf-lastname" data-i18n-placeholder="form-lastname-ph" placeholder="Vaše příjmení" required>
             </div>
           </div>
 
-          <!-- FIRMA NEBO WEB -->
+          <!-- EMAIL -->
           <div class="mb-5">
-            <label class="form-label" data-i18n="form-company-label">Firma nebo web</label>
-            <input type="text" class="form-input" id="cf-company" data-i18n-placeholder="form-company-ph" placeholder="Název firmy nebo web (volitelné)">
+            <label class="form-label" data-i18n="form-email-label">Email</label>
+            <input type="email" class="form-input" id="cf-email" data-i18n-placeholder="form-email-ph" placeholder="vas@email.cz" required>
+          </div>
+
+          <!-- PŘEDVOLBA + TELEFON -->
+          <div class="grid grid-cols-[120px_1fr] gap-5 mb-5">
+            <div>
+              <label class="form-label" data-i18n="form-prefix-label">Předvolba</label>
+              <select class="form-select" id="cf-prefix">
+                <option value="+420">🇨🇿 +420</option>
+                <option value="+421">🇸🇰 +421</option>
+                <option value="+49">🇩🇪 +49</option>
+                <option value="+43">🇦🇹 +43</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+48">🇵🇱 +48</option>
+                <option value="+33">🇫🇷 +33</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" data-i18n="form-phone-label">Telefon</label>
+              <input type="tel" class="form-input" id="cf-phone" data-i18n-placeholder="form-phone-ph" placeholder="123 456 789">
+            </div>
           </div>
 
           <!-- JAKÁ SLUŽBA VÁS ZAJÍMÁ -->
@@ -2118,8 +2139,9 @@
           'contact-title': 'Chcete bezplatný návrh<br><span class="gradient-text">webu na míru?</span>',
           'contact-sub': 'Popište nám váš projekt a do 24 hodin dostanete bezplatný návrh webu přímo na e-mail.',
           'form-name-label': 'Jméno', 'form-name-ph': 'Vaše jméno',
+          'form-lastname-label': 'Příjmení', 'form-lastname-ph': 'Vaše příjmení',
           'form-email-label': 'Email', 'form-email-ph': 'vas@email.cz',
-          'form-company-label': 'Firma nebo web', 'form-company-ph': 'Název firmy nebo web (volitelné)',
+          'form-prefix-label': 'Předvolba', 'form-phone-label': 'Telefon', 'form-phone-ph': '123 456 789',
           'form-service-label': 'Jaká služba vás zajímá', 'form-service-ph': 'Vyberte službu…',
           'form-svc-1': 'Tvorba webu', 'form-svc-2': 'Online marketing',
           'form-svc-3': 'Automatizace', 'form-svc-4': 'AI agenti',
@@ -2204,9 +2226,10 @@
           'contact-label': 'Non-binding inquiry',
           'contact-title': 'Want a free custom<br><span class="gradient-text">website design?</span>',
           'contact-sub': 'Describe your project and within 24 hours you\'ll receive a free website design straight to your email.',
-          'form-name-label': 'Name', 'form-name-ph': 'Your name',
+          'form-name-label': 'First name', 'form-name-ph': 'Your first name',
+          'form-lastname-label': 'Last name', 'form-lastname-ph': 'Your last name',
           'form-email-label': 'Email', 'form-email-ph': 'you@email.com',
-          'form-company-label': 'Company or website', 'form-company-ph': 'Company name or website (optional)',
+          'form-prefix-label': 'Prefix', 'form-phone-label': 'Phone', 'form-phone-ph': '123 456 789',
           'form-service-label': 'Which service interests you', 'form-service-ph': 'Select a service…',
           'form-svc-1': 'Website creation', 'form-svc-2': 'Online marketing',
           'form-svc-3': 'Automation', 'form-svc-4': 'AI agents',
@@ -2291,9 +2314,10 @@
           'contact-label': 'Unverbindliche Anfrage',
           'contact-title': 'Möchten Sie einen kostenlosen<br><span class="gradient-text">Website-Entwurf?</span>',
           'contact-sub': 'Beschreiben Sie Ihr Projekt und erhalten Sie innerhalb von 24 Stunden einen kostenlosen Website-Entwurf direkt per E-Mail.',
-          'form-name-label': 'Name', 'form-name-ph': 'Ihr Name',
+          'form-name-label': 'Vorname', 'form-name-ph': 'Ihr Vorname',
+          'form-lastname-label': 'Nachname', 'form-lastname-ph': 'Ihr Nachname',
           'form-email-label': 'E-Mail', 'form-email-ph': 'sie@email.de',
-          'form-company-label': 'Firma oder Website', 'form-company-ph': 'Firmenname oder Website (optional)',
+          'form-prefix-label': 'Vorwahl', 'form-phone-label': 'Telefon', 'form-phone-ph': '123 456 789',
           'form-service-label': 'Welche Leistung interessiert Sie', 'form-service-ph': 'Leistung auswählen…',
           'form-svc-1': 'Website-Erstellung', 'form-svc-2': 'Online-Marketing',
           'form-svc-3': 'Automatisierung', 'form-svc-4': 'KI-Agenten',
