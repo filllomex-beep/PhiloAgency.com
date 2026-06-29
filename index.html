@@ -628,6 +628,23 @@
       cursor: pointer;
     }
 
+    .svc-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: 999px; cursor: pointer;
+      font-size: 13px; font-weight: 600; user-select: none;
+      background: rgba(255,255,255,0.65); border: 1.5px solid rgba(0,0,0,0.08);
+      color: #555; transition: border-color 0.18s, background 0.18s, color 0.18s;
+      backdrop-filter: blur(8px);
+    }
+    .svc-chip:hover { border-color: rgba(192,57,43,0.3); color: #c0392b; }
+    .svc-chip.selected {
+      background: rgba(192,57,43,0.08); border-color: #c0392b;
+      color: #c0392b;
+    }
+    .svc-chip.selected::before {
+      content: '✓'; font-size: 11px; font-weight: 800;
+    }
+
     .form-check-card {
       display: flex;
       gap: 14px;
@@ -1721,15 +1738,15 @@
           <!-- JAKÁ SLUŽBA VÁS ZAJÍMÁ -->
           <div class="mb-5">
             <label class="form-label" data-i18n="form-service-label">Jaká služba vás zajímá</label>
-            <select class="form-select" id="cf-service">
-              <option value="" data-i18n="form-service-ph">Vyberte službu…</option>
-              <option data-i18n="form-svc-1">Tvorba webu</option>
-              <option data-i18n="form-svc-2">Online marketing</option>
-              <option data-i18n="form-svc-3">Automatizace</option>
-              <option data-i18n="form-svc-4">AI agenti</option>
-              <option data-i18n="form-svc-5">Fotografie</option>
-              <option data-i18n="form-svc-6">Nevím, poradíte mi</option>
-            </select>
+            <div class="flex flex-wrap gap-2" id="svc-chips">
+              <button type="button" class="svc-chip" data-i18n="form-svc-1">Tvorba webu</button>
+              <button type="button" class="svc-chip" data-i18n="form-svc-2">Online marketing</button>
+              <button type="button" class="svc-chip" data-i18n="form-svc-3">Automatizace</button>
+              <button type="button" class="svc-chip" data-i18n="form-svc-4">AI agenti</button>
+              <button type="button" class="svc-chip" data-i18n="form-svc-5">Fotografie</button>
+              <button type="button" class="svc-chip" data-i18n="form-svc-6">Nevím, poradíte mi</button>
+            </div>
+            <input type="hidden" id="cf-service" name="service">
           </div>
 
           <!-- POPIS PROJEKTU -->
@@ -2398,6 +2415,16 @@
       document.querySelectorAll('[data-i18n="btn-showcase"]').forEach(el => {
         el.closest('button, a').addEventListener('click', () => {
           document.getElementById('ukazky').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Service chips multi-select
+      document.querySelectorAll('#svc-chips .svc-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          chip.classList.toggle('selected');
+          const selected = [...document.querySelectorAll('#svc-chips .svc-chip.selected')]
+            .map(c => c.textContent.replace('✓', '').trim());
+          document.getElementById('cf-service').value = selected.join(', ');
         });
       });
 
