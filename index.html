@@ -2609,17 +2609,20 @@
       // Hamburger mobile menu
       const hamburgerBtn = document.getElementById('hamburger-btn');
       const mobileMenu = document.getElementById('mobile-menu');
+      const langSwitcher = document.getElementById('lang-switcher');
       if (hamburgerBtn && mobileMenu) {
         hamburgerBtn.addEventListener('click', () => {
           const isOpen = hamburgerBtn.classList.toggle('open');
           mobileMenu.classList.toggle('open', isOpen);
           document.body.style.overflow = isOpen ? 'hidden' : '';
+          if (langSwitcher) langSwitcher.style.visibility = isOpen ? 'hidden' : '';
         });
         mobileMenu.querySelectorAll('a, #mm-cta').forEach(el => {
           el.addEventListener('click', () => {
             hamburgerBtn.classList.remove('open');
             mobileMenu.classList.remove('open');
             document.body.style.overflow = '';
+            if (langSwitcher) langSwitcher.style.visibility = '';
           });
         });
       }
