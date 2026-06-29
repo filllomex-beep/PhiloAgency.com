@@ -1832,13 +1832,13 @@
             <!-- JMÉNO -->
             <div>
               <label class="form-label" data-i18n="form-name-label">Jméno</label>
-              <input type="text" class="form-input" id="cf-name" data-i18n-placeholder="form-name-ph"
+              <input type="text" class="form-input" id="cf-name" name="jmeno" data-i18n-placeholder="form-name-ph"
                 placeholder="Vaše jméno" required>
             </div>
             <!-- PŘÍJMENÍ -->
             <div>
               <label class="form-label" data-i18n="form-lastname-label">Příjmení</label>
-              <input type="text" class="form-input" id="cf-lastname" data-i18n-placeholder="form-lastname-ph"
+              <input type="text" class="form-input" id="cf-lastname" name="prijmeni" data-i18n-placeholder="form-lastname-ph"
                 placeholder="Vaše příjmení" required>
             </div>
           </div>
@@ -1846,7 +1846,7 @@
           <!-- EMAIL -->
           <div class="mb-5">
             <label class="form-label" data-i18n="form-email-label">Email</label>
-            <input type="email" class="form-input" id="cf-email" data-i18n-placeholder="form-email-ph"
+            <input type="email" class="form-input" id="cf-email" name="email" data-i18n-placeholder="form-email-ph"
               placeholder="vas@email.cz" required>
           </div>
 
@@ -1854,7 +1854,7 @@
           <div class="grid grid-cols-[120px_1fr] gap-5 mb-5">
             <div>
               <label class="form-label" data-i18n="form-prefix-label">Předvolba</label>
-              <select class="form-select" id="cf-prefix">
+              <select class="form-select" id="cf-prefix" name="predvolba">
                 <option value="+420">🇨🇿 +420</option>
                 <option value="+421">🇸🇰 +421</option>
                 <option value="+49">🇩🇪 +49</option>
@@ -1867,7 +1867,7 @@
             </div>
             <div>
               <label class="form-label" data-i18n="form-phone-label">Telefon</label>
-              <input type="tel" class="form-input" id="cf-phone" data-i18n-placeholder="form-phone-ph"
+              <input type="tel" class="form-input" id="cf-phone" name="telefon" data-i18n-placeholder="form-phone-ph"
                 placeholder="123 456 789">
             </div>
           </div>
@@ -1889,13 +1889,13 @@
           <!-- POPIS PROJEKTU -->
           <div class="mb-6">
             <label class="form-label" data-i18n="form-desc-label">Popis projektu</label>
-            <textarea class="form-textarea" id="cf-desc" data-i18n-placeholder="form-desc-ph"
+            <textarea class="form-textarea" id="cf-desc" name="popis_projektu" data-i18n-placeholder="form-desc-ph"
               placeholder="Čím více napíšete, tím přesnější návrh dostanete — např. obor podnikání, styl, funkce…"></textarea>
           </div>
 
           <!-- Checkbox card -->
           <label class="form-check-card mb-8 block">
-            <input type="checkbox" id="cf-free" checked>
+            <input type="checkbox" id="cf-free" name="prvni_navrh_zdarma" value="ano" checked>
             <div>
               <div class="font-semibold text-gray-900 text-[14px] mb-1" data-i18n="form-check-title">Chci první návrh
                 webu zcela zdarma</div>
@@ -2696,24 +2696,53 @@
         });
       });
 
-      // Contact form submit
+      // Contact form submit — Formspree
+      const FORMSPREE_ID = 'YOUR_FORM_ID'; // ← replace with your Formspree form ID
       const contactForm = document.getElementById('contact-form');
       const contactSuccess = document.getElementById('contact-success');
       if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
+        contactForm.addEventListener('submit', async function (e) {
           e.preventDefault();
-          contactForm.style.opacity = '0';
-          contactForm.style.transform = 'translateY(8px)';
-          contactForm.style.transition = 'opacity 0.3s, transform 0.3s';
-          setTimeout(() => {
-            contactForm.style.display = 'none';
-            contactSuccess.classList.remove('hidden');
-            contactSuccess.style.opacity = '0';
-            requestAnimationFrame(() => {
-              contactSuccess.style.transition = 'opacity 0.4s';
-              contactSuccess.style.opacity = '1';
+          const submitBtn = contactForm.querySelector('button[type="submit"]');
+          const btnText = submitBtn.querySelector('.btn-text');
+          const origText = btnText.textContent;
+          submitBtn.disabled = true;
+          btnText.textContent = '⏳';
+
+          const data = new FormData(contactForm);
+
+          try {
+            const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+              method: 'POST',
+              body: data,
+              headers: { 'Accept': 'application/json' }
             });
-          }, 300);
+
+            if (res.ok) {
+              contactForm.style.opacity = '0';
+              contactForm.style.transform = 'translateY(8px)';
+              contactForm.style.transition = 'opacity 0.3s, transform 0.3s';
+              setTimeout(() => {
+                contactForm.style.display = 'none';
+                contactSuccess.classList.remove('hidden');
+                contactSuccess.style.opacity = '0';
+                requestAnimationFrame(() => {
+                  contactSuccess.style.transition = 'opacity 0.4s';
+                  contactSuccess.style.opacity = '1';
+                });
+              }, 300);
+            } else {
+              const json = await res.json().catch(() => ({}));
+              const msg = json.errors ? json.errors.map(e => e.message).join(', ') : 'Chyba při odesílání. Zkuste to znovu.';
+              alert(msg);
+              submitBtn.disabled = false;
+              btnText.textContent = origText;
+            }
+          } catch (_) {
+            alert('Nepodařilo se odeslat formulář. Zkontrolujte připojení a zkuste znovu.');
+            submitBtn.disabled = false;
+            btnText.textContent = origText;
+          }
         });
       }
     })();
