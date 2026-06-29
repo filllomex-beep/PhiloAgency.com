@@ -2115,18 +2115,22 @@
       const viewport = track.closest('.showcase-viewport');
       const cards = [...track.children];
       const GAP = 20;
-      // Navigable positions: 0 = 2-card view, then each subsequent card centred.
-      // Position 1 is skipped by arrows so card 1 is gone after first click.
-      const STEPS = [0, 2, 3];
+
+      // Mobile: one card per step. Desktop: skip card index 1 (2-up view).
+      function getSteps() {
+        return window.innerWidth < 640 ? [0, 1, 2, 3] : [0, 2, 3];
+      }
+
+      let STEPS = getSteps();
       let current = STEPS[0];
 
-      // idx 0 → left-aligned (2 cards + right peek).
-      // idx 1+ → centre the active card with both neighbours peeking.
       function calcOffset(idx) {
         const cardW = cards[0].offsetWidth;
         const viewW = viewport.offsetWidth;
         if (idx === 0) return 0;
-        return idx * (cardW + GAP) - (viewW - cardW) / 2;
+        const totalW = cards.length * (cardW + GAP) - GAP;
+        const raw = idx * (cardW + GAP) - (viewW - cardW) / 2;
+        return Math.max(0, Math.min(raw, totalW - viewW));
       }
 
       function buildDots() {
@@ -2162,7 +2166,17 @@
         const i = STEPS.indexOf(current);
         if (i < STEPS.length - 1) goTo(STEPS[i + 1]);
       });
-      window.addEventListener('resize', () => { goTo(current); }, { passive: true });
+      window.addEventListener('resize', () => {
+        const newSteps = getSteps();
+        // Remap current to nearest valid step in new layout
+        if (JSON.stringify(newSteps) !== JSON.stringify(STEPS)) {
+          STEPS = newSteps;
+          const clamped = STEPS.reduce((prev, s) => Math.abs(s - current) < Math.abs(prev - current) ? s : prev, STEPS[0]);
+          current = clamped;
+          buildDots();
+        }
+        goTo(current);
+      }, { passive: true });
     })();
 
     // Services slider — sliding indicator
