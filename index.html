@@ -629,20 +629,37 @@
     }
 
     .svc-chip {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 9px 16px; border-radius: 999px; cursor: pointer;
-      font-size: 13px; font-weight: 600; user-select: none;
-      background: rgba(255,255,255,0.65); border: 1.5px solid rgba(0,0,0,0.08);
-      color: #555; transition: border-color 0.18s, background 0.18s, color 0.18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      user-select: none;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1.5px solid rgba(0, 0, 0, 0.08);
+      color: #555;
+      transition: border-color 0.18s, background 0.18s, color 0.18s;
       backdrop-filter: blur(8px);
     }
-    .svc-chip:hover { border-color: rgba(192,57,43,0.3); color: #c0392b; }
-    .svc-chip.selected {
-      background: rgba(192,57,43,0.08); border-color: #c0392b;
+
+    .svc-chip:hover {
+      border-color: rgba(192, 57, 43, 0.3);
       color: #c0392b;
     }
+
+    .svc-chip.selected {
+      background: rgba(192, 57, 43, 0.08);
+      border-color: #c0392b;
+      color: #c0392b;
+    }
+
     .svc-chip.selected::before {
-      content: '✓'; font-size: 11px; font-weight: 800;
+      content: '✓';
+      font-size: 11px;
+      font-weight: 800;
     }
 
     .form-check-card {
@@ -955,7 +972,8 @@
                 </div>
                 <div class="w-px self-stretch" style="background:rgba(0,0,0,0.07)"></div>
                 <div class="flex flex-col items-center flex-1">
-                  <span class="text-[22px] font-black text-gray-900 tracking-tight" data-i18n="stat-price-val">9900 Kč</span>
+                  <span class="text-[22px] font-black text-gray-900 tracking-tight" data-i18n="stat-price-val">9900
+                    Kč</span>
                   <span class="text-[10px] uppercase tracking-wider text-gray-500 font-medium mt-0.5"
                     data-i18n="stat-price">Cena od</span>
                 </div>
@@ -1474,103 +1492,133 @@
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="flex items-start justify-between gap-4 mb-4">
             <div class="flex items-center gap-3">
-              <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Martin K.">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Martin K.">
               <div>
                 <div class="font-semibold text-gray-900 text-[15px] leading-tight">Martin K.</div>
                 <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review1-prof">Kosmetický salón</div>
               </div>
             </div>
             <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
               <span>5.0</span>
             </div>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review1">"Byl jsem velmi spokojený s prací. První návrh přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2 týdny."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review1">"Byl jsem velmi spokojený s prací.
+            První návrh přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2 týdny."</p>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="flex items-start justify-between gap-4 mb-4">
             <div class="flex items-center gap-3">
-              <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Petr S.">
+              <img src="https://randomuser.me/api/portraits/men/45.jpg"
+                class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Petr S.">
               <div>
                 <div class="font-semibold text-gray-900 text-[15px] leading-tight">Petr S.</div>
                 <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review2-prof">Restaurace</div>
               </div>
             </div>
             <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
               <span>5.0</span>
             </div>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review2">"Profesionální přístup od začátku do konce. Vše jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review2">"Profesionální přístup od začátku
+            do konce. Vše jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."</p>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="flex items-start justify-between gap-4 mb-4">
             <div class="flex items-center gap-3">
-              <img src="https://randomuser.me/api/portraits/women/28.jpg" class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Zuzana M.">
+              <img src="https://randomuser.me/api/portraits/women/28.jpg"
+                class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Zuzana M.">
               <div>
                 <div class="font-semibold text-gray-900 text-[15px] leading-tight">Zuzana M.</div>
                 <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review3-prof">Zubní klinika</div>
               </div>
             </div>
             <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
               <span>5.0</span>
             </div>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review3">"Velmi rychlé dodání a kvalitní zpracování. Web nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review3">"Velmi rychlé dodání a kvalitní
+            zpracování. Web nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"</p>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="flex items-start justify-between gap-4 mb-4">
             <div class="flex items-center gap-3">
-              <img src="https://randomuser.me/api/portraits/men/67.jpg" class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Lukáš R.">
+              <img src="https://randomuser.me/api/portraits/men/67.jpg"
+                class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Lukáš R.">
               <div>
                 <div class="font-semibold text-gray-900 text-[15px] leading-tight">Lukáš R.</div>
                 <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review4-prof">Autoservis</div>
               </div>
             </div>
             <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
               <span>5.0</span>
             </div>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review4">"Chtěl jsem moderní web, který bude dohledatelný. Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review4">"Chtěl jsem moderní web, který bude
+            dohledatelný. Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."</p>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="flex items-start justify-between gap-4 mb-4">
             <div class="flex items-center gap-3">
-              <img src="https://randomuser.me/api/portraits/women/54.jpg" class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Jana P.">
+              <img src="https://randomuser.me/api/portraits/women/54.jpg"
+                class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Jana P.">
               <div>
                 <div class="font-semibold text-gray-900 text-[15px] leading-tight">Jana P.</div>
                 <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review5-prof">Fitness studio</div>
               </div>
             </div>
             <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
               <span>5.0</span>
             </div>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review5">"Skvělé! Web vypadá přesně tak, jak jsem si představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review5">"Skvělé! Web vypadá přesně tak, jak
+            jsem si představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"</p>
         </div>
 
         <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
           <div class="flex items-start justify-between gap-4 mb-4">
             <div class="flex items-center gap-3">
-              <img src="https://randomuser.me/api/portraits/men/22.jpg" class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Marek B.">
+              <img src="https://randomuser.me/api/portraits/men/22.jpg"
+                class="w-12 h-12 rounded-full object-cover flex-shrink-0" alt="Marek B.">
               <div>
                 <div class="font-semibold text-gray-900 text-[15px] leading-tight">Marek B.</div>
                 <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review6-prof">Stavební firma</div>
               </div>
             </div>
             <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
               <span>5.0</span>
             </div>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review6">"Výborná práce za rozumnou cenu. Web funguje bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."</p>
+          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review6">"Výborná práce za rozumnou cenu.
+            Web funguje bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."</p>
         </div>
 
       </div>
@@ -1608,7 +1656,8 @@
             <span class="faq-icon text-red-200 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pt-3 pb-6 text-red-100 text-[14px] leading-relaxed" data-i18n="faq1-a">První návrh dostanete do
+            <p class="px-6 pt-3 pb-6 text-red-100 text-[14px] leading-relaxed" data-i18n="faq1-a">První návrh dostanete
+              do
               24 hodin. Celý hotový web obvykle dokončíme do 7–14 dní od schválení designu.</p>
           </div>
         </div>
@@ -1620,7 +1669,8 @@
             <span class="faq-icon text-red-200 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pt-3 pb-6 text-red-100 text-[14px] leading-relaxed" data-i18n="faq2-a">Chceme vám ukázat, jak váš
+            <p class="px-6 pt-3 pb-6 text-red-100 text-[14px] leading-relaxed" data-i18n="faq2-a">Chceme vám ukázat, jak
+              váš
               web může vypadat, ještě předtím než nás objednáte. Věříme, že když uvidíte kvalitu, budete chtít
               pokračovat.</p>
           </div>
@@ -1645,7 +1695,8 @@
             <span class="faq-icon text-red-200 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pt-3 pb-6 text-red-100 text-[14px] leading-relaxed" data-i18n="faq4-a">Bez problémů. Pokud se vám
+            <p class="px-6 pt-3 pb-6 text-red-100 text-[14px] leading-relaxed" data-i18n="faq4-a">Bez problémů. Pokud se
+              vám
               návrh nelíbí, neplatíte nic. Můžeme se pokusit o úpravu nebo jednoduše jdeme každý svou cestou.</p>
           </div>
         </div>
@@ -1670,7 +1721,8 @@
             <span class="faq-icon text-red-200 text-[22px] leading-none flex-shrink-0">+</span>
           </button>
           <div class="faq-answer">
-            <p class="px-6 pt-3 pb-6 text-red-100 text-[14px] leading-relaxed" data-i18n="faq6-a">Cena webu začíná od 9 900 Kč.
+            <p class="px-6 pt-3 pb-6 text-red-100 text-[14px] leading-relaxed" data-i18n="faq6-a">Cena webu začíná od 9
+              900 Kč.
               Konečná cena závisí na rozsahu a funkcionalitě. Všechny detaily probereme při bezplatné konzultaci.</p>
           </div>
         </div>
@@ -1680,16 +1732,24 @@
   </section>
 
   <!-- ───── CONTACT FORM ───── -->
-  <section id="kontakt" class="py-24 px-6 relative overflow-hidden" style="background:linear-gradient(160deg,#faf9f7 0%,#fff7f4 50%,#fafbff 100%)">
-    <div class="blob" style="width:500px;height:500px;background:radial-gradient(circle,rgba(192,57,43,0.07),transparent 65%);top:-80px;left:50%;transform:translateX(-50%);filter:blur(80px)"></div>
-    <div class="blob" style="width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,0.06),transparent 65%);bottom:-60px;right:-60px;filter:blur(70px)"></div>
+  <section id="kontakt" class="py-24 px-6 relative overflow-hidden"
+    style="background:linear-gradient(160deg,#faf9f7 0%,#fff7f4 50%,#fafbff 100%)">
+    <div class="blob"
+      style="width:500px;height:500px;background:radial-gradient(circle,rgba(192,57,43,0.07),transparent 65%);top:-80px;left:50%;transform:translateX(-50%);filter:blur(80px)">
+    </div>
+    <div class="blob"
+      style="width:350px;height:350px;background:radial-gradient(circle,rgba(139,92,246,0.06),transparent 65%);bottom:-60px;right:-60px;filter:blur(70px)">
+    </div>
 
     <div class="max-w-2xl mx-auto relative z-10">
       <!-- Header -->
       <div class="text-center mb-12 reveal">
-        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3" style="color:#c0392b" data-i18n="contact-label">Nezávazná poptávka</p>
-        <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4" style="line-height:1.08" data-i18n-html="contact-title">Chcete bezplatný návrh<br><span class="gradient-text">webu na míru?</span></h2>
-        <p class="text-gray-500 text-[16px]" data-i18n="contact-sub">Popište nám váš projekt a do 24 hodin vám zašleme konkrétní návrh zcela zdarma.</p>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3" style="color:#c0392b"
+          data-i18n="contact-label">Nezávazná poptávka</p>
+        <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4" style="line-height:1.08"
+          data-i18n-html="contact-title">Chcete bezplatný návrh<br><span class="gradient-text">webu na míru?</span></h2>
+        <p class="text-gray-500 text-[16px]" data-i18n="contact-sub">Popište nám váš projekt a do 24 hodin vám zašleme
+          konkrétní návrh zcela zdarma.</p>
       </div>
 
       <!-- Form glass card -->
@@ -1699,19 +1759,22 @@
             <!-- JMÉNO -->
             <div>
               <label class="form-label" data-i18n="form-name-label">Jméno</label>
-              <input type="text" class="form-input" id="cf-name" data-i18n-placeholder="form-name-ph" placeholder="Vaše jméno" required>
+              <input type="text" class="form-input" id="cf-name" data-i18n-placeholder="form-name-ph"
+                placeholder="Vaše jméno" required>
             </div>
             <!-- PŘÍJMENÍ -->
             <div>
               <label class="form-label" data-i18n="form-lastname-label">Příjmení</label>
-              <input type="text" class="form-input" id="cf-lastname" data-i18n-placeholder="form-lastname-ph" placeholder="Vaše příjmení" required>
+              <input type="text" class="form-input" id="cf-lastname" data-i18n-placeholder="form-lastname-ph"
+                placeholder="Vaše příjmení" required>
             </div>
           </div>
 
           <!-- EMAIL -->
           <div class="mb-5">
             <label class="form-label" data-i18n="form-email-label">Email</label>
-            <input type="email" class="form-input" id="cf-email" data-i18n-placeholder="form-email-ph" placeholder="vas@email.cz" required>
+            <input type="email" class="form-input" id="cf-email" data-i18n-placeholder="form-email-ph"
+              placeholder="vas@email.cz" required>
           </div>
 
           <!-- PŘEDVOLBA + TELEFON -->
@@ -1731,7 +1794,8 @@
             </div>
             <div>
               <label class="form-label" data-i18n="form-phone-label">Telefon</label>
-              <input type="tel" class="form-input" id="cf-phone" data-i18n-placeholder="form-phone-ph" placeholder="123 456 789">
+              <input type="tel" class="form-input" id="cf-phone" data-i18n-placeholder="form-phone-ph"
+                placeholder="123 456 789">
             </div>
           </div>
 
@@ -1752,33 +1816,44 @@
           <!-- POPIS PROJEKTU -->
           <div class="mb-6">
             <label class="form-label" data-i18n="form-desc-label">Popis projektu</label>
-            <textarea class="form-textarea" id="cf-desc" data-i18n-placeholder="form-desc-ph" placeholder="Čím více napíšete, tím přesnější návrh dostanete — např. obor podnikání, styl, funkce…"></textarea>
+            <textarea class="form-textarea" id="cf-desc" data-i18n-placeholder="form-desc-ph"
+              placeholder="Čím více napíšete, tím přesnější návrh dostanete — např. obor podnikání, styl, funkce…"></textarea>
           </div>
 
           <!-- Checkbox card -->
           <label class="form-check-card mb-8 block">
             <input type="checkbox" id="cf-free" checked>
             <div>
-              <div class="font-semibold text-gray-900 text-[14px] mb-1" data-i18n="form-check-title">Chci první návrh webu zcela zdarma</div>
-              <div class="text-gray-500 text-[13px] leading-relaxed" data-i18n="form-check-desc">Připravíme vám návrh webu do 24 hodin zdarma a bez závazků — abyste viděli kvalitu na vlastní oči.</div>
+              <div class="font-semibold text-gray-900 text-[14px] mb-1" data-i18n="form-check-title">Chci první návrh
+                webu zcela zdarma</div>
+              <div class="text-gray-500 text-[13px] leading-relaxed" data-i18n="form-check-desc">Připravíme vám návrh
+                webu do 24 hodin zdarma a bez závazků — abyste viděli kvalitu na vlastní oči.</div>
             </div>
           </label>
 
           <!-- Submit -->
           <button type="submit" class="btn-orange" style="width:100%;justify-content:center;padding-left:60px">
             <span class="btn-text" data-i18n="form-submit">Odeslat poptávku</span>
-            <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+            <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 7h10v10" />
+                <path d="M7 17 17 7" />
+              </svg></div>
           </button>
           <p class="text-center text-gray-500 text-[13px] mt-4" data-i18n="form-response">Odpovíme do 24 hodin</p>
         </form>
 
         <!-- Success state (hidden by default) -->
         <div id="contact-success" class="hidden text-center py-8">
-          <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5" style="background:rgba(192,57,43,0.1)">
-            <svg class="w-7 h-7" fill="none" stroke="#c0392b" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+            style="background:rgba(192,57,43,0.1)">
+            <svg class="w-7 h-7" fill="none" stroke="#c0392b" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
           </div>
           <h3 class="text-xl font-black text-gray-900 mb-2" data-i18n="form-success-title">Poptávka odeslána!</h3>
-          <p class="text-gray-500 text-[14px]" data-i18n="form-success-sub">Ozveme se vám do 24 hodin s bezplatným návrhem webu.</p>
+          <p class="text-gray-500 text-[14px]" data-i18n="form-success-sub">Ozveme se vám do 24 hodin s bezplatným
+            návrhem webu.</p>
         </div>
       </div>
     </div>
@@ -2084,7 +2159,7 @@
           'stat-first': 'První návrh', 'stat-delivery': 'Doručení', 'stat-price': 'Cena od', 'stat-price-val': '9900 Kč',
           'tag-active': 'AKTIVNÍ', 'tag-premium': 'PRÉMIOVÝ',
           'marquee-title-1': 'Naše záruky pro klienty', 'marquee-title-2': 'S kým spolupracujeme',
-          'marquee-items': ['První návrh zdarma', 'Doručení do 14 dní', 'Platba po dokončení', '25+ spokojených klientů', 'Responzivní design', 'Základní SEO'],
+          'marquee-items': ['První návrh zdarma', 'Doručení do 14 dní', 'Platba po dokončení', '50+ spokojených klientů', 'Responzivní design', 'Základní SEO'],
           'flip-words': ['moderní web.', 'online marketing.', 'automatizace.', 'ai agenty.', 'photo/video.'],
           'svc-segments': [
             { label: 'Weby', desc: 'Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru — od designu po spuštění do 14 dní.' },
@@ -2172,7 +2247,7 @@
           'stat-first': 'First design', 'stat-delivery': 'Delivery', 'stat-price': 'From', 'stat-price-val': '399 €',
           'tag-active': 'ACTIVE', 'tag-premium': 'PREMIUM',
           'marquee-title-1': 'Our client guarantees', 'marquee-title-2': 'Who we work with',
-          'marquee-items': ['First design free', 'Delivery in 14 days', 'Pay after completion', '25+ satisfied clients', 'Responsive design', 'Basic SEO'],
+          'marquee-items': ['First design free', 'Delivery in 14 days', 'Pay after completion', '50+ satisfied clients', 'Responsive design', 'Basic SEO'],
           'flip-words': ['a modern website.', 'online marketing.', 'automation.', 'AI agents.', 'photo/video.'],
           'svc-segments': [
             { label: 'Websites', desc: 'We design and develop fast, modern websites tailored to you — from design to launch in 14 days.' },
@@ -2260,7 +2335,7 @@
           'stat-first': 'Erster Entwurf', 'stat-delivery': 'Lieferung', 'stat-price': 'Ab', 'stat-price-val': '399 €',
           'tag-active': 'AKTIV', 'tag-premium': 'PREMIUM',
           'marquee-title-1': 'Unsere Garantien', 'marquee-title-2': 'Unsere Partner',
-          'marquee-items': ['Erster Entwurf kostenlos', 'Lieferung in 14 Tagen', 'Zahlung nach Fertigstellung', '25+ zufriedene Kunden', 'Responsives Design', 'Basis-SEO'],
+          'marquee-items': ['Erster Entwurf kostenlos', 'Lieferung in 14 Tagen', 'Zahlung nach Fertigstellung', '50+ zufriedene Kunden', 'Responsives Design', 'Basis-SEO'],
           'flip-words': ['eine moderne Website.', 'Online-Marketing.', 'Automatisierung.', 'KI-Agenten.', 'Foto/Video.'],
           'svc-segments': [
             { label: 'Webseiten', desc: 'Wir entwerfen und entwickeln schnelle, moderne Webseiten nach Maß — vom Design bis zum Launch in 14 Tagen.' },
