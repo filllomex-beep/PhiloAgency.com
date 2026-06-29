@@ -2173,8 +2173,10 @@
       function moveToSeg(seg) {
         const trackLeft = track.getBoundingClientRect().left;
         const r = seg.getBoundingClientRect();
-        indicator.style.left = (r.left - trackLeft) + 'px';
+        indicator.style.left = (r.left - trackLeft + track.scrollLeft) + 'px';
         indicator.style.width = r.width + 'px';
+        // Keep selected segment visible on mobile
+        seg.scrollIntoView({ block: 'nearest', inline: 'center' });
       }
 
       // Init on first active
@@ -2184,6 +2186,17 @@
         indicator.style.transition = 'none';
         moveToSeg(first);
         requestAnimationFrame(() => { indicator.style.transition = ''; });
+      });
+
+      track.addEventListener('scroll', () => {
+        const active = segs.find(s => s.classList.contains('active'));
+        if (active) {
+          const trackLeft = track.getBoundingClientRect().left;
+          const r = active.getBoundingClientRect();
+          indicator.style.transition = 'none';
+          indicator.style.left = (r.left - trackLeft + track.scrollLeft) + 'px';
+          requestAnimationFrame(() => { indicator.style.transition = ''; });
+        }
       });
 
       segs.forEach(seg => {
