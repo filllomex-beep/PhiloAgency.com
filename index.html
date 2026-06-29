@@ -804,9 +804,15 @@
 
     /* ─── MOBILE OVERRIDES ─── */
     @media (max-width: 767px) {
-      .svc-track { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap; }
-      .svc-track::-webkit-scrollbar { display: none; }
-      .svc-seg { flex: 0 0 auto; padding: 7px 14px; }
+      .svc-track { overflow: hidden; flex-wrap: nowrap; cursor: default; user-select: none; }
+      .svc-seg { flex: 0 0 auto; padding: 7px 16px; }
+      .svc-indicator { display: none; }
+      .svc-seg.active {
+        background: rgba(255,255,255,0.92) !important;
+        color: #c0392b !important;
+        font-weight: 700 !important;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+      }
       .hero-bg { padding-top: 96px !important; padding-bottom: 48px !important; }
     }
   </style>
@@ -2171,12 +2177,12 @@
       track.prepend(indicator);
 
       function moveToSeg(seg) {
-        const trackLeft = track.getBoundingClientRect().left;
-        const r = seg.getBoundingClientRect();
-        indicator.style.left = (r.left - trackLeft + track.scrollLeft) + 'px';
-        indicator.style.width = r.width + 'px';
-        // Keep selected segment visible on mobile
-        seg.scrollIntoView({ block: 'nearest', inline: 'center' });
+        if (window.innerWidth >= 768) {
+          const trackLeft = track.getBoundingClientRect().left;
+          const r = seg.getBoundingClientRect();
+          indicator.style.left = (r.left - trackLeft + track.scrollLeft) + 'px';
+          indicator.style.width = r.width + 'px';
+        }
       }
 
       // Init on first active
@@ -2188,31 +2194,59 @@
         requestAnimationFrame(() => { indicator.style.transition = ''; });
       });
 
-      track.addEventListener('scroll', () => {
-        const active = segs.find(s => s.classList.contains('active'));
-        if (active) {
-          const trackLeft = track.getBoundingClientRect().left;
-          const r = active.getBoundingClientRect();
-          indicator.style.transition = 'none';
-          indicator.style.left = (r.left - trackLeft + track.scrollLeft) + 'px';
-          requestAnimationFrame(() => { indicator.style.transition = ''; });
-        }
-      });
+      function activateSeg(seg) {
+        segs.forEach(s => s.classList.remove('active'));
+        // Also remove active from any clones
+        track.querySelectorAll('.svc-seg').forEach(s => s.classList.remove('active'));
+        seg.classList.add('active');
+        // Mirror active to original if clone clicked
+        const origSeg = segs.find(s => s.dataset.desc === seg.dataset.desc);
+        if (origSeg) origSeg.classList.add('active');
+        moveToSeg(seg);
+        svcDesc.style.opacity = '0';
+        svcDesc.style.transform = 'translateY(4px)';
+        setTimeout(() => {
+          svcDesc.textContent = seg.dataset.desc;
+          svcDesc.style.opacity = '1';
+          svcDesc.style.transform = 'translateY(0)';
+        }, 80);
+      }
 
       segs.forEach(seg => {
-        seg.addEventListener('click', () => {
-          segs.forEach(s => s.classList.remove('active'));
-          seg.classList.add('active');
-          moveToSeg(seg);
-          svcDesc.style.opacity = '0';
-          svcDesc.style.transform = 'translateY(4px)';
-          setTimeout(() => {
-            svcDesc.textContent = seg.dataset.desc;
-            svcDesc.style.opacity = '1';
-            svcDesc.style.transform = 'translateY(0)';
-          }, 80);
-        });
+        seg.addEventListener('click', () => activateSeg(seg));
       });
+
+      // Mobile: auto-scroll loop
+      if (window.innerWidth < 768) {
+        // Duplicate segments for seamless loop
+        [...segs].forEach(seg => {
+          const clone = seg.cloneNode(true);
+          clone.addEventListener('click', () => activateSeg(clone));
+          track.appendChild(clone);
+        });
+
+        let paused = false;
+        let pauseTimer = null;
+
+        function pauseFor(ms) {
+          paused = true;
+          clearTimeout(pauseTimer);
+          pauseTimer = setTimeout(() => { paused = false; }, ms);
+        }
+
+        track.addEventListener('click', () => pauseFor(2500));
+        track.addEventListener('touchstart', () => pauseFor(3000), { passive: true });
+
+        const halfWidth = () => track.scrollWidth / 2;
+
+        (function loop() {
+          if (!paused) {
+            track.scrollLeft += 0.5;
+            if (track.scrollLeft >= halfWidth()) track.scrollLeft -= halfWidth();
+          }
+          requestAnimationFrame(loop);
+        })();
+      }
 
       // Re-position on resize
       window.addEventListener('resize', () => {
