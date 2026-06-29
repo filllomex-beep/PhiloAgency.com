@@ -2696,8 +2696,8 @@
         });
       });
 
-      // Contact form submit — Formspree
-      const FORMSPREE_ID = 'YOUR_FORM_ID'; // ← replace with your Formspree form ID
+      // Contact form submit — Web3Forms
+      const WEB3FORMS_KEY = 'YOUR_ACCESS_KEY'; // ← replace with your Web3Forms access key
       const contactForm = document.getElementById('contact-form');
       const contactSuccess = document.getElementById('contact-success');
       if (contactForm) {
@@ -2710,15 +2710,18 @@
           btnText.textContent = '⏳';
 
           const data = new FormData(contactForm);
+          data.append('access_key', WEB3FORMS_KEY);
+          data.append('subject', 'Nová poptávka z PhiloAgency.com');
+          data.append('from_name', 'PhiloAgency.com');
 
           try {
-            const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+            const res = await fetch('https://api.web3forms.com/submit', {
               method: 'POST',
-              body: data,
-              headers: { 'Accept': 'application/json' }
+              body: data
             });
+            const json = await res.json();
 
-            if (res.ok) {
+            if (json.success) {
               contactForm.style.opacity = '0';
               contactForm.style.transform = 'translateY(8px)';
               contactForm.style.transition = 'opacity 0.3s, transform 0.3s';
@@ -2732,9 +2735,7 @@
                 });
               }, 300);
             } else {
-              const json = await res.json().catch(() => ({}));
-              const msg = json.errors ? json.errors.map(e => e.message).join(', ') : 'Chyba při odesílání. Zkuste to znovu.';
-              alert(msg);
+              alert(json.message || 'Chyba při odesílání. Zkuste to znovu.');
               submitBtn.disabled = false;
               btnText.textContent = origText;
             }
