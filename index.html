@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Philo Agency — Vytvoříme vám nový web</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23c0392b' stroke-width='7'/%3E%3Ctext x='50' y='67' font-family='Arial Black%2C Arial' font-weight='900' font-size='38' text-anchor='middle' fill='%23c0392b'%3EPA%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23c0392b' stroke-width='7'/%3E%3Ctext x='50' y='67' font-family='Arial Black%2C Arial' font-weight='900' font-size='38' text-anchor='middle' fill='%23c0392b'%3EPA%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=inter:wght@100..900&display=swap" rel="stylesheet">
@@ -767,53 +768,114 @@
 
     /* ─── HAMBURGER ─── */
     .hamburger-btn {
-      display: flex; flex-direction: column; justify-content: center;
-      gap: 5px; width: 36px; height: 36px;
-      background: none; border: none; cursor: pointer; padding: 4px; flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      flex-shrink: 0;
     }
+
     .hamburger-btn span {
-      display: block; height: 2px; background: #111; border-radius: 2px;
+      display: block;
+      height: 2px;
+      background: #111;
+      border-radius: 2px;
       transition: transform 0.25s ease, opacity 0.2s ease;
     }
-    .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger-btn.open span:nth-child(2) { opacity: 0; }
-    .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .hamburger-btn.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger-btn.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
 
     /* ─── MOBILE MENU ─── */
     .mobile-menu {
-      position: fixed; top: 64px; left: 0; right: 0; z-index: 48;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid rgba(0,0,0,0.07);
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      z-index: 48;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .mobile-menu.open { max-height: 480px; }
+
+    .mobile-menu.open {
+      max-height: 480px;
+    }
+
     .mobile-menu-inner {
       padding: 20px 24px 28px;
-      display: flex; flex-direction: column; gap: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
+
     .mobile-nav-link {
-      display: block; padding: 14px 0;
-      font-size: 17px; font-weight: 600; color: #111;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      text-decoration: none; transition: color 0.15s;
+      display: block;
+      padding: 14px 0;
+      font-size: 17px;
+      font-weight: 600;
+      color: #111;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      text-decoration: none;
+      transition: color 0.15s;
     }
-    .mobile-nav-link:last-of-type { border-bottom: none; }
-    .mobile-nav-link:active { color: #c0392b; }
+
+    .mobile-nav-link:last-of-type {
+      border-bottom: none;
+    }
+
+    .mobile-nav-link:active {
+      color: #c0392b;
+    }
 
     /* ─── MOBILE OVERRIDES ─── */
     @media (max-width: 767px) {
-      .svc-track { overflow: hidden; flex-wrap: nowrap; cursor: default; user-select: none; }
-      .svc-seg { flex: 0 0 auto; padding: 7px 16px; }
-      .svc-indicator { display: none; }
+      .svc-track {
+        overflow: hidden;
+        flex-wrap: nowrap;
+        cursor: default;
+        user-select: none;
+      }
+
+      .svc-seg {
+        flex: 0 0 auto;
+        padding: 7px 16px;
+      }
+
+      .svc-indicator {
+        display: none;
+      }
+
       .svc-seg.active {
-        background: rgba(255,255,255,0.92) !important;
+        background: rgba(255, 255, 255, 0.92) !important;
         color: #c0392b !important;
         font-weight: 700 !important;
-        box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
       }
-      .hero-bg { padding-top: 96px !important; padding-bottom: 48px !important; }
+
+      .hero-bg {
+        padding-top: 96px !important;
+        padding-bottom: 48px !important;
+      }
     }
   </style>
 </head>
@@ -871,7 +933,8 @@
         <span class="btn-text" data-i18n="nav-cta">Chci bezplatný návrh</span>
         <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 7h10v10" /><path d="M7 17 17 7" />
+            <path d="M7 7h10v10" />
+            <path d="M7 17 17 7" />
           </svg></div>
       </button>
     </div>
@@ -917,7 +980,8 @@
           </div>
 
           <!-- H1 -->
-          <h1 id="hero-title" class="text-[36px] sm:text-[46px] md:text-[52px] lg:text-[66px] font-black leading-[1.02] tracking-tight text-gray-900"
+          <h1 id="hero-title"
+            class="text-[36px] sm:text-[46px] md:text-[52px] lg:text-[66px] font-black leading-[1.02] tracking-tight text-gray-900"
             style="opacity:0">
             <span data-i18n="h1-line1">Zařídíme vám</span>
             <span id="fw-wrap" style="position:relative;display:inline-block;vertical-align:baseline;color:#c0392b">
@@ -1717,7 +1781,8 @@
     </div>
 
     <div class="max-w-3xl mx-auto relative z-10">
-      <h2 class="text-4xl md:text-5xl font-black text-white mb-8 md:mb-14 text-center reveal" data-i18n="faq-title">Časté
+      <h2 class="text-4xl md:text-5xl font-black text-white mb-8 md:mb-14 text-center reveal" data-i18n="faq-title">
+        Časté
         dotazy</h2>
 
       <div class="space-y-3">
@@ -1838,8 +1903,8 @@
             <!-- PŘÍJMENÍ -->
             <div>
               <label class="form-label" data-i18n="form-lastname-label">Příjmení</label>
-              <input type="text" class="form-input" id="cf-lastname" name="prijmeni" data-i18n-placeholder="form-lastname-ph"
-                placeholder="Vaše příjmení" required>
+              <input type="text" class="form-input" id="cf-lastname" name="prijmeni"
+                data-i18n-placeholder="form-lastname-ph" placeholder="Vaše příjmení" required>
             </div>
           </div>
 
@@ -1960,8 +2025,8 @@
         <div>
           <h4 class="text-white font-semibold text-[13px] mb-4" data-i18n="foot-contact">Kontakt</h4>
           <div class="space-y-2.5">
-            <a href="mailto:info@philoagency.cz"
-              class="block text-gray-500 text-[13px] hover:text-white transition-colors">info@philoagency.cz</a>
+            <a href="mailto:philoagency.info@gmail.com"
+              class="block text-gray-500 text-[13px] hover:text-white transition-colors">philoagency.info@gmail.com</a>
             <a href="tel:+420900000000" class="block text-gray-500 text-[13px] hover:text-white transition-colors">+420
               900 000 000</a>
           </div>
