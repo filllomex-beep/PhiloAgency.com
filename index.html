@@ -764,6 +764,51 @@
       color: #111;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     }
+
+    /* ─── HAMBURGER ─── */
+    .hamburger-btn {
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 5px; width: 36px; height: 36px;
+      background: none; border: none; cursor: pointer; padding: 4px; flex-shrink: 0;
+    }
+    .hamburger-btn span {
+      display: block; height: 2px; background: #111; border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+    .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.open span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      position: fixed; top: 64px; left: 0; right: 0; z-index: 48;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mobile-menu.open { max-height: 480px; }
+    .mobile-menu-inner {
+      padding: 20px 24px 28px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .mobile-nav-link {
+      display: block; padding: 14px 0;
+      font-size: 17px; font-weight: 600; color: #111;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .mobile-nav-link:last-of-type { border-bottom: none; }
+    .mobile-nav-link:active { color: #c0392b; }
+
+    /* ─── MOBILE OVERRIDES ─── */
+    @media (max-width: 767px) {
+      .svc-track { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap; }
+      .svc-track::-webkit-scrollbar { display: none; }
+      .svc-seg { flex: 0 0 auto; padding: 7px 14px; }
+      .hero-bg { padding-top: 96px !important; padding-bottom: 48px !important; }
+    }
   </style>
 </head>
 
@@ -788,7 +833,7 @@
           data-i18n="nav-faq">Časté dotazy</a>
       </div>
       <div class="flex items-center gap-3">
-        <button class="btn-dark btn-nav">
+        <button class="btn-dark btn-nav hidden md:inline-flex">
           <span class="btn-text" data-i18n="nav-cta">Chci bezplatný návrh</span>
           <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -801,9 +846,30 @@
           <button class="lang-btn" data-lang="en">EN</button>
           <button class="lang-btn" data-lang="de">DE</button>
         </div>
+        <button class="hamburger-btn md:hidden" id="hamburger-btn" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- ───── MOBILE MENU ───── -->
+  <div class="mobile-menu md:hidden" id="mobile-menu">
+    <div class="mobile-menu-inner">
+      <a href="#" class="mobile-nav-link" data-i18n="nav-home" id="mm-home">Domů</a>
+      <a href="#cena" class="mobile-nav-link" data-i18n="nav-price" id="mm-price">Cena</a>
+      <a href="#ukazky" class="mobile-nav-link" data-i18n="nav-showcase" id="mm-showcase">Ukázky</a>
+      <a href="#referencie" class="mobile-nav-link" data-i18n="nav-ref" id="mm-ref">Reference</a>
+      <a href="#faq" class="mobile-nav-link" data-i18n="nav-faq" id="mm-faq">Časté dotazy</a>
+      <button class="btn-dark mt-5" style="width:100%;justify-content:center" id="mm-cta">
+        <span class="btn-text" data-i18n="nav-cta">Chci bezplatný návrh</span>
+        <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 7h10v10" /><path d="M7 17 17 7" />
+          </svg></div>
+      </button>
+    </div>
+  </div>
 
   <!-- ───── HERO ───── -->
   <section class="hero-bg pt-36 pb-28 px-6">
@@ -845,7 +911,7 @@
           </div>
 
           <!-- H1 -->
-          <h1 id="hero-title" class="text-[52px] md:text-[66px] font-black leading-[1.02] tracking-tight text-gray-900"
+          <h1 id="hero-title" class="text-[36px] sm:text-[46px] md:text-[52px] lg:text-[66px] font-black leading-[1.02] tracking-tight text-gray-900"
             style="opacity:0">
             <span data-i18n="h1-line1">Zařídíme vám</span>
             <span id="fw-wrap" style="position:relative;display:inline-block;vertical-align:baseline;color:#c0392b">
@@ -1187,7 +1253,7 @@
   </section>
 
   <!-- ───── HOW IT WORKS ───── -->
-  <section style="background:#c0392b" class="py-20 px-6">
+  <section style="background:#c0392b" class="py-12 md:py-20 px-6">
     <div class="max-w-5xl mx-auto text-center">
       <p class="text-red-100 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" data-i18n="hiw-label">
         Jak to funguje</p>
@@ -1241,7 +1307,7 @@
   </section>
 
   <!-- ───── FEATURES / PACKAGE ───── -->
-  <section id="cena" class="py-24 px-6 relative overflow-hidden"
+  <section id="cena" class="py-14 md:py-24 px-6 relative overflow-hidden"
     style="background:linear-gradient(135deg,#fefbff 0%,#fffcfa 60%,#f7fcff 100%)">
     <!-- blobs -->
     <div class="blob"
@@ -1368,7 +1434,7 @@
   </section>
 
   <!-- ───── PORTFOLIO ───── -->
-  <section id="ukazky" class="py-24 px-6 relative overflow-hidden"
+  <section id="ukazky" class="py-14 md:py-24 px-6 relative overflow-hidden"
     style="background:linear-gradient(135deg,#f6f4f2 0%,#f9f7f5 100%)">
     <div class="blob"
       style="width:450px;height:450px;background:radial-gradient(circle,rgba(192,57,43,0.06),transparent 65%);top:-80px;left:-80px;filter:blur(70px)">
@@ -1469,7 +1535,7 @@
   </section>
 
   <!-- ───── TESTIMONIALS ───── -->
-  <section id="referencie" class="py-24 px-6 relative overflow-hidden"
+  <section id="referencie" class="py-14 md:py-24 px-6 relative overflow-hidden"
     style="background:linear-gradient(160deg,#fffbf7 0%,#ffffff 50%,#faf9ff 100%)">
     <div class="blob"
       style="width:500px;height:500px;background:radial-gradient(circle,rgba(192,57,43,0.07),transparent 65%);top:-80px;right:-80px;filter:blur(80px)">
@@ -1638,14 +1704,14 @@
   </section>
 
   <!-- ───── FAQ ───── -->
-  <section id="faq" class="py-24 px-6 relative overflow-hidden" style="background:#c0392b">
+  <section id="faq" class="py-14 md:py-24 px-6 relative overflow-hidden" style="background:#c0392b">
     <div class="absolute inset-0 pointer-events-none">
       <div class="absolute w-96 h-96 rounded-full opacity-10"
         style="background:#fff;filter:blur(120px);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
     </div>
 
     <div class="max-w-3xl mx-auto relative z-10">
-      <h2 class="text-4xl md:text-5xl font-black text-white mb-14 text-center reveal" data-i18n="faq-title">Časté
+      <h2 class="text-4xl md:text-5xl font-black text-white mb-8 md:mb-14 text-center reveal" data-i18n="faq-title">Časté
         dotazy</h2>
 
       <div class="space-y-3">
@@ -1733,7 +1799,7 @@
   </section>
 
   <!-- ───── CONTACT FORM ───── -->
-  <section id="kontakt" class="py-24 px-6 relative overflow-hidden"
+  <section id="kontakt" class="py-14 md:py-24 px-6 relative overflow-hidden"
     style="background:linear-gradient(160deg,#faf9f7 0%,#fff7f4 50%,#fafbff 100%)">
     <div class="blob"
       style="width:500px;height:500px;background:radial-gradient(circle,rgba(192,57,43,0.07),transparent 65%);top:-80px;left:50%;transform:translateX(-50%);filter:blur(80px)">
@@ -1754,7 +1820,7 @@
       </div>
 
       <!-- Form glass card -->
-      <div class="glass rounded-3xl p-8 md:p-10 reveal">
+      <div class="glass rounded-3xl p-5 sm:p-8 md:p-10 reveal">
         <form id="contact-form" novalidate>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
             <!-- JMÉNO -->
@@ -2479,6 +2545,29 @@
       // Restore saved language
       const saved = localStorage.getItem('philoLang');
       if (saved && saved !== 'cs' && TRANSLATIONS[saved]) setLang(saved);
+
+      // Hamburger mobile menu
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (hamburgerBtn && mobileMenu) {
+        hamburgerBtn.addEventListener('click', () => {
+          const isOpen = hamburgerBtn.classList.toggle('open');
+          mobileMenu.classList.toggle('open', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        mobileMenu.querySelectorAll('a, #mm-cta').forEach(el => {
+          el.addEventListener('click', () => {
+            hamburgerBtn.classList.remove('open');
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+      // Mobile menu CTA scrolls to form
+      const mmCta = document.getElementById('mm-cta');
+      if (mmCta) mmCta.addEventListener('click', () => {
+        document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
 
       // Scroll-to-form for all CTA buttons
       document.querySelectorAll('[data-i18n="btn-main"], [data-i18n="nav-cta"], [data-i18n="btn-orange-cta"]').forEach(el => {
