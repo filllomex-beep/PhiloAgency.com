@@ -615,6 +615,41 @@
       box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.07);
     }
 
+    .form-input.field-error,
+    .form-select.field-error,
+    .form-textarea.field-error {
+      border-color: #e03b30;
+      box-shadow: 0 0 0 3px rgba(224, 59, 48, 0.08);
+    }
+
+    #svc-chips.field-error {
+      outline: 1.5px solid #e03b30;
+      outline-offset: 6px;
+      border-radius: 12px;
+    }
+
+    .form-err-msg {
+      color: #e03b30;
+      font-size: 12.5px;
+      font-weight: 500;
+      margin-top: 6px;
+    }
+
+    /* Minimalist button spinner */
+    .btn-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: btn-spin 0.6s linear infinite;
+    }
+
+    @keyframes btn-spin {
+      to { transform: rotate(360deg); }
+    }
+
     .form-textarea {
       min-height: 110px;
       resize: vertical;
@@ -2463,7 +2498,10 @@
           'form-check-desc': 'Připravíme vám návrh webu do 24 hodin zdarma a bez závazků. Neplatíte nic, dokud nebudete spokojeni.',
           'form-submit': 'Odeslat poptávku', 'form-response': 'Odpovíme do 24 hodin',
           'form-success-title': 'Poptávka odeslána!',
-          'form-success-sub': 'Ozveme se vám do 24 hodin s bezplatným návrhem webu.'
+          'form-success-sub': 'Ozveme se vám do 24 hodin s bezplatným návrhem webu.',
+          'form-err-required': 'Toto pole je povinné.',
+          'form-err-email': 'Zadejte platný email.',
+          'form-err-service': 'Vyberte alespoň jednu službu.'
         },
         en: {
           'page-title': 'Philo Agency — We\'ll build your new website',
@@ -2550,6 +2588,9 @@
           'form-check-title': 'I want the first website design completely free',
           'form-check-desc': 'We\'ll prepare a website design for you within 24 hours, free of charge and with no commitment. You pay nothing until you\'re satisfied.',
           'form-submit': 'Send inquiry', 'form-response': 'We respond within 24 hours',
+          'form-err-required': 'This field is required.',
+          'form-err-email': 'Enter a valid email.',
+          'form-err-service': 'Select at least one service.',
           'form-success-title': 'Inquiry sent!',
           'form-success-sub': 'We\'ll get back to you within 24 hours with a free website design.'
         },
@@ -2638,6 +2679,9 @@
           'form-check-title': 'Ich möchte den ersten Website-Entwurf völlig kostenlos',
           'form-check-desc': 'Wir bereiten Ihnen innerhalb von 24 Stunden einen Website-Entwurf kostenlos und unverbindlich vor. Sie zahlen nichts, bis Sie zufrieden sind.',
           'form-submit': 'Anfrage senden', 'form-response': 'Wir antworten innerhalb von 24 Stunden',
+          'form-err-required': 'Dieses Feld ist erforderlich.',
+          'form-err-email': 'Geben Sie eine gültige E-Mail ein.',
+          'form-err-service': 'Wählen Sie mindestens eine Leistung.',
           'form-success-title': 'Anfrage gesendet!',
           'form-success-sub': 'Wir melden uns innerhalb von 24 Stunden mit einem kostenlosen Website-Entwurf.'
         }
@@ -2764,14 +2808,111 @@
       const WEB3FORMS_KEY = 'acf94c7c-f4ae-4136-93d4-e800eed98043';
       const contactForm = document.getElementById('contact-form');
       const contactSuccess = document.getElementById('contact-success');
+
+      // Helper: get an error message in current language
+      function tErr(key) {
+        const t = TRANSLATIONS[document.documentElement.lang] || TRANSLATIONS.cs;
+        return t[key] || TRANSLATIONS.cs[key];
+      }
+
+      // Helper: show/clear an inline error under a field
+      function showErr(el, msg) {
+        el.classList.add('field-error');
+        let m = el.parentElement.querySelector('.form-err-msg');
+        if (!m) {
+          m = document.createElement('p');
+          m.className = 'form-err-msg';
+          el.parentElement.appendChild(m);
+        }
+        m.textContent = msg;
+      }
+      function clearErr(el) {
+        el.classList.remove('field-error');
+        const m = el.parentElement.querySelector('.form-err-msg');
+        if (m) m.remove();
+      }
+
       if (contactForm) {
+        // Live-clear errors as the user fixes fields
+        ['cf-name', 'cf-lastname', 'cf-email', 'cf-phone'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', () => clearErr(el));
+        });
+        document.querySelectorAll('#svc-chips .svc-chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const wrap = document.getElementById('svc-chips');
+            wrap.classList.remove('field-error');
+            const m = wrap.parentElement.querySelector('.form-err-msg');
+            if (m) m.remove();
+          });
+        });
+
+        function validate() {
+          let ok = true;
+          let firstBad = null;
+
+          const required = ['cf-name', 'cf-lastname', 'cf-phone'];
+          required.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el.value.trim()) {
+              showErr(el, tErr('form-err-required'));
+              if (!firstBad) firstBad = el;
+              ok = false;
+            } else clearErr(el);
+          });
+
+          // Email: required + valid format
+          const email = document.getElementById('cf-email');
+          const emailVal = email.value.trim();
+          if (!emailVal) {
+            showErr(email, tErr('form-err-required'));
+            if (!firstBad) firstBad = email;
+            ok = false;
+          } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+            showErr(email, tErr('form-err-email'));
+            if (!firstBad) firstBad = email;
+            ok = false;
+          } else clearErr(email);
+
+          // At least one service chip
+          const chipsWrap = document.getElementById('svc-chips');
+          const anyService = chipsWrap.querySelectorAll('.svc-chip.selected').length > 0;
+          if (!anyService) {
+            chipsWrap.classList.add('field-error');
+            let m = chipsWrap.parentElement.querySelector('.form-err-msg');
+            if (!m) {
+              m = document.createElement('p');
+              m.className = 'form-err-msg';
+              chipsWrap.parentElement.appendChild(m);
+            }
+            m.textContent = tErr('form-err-service');
+            if (!firstBad) firstBad = chipsWrap;
+            ok = false;
+          }
+
+          if (firstBad) firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return ok;
+        }
+
         contactForm.addEventListener('submit', async function (e) {
           e.preventDefault();
+          if (!validate()) return;
+
           const submitBtn = contactForm.querySelector('button[type="submit"]');
           const btnText = submitBtn.querySelector('.btn-text');
+          const btnIcon = submitBtn.querySelector('.btn-icon');
           const origText = btnText.textContent;
           submitBtn.disabled = true;
-          btnText.textContent = '⏳';
+          submitBtn.style.opacity = '0.85';
+          btnText.innerHTML = '<span class="btn-spinner"></span>';
+          if (btnIcon) btnIcon.style.display = 'none';
+
+          function resetBtn() {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '';
+            btnText.textContent = origText;
+            if (btnIcon) btnIcon.style.display = '';
+          }
 
           const data = new FormData(contactForm);
           data.append('access_key', WEB3FORMS_KEY);
@@ -2800,13 +2941,11 @@
               }, 300);
             } else {
               alert(json.message || 'Chyba při odesílání. Zkuste to znovu.');
-              submitBtn.disabled = false;
-              btnText.textContent = origText;
+              resetBtn();
             }
           } catch (_) {
             alert('Nepodařilo se odeslat formulář. Zkontrolujte připojení a zkuste znovu.');
-            submitBtn.disabled = false;
-            btnText.textContent = origText;
+            resetBtn();
           }
         });
       }
