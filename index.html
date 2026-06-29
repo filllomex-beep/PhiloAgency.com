@@ -2216,15 +2216,28 @@
         seg.addEventListener('click', () => activateSeg(seg));
       });
 
-      // Mobile: auto-scroll loop
+      // Mobile: CSS-transform marquee loop (works on iOS Safari)
       if (window.innerWidth < 768) {
-        // Duplicate segments for seamless loop
-        [...segs].forEach(seg => {
+        // Wrap original segs in an inner container
+        const inner = document.createElement('div');
+        inner.style.cssText = 'display:flex;gap:2px;will-change:transform;';
+        [...track.children].forEach(child => {
+          if (!child.classList.contains('svc-indicator')) inner.appendChild(child);
+        });
+        track.appendChild(inner);
+
+        // Clone originals for seamless loop
+        [...inner.querySelectorAll('.svc-seg')].forEach(seg => {
           const clone = seg.cloneNode(true);
-          clone.addEventListener('click', () => activateSeg(clone));
-          track.appendChild(clone);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.addEventListener('click', () => {
+            const orig = segs.find(s => s.dataset.desc === clone.dataset.desc);
+            if (orig) activateSeg(orig);
+          });
+          inner.appendChild(clone);
         });
 
+        let offset = 0;
         let paused = false;
         let pauseTimer = null;
 
@@ -2237,12 +2250,12 @@
         track.addEventListener('click', () => pauseFor(2500));
         track.addEventListener('touchstart', () => pauseFor(3000), { passive: true });
 
-        const halfWidth = () => track.scrollWidth / 2;
-
         (function loop() {
           if (!paused) {
-            track.scrollLeft += 0.5;
-            if (track.scrollLeft >= halfWidth()) track.scrollLeft -= halfWidth();
+            offset += 0.5;
+            const halfW = inner.scrollWidth / 2;
+            if (offset >= halfW) offset -= halfW;
+            inner.style.transform = 'translateX(-' + offset + 'px)';
           }
           requestAnimationFrame(loop);
         })();
