@@ -979,8 +979,8 @@
 
   <!-- ───── HERO ───── -->
   <section class="hero-bg pt-36 pb-28 px-6">
-    <!-- Wave background -->
-    <div id="hero-waves" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0"></div>
+    <!-- Animated shader background -->
+    <canvas id="hero-shader" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;display:block"></canvas>
     <!-- Colored blobs for glass effect -->
     <div class="blob"
       style="width:720px;height:720px;background:radial-gradient(circle,rgba(192,57,43,0.13),transparent 65%);top:-200px;right:-120px;filter:blur(90px)">
@@ -2940,120 +2940,176 @@
     })();
   </script>
 
-  <script type="module">
-    import { createNoise2D } from 'https://cdn.jsdelivr.net/npm/simplex-noise@4.0.1/+esm';
+  <script>
+    // Hero background — Axion-style animated shader (Swirl + ChromaFlow + FlutedGlass + FilmGrain)
+    // Custom WebGL fragment shader, no build step required.
+    (function () {
+      const canvas = document.getElementById('hero-shader');
+      if (!canvas) return;
+      const gl = canvas.getContext('webgl', { antialias: true, premultipliedAlpha: false, alpha: true });
+      if (!gl) return;
 
-    const container = document.getElementById('hero-waves');
-    if (container) {
-      const ns = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(ns, 'svg');
-      svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-      svg.style.cssText = 'display:block;width:100%;height:100%;';
-      container.appendChild(svg);
+      const VERT = `
+        attribute vec2 a_pos;
+        void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+      `;
 
-      const strokeColor = 'rgba(15,23,42,1)';
-      const mouse = { x: -10, y: 0, lx: 0, ly: 0, sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false };
-      let paths = [], lines = [];
-      const noise = createNoise2D();
-      let bounding = null;
+      const FRAG = `
+        precision highp float;
+        uniform vec2  u_res;
+        uniform float u_time;
+        uniform vec2  u_ptr;   // smoothed pointer, -1..1
 
-      function setSize() {
-        bounding = container.getBoundingClientRect();
-        svg.style.width = bounding.width + 'px';
-        svg.style.height = bounding.height + 'px';
-      }
-
-      function setLines() {
-        const { width, height } = bounding;
-        lines = [];
-        paths.forEach(p => p.remove());
-        paths = [];
-        const xGap = 8, yGap = 8;
-        const totalLines = Math.ceil((width + 200) / xGap);
-        const totalPoints = Math.ceil((height + 30) / yGap);
-        const xStart = (width - xGap * totalLines) / 2;
-        const yStart = (height - yGap * totalPoints) / 2;
-
-        for (let i = 0; i < totalLines; i++) {
-          const points = [];
-          for (let j = 0; j < totalPoints; j++) {
-            points.push({ x: xStart + xGap * i, y: yStart + yGap * j, wave: { x: 0, y: 0 }, cursor: { x: 0, y: 0, vx: 0, vy: 0 } });
-          }
-          const path = document.createElementNS(ns, 'path');
-          path.setAttribute('fill', 'none');
-          path.setAttribute('stroke', strokeColor);
-          path.setAttribute('stroke-width', '1');
-          path.setAttribute('stroke-opacity', '0.1');
-          svg.appendChild(path);
-          paths.push(path);
-          lines.push(points);
+        // ---- hash / value-noise / fbm ----
+        float hash(vec2 p){
+          p = fract(p * vec2(123.34, 456.21));
+          p += dot(p, p + 45.32);
+          return fract(p.x * p.y);
         }
+        float noise(vec2 p){
+          vec2 i = floor(p), f = fract(p);
+          float a = hash(i);
+          float b = hash(i + vec2(1.0, 0.0));
+          float c = hash(i + vec2(0.0, 1.0));
+          float d = hash(i + vec2(1.0, 1.0));
+          vec2 u = f * f * (3.0 - 2.0 * f);
+          return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+        }
+        float fbm(vec2 p){
+          float v = 0.0, amp = 0.5;
+          for (int i = 0; i < 5; i++){
+            v += amp * noise(p);
+            p *= 2.02;
+            amp *= 0.5;
+          }
+          return v;
+        }
+
+        vec2 swirl(vec2 uv, vec2 c, float amt){
+          vec2 d = uv - c;
+          float r = length(d);
+          float a = amt * exp(-r * 2.2);
+          float s = sin(a), co = cos(a);
+          return c + mat2(co, -s, s, co) * d;
+        }
+
+        void main(){
+          vec2 uv = gl_FragCoord.xy / u_res;
+          float aspect = u_res.x / u_res.y;
+          vec2 p = uv;
+          p.x *= aspect;
+
+          float t = u_time * 0.06;
+
+          // --- Swirl distortion (detail ~1.7) ---
+          vec2 sw = swirl(p, vec2(0.5 * aspect + u_ptr.x * 0.12, 0.55 - u_ptr.y * 0.12), 1.7 + 0.4 * sin(t * 0.7));
+
+          // --- ChromaFlow: domain-warped flow field, orange over white ---
+          vec2 q = vec2(fbm(sw * 1.6 + vec2(0.0, t)), fbm(sw * 1.6 + vec2(5.2, -t)));
+          vec2 r = vec2(fbm(sw * 1.6 + q * 3.5 + vec2(1.7, 9.2)),
+                        fbm(sw * 1.6 + q * 3.5 + vec2(8.3, 2.8) - t * 0.5));
+          float flow = fbm(sw * 1.6 + r * 3.5);
+          flow = smoothstep(0.35, 0.95, flow);
+
+          // --- FlutedGlass: vertical ridges w/ refraction + chromatic aberration ---
+          float freq = 8.0;
+          float ridge = fract(uv.x * freq);
+          float refr = (ridge - 0.5) * 0.06;            // refraction offset
+          float ab   = 0.010;                            // aberration
+          float fR = smoothstep(0.35, 0.95, fbm((sw + vec2(refr + ab, 0.0)) * 1.6 + r * 3.5));
+          float fB = smoothstep(0.35, 0.95, fbm((sw + vec2(refr - ab, 0.0)) * 1.6 + r * 3.5));
+          float highlight = pow(sin(ridge * 3.14159265), 24.0) * 0.12; // fluted highlight seam
+
+          // --- Colors ---
+          vec3 base   = vec3(0.949, 0.945, 0.937);       // warm light gray (~#f2f1ee)
+          vec3 orange = vec3(1.0, 0.373, 0.012);         // #ff5f03
+          vec3 col = base;
+          col = mix(col, orange, fR * 0.34);             // red-shifted flow
+          col = mix(col, orange, flow * 0.30);
+          col = mix(col, mix(orange, base, 0.5), fB * 0.10); // blue-shifted (softens)
+          col += highlight;
+
+          // subtle vertical light falloff so text area stays clean
+          col = mix(col, base, smoothstep(0.35, 0.0, uv.y) * 0.25);
+
+          // --- FilmGrain (strength 0.05) ---
+          float grain = hash(gl_FragCoord.xy + u_time) - 0.5;
+          col += grain * 0.05;
+
+          gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+        }
+      `;
+
+      function compile(type, src){
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          console.warn('shader compile error:', gl.getShaderInfoLog(s));
+          return null;
+        }
+        return s;
+      }
+      const vs = compile(gl.VERTEX_SHADER, VERT);
+      const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+      if (!vs || !fs) return;
+      const prog = gl.createProgram();
+      gl.attachShader(prog, vs);
+      gl.attachShader(prog, fs);
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+      gl.useProgram(prog);
+
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const aPos = gl.getAttribLocation(prog, 'a_pos');
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+      const uRes  = gl.getUniformLocation(prog, 'u_res');
+      const uTime = gl.getUniformLocation(prog, 'u_time');
+      const uPtr  = gl.getUniformLocation(prog, 'u_ptr');
+
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+      function resize(){
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        canvas.width = Math.max(1, Math.floor(w * dpr));
+        canvas.height = Math.max(1, Math.floor(h * dpr));
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const ptr = { x: 0, y: 0, tx: 0, ty: 0 };
+      window.addEventListener('mousemove', (e) => {
+        const b = canvas.getBoundingClientRect();
+        ptr.tx = ((e.clientX - b.left) / b.width) * 2 - 1;
+        ptr.ty = ((e.clientY - b.top) / b.height) * 2 - 1;
+      });
+
+      const start = performance.now();
+      let running = true;
+      // Pause when hero is offscreen to save GPU
+      const sect = canvas.closest('section');
+      if (sect && 'IntersectionObserver' in window) {
+        new IntersectionObserver((es) => { running = es[0].isIntersecting; if (running) requestAnimationFrame(frame); })
+          .observe(sect);
       }
 
-      function onMouseMove(e) {
-        if (!bounding) return;
-        mouse.x = e.clientX - bounding.left;
-        mouse.y = e.clientY - bounding.top + window.scrollY;
-        if (!mouse.set) { mouse.sx = mouse.x; mouse.sy = mouse.y; mouse.lx = mouse.x; mouse.ly = mouse.y; mouse.set = true; }
+      function frame(now){
+        if (!running) return;
+        ptr.x += (ptr.tx - ptr.x) * 0.05;
+        ptr.y += (ptr.ty - ptr.y) * 0.05;
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uTime, (now - start) * 0.001);
+        gl.uniform2f(uPtr, ptr.x, ptr.y);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        requestAnimationFrame(frame);
       }
-
-      function movePoints(time) {
-        lines.forEach(points => {
-          points.forEach(p => {
-            const move = noise((p.x + time * 0.008) * 0.003, (p.y + time * 0.003) * 0.002) * 8;
-            p.wave.x = Math.cos(move) * 12;
-            p.wave.y = Math.sin(move) * 6;
-            const dx = p.x - mouse.sx, dy = p.y - mouse.sy;
-            const d = Math.hypot(dx, dy), l = Math.max(175, mouse.vs);
-            if (d < l) {
-              const s = 1 - d / l;
-              const f = Math.cos(d * 0.001) * s;
-              p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00035;
-              p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00035;
-            }
-            p.cursor.vx += (0 - p.cursor.x) * 0.01; p.cursor.vy += (0 - p.cursor.y) * 0.01;
-            p.cursor.vx *= 0.95; p.cursor.vy *= 0.95;
-            p.cursor.x += p.cursor.vx; p.cursor.y += p.cursor.vy;
-            p.cursor.x = Math.min(50, Math.max(-50, p.cursor.x));
-            p.cursor.y = Math.min(50, Math.max(-50, p.cursor.y));
-          });
-        });
-      }
-
-      function moved(p, withCursor = true) {
-        return { x: p.x + p.wave.x + (withCursor ? p.cursor.x : 0), y: p.y + p.wave.y + (withCursor ? p.cursor.y : 0) };
-      }
-
-      function drawLines() {
-        lines.forEach((points, i) => {
-          if (points.length < 2 || !paths[i]) return;
-          const f = moved(points[0], false);
-          let d = `M ${f.x} ${f.y}`;
-          for (let j = 1; j < points.length; j++) { const c = moved(points[j]); d += ` L ${c.x} ${c.y}`; }
-          paths[i].setAttribute('d', d);
-        });
-      }
-
-      function tick(time) {
-        mouse.sx += (mouse.x - mouse.sx) * 0.1;
-        mouse.sy += (mouse.y - mouse.sy) * 0.1;
-        const dx = mouse.x - mouse.lx, dy = mouse.y - mouse.ly;
-        mouse.v = Math.hypot(dx, dy);
-        mouse.vs += (mouse.v - mouse.vs) * 0.1;
-        mouse.vs = Math.min(100, mouse.vs);
-        mouse.lx = mouse.x; mouse.ly = mouse.y;
-        mouse.a = Math.atan2(dy, dx);
-        movePoints(time);
-        drawLines();
-        requestAnimationFrame(tick);
-      }
-
-      setSize();
-      setLines();
-      window.addEventListener('resize', () => { setSize(); setLines(); });
-      window.addEventListener('mousemove', onMouseMove);
-      requestAnimationFrame(tick);
-    }
+      requestAnimationFrame(frame);
+    })();
   </script>
 </body>
 
