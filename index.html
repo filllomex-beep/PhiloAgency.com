@@ -979,8 +979,8 @@
 
   <!-- ───── HERO ───── -->
   <section class="hero-bg pt-36 pb-28 px-6">
-    <!-- Animated shader background -->
-    <canvas id="hero-shader" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;display:block"></canvas>
+    <!-- Wave background -->
+    <div id="hero-waves" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0"></div>
     <!-- Colored blobs for glass effect -->
     <div class="blob"
       style="width:720px;height:720px;background:radial-gradient(circle,rgba(192,57,43,0.13),transparent 65%);top:-200px;right:-120px;filter:blur(90px)">
@@ -2940,194 +2940,120 @@
     })();
   </script>
 
-  <script>
-    // Hero background — Axion-style animated shader (Swirl + ChromaFlow + FlutedGlass + FilmGrain)
-    // Custom WebGL fragment shader, no build step required.
-    (function () {
-      const canvas = document.getElementById('hero-shader');
-      if (!canvas) return;
-      const gl = canvas.getContext('webgl', { antialias: true, premultipliedAlpha: false, alpha: true });
-      if (!gl) return;
+  <script type="module">
+    import { createNoise2D } from 'https://cdn.jsdelivr.net/npm/simplex-noise@4.0.1/+esm';
 
-      const VERT = `
-        attribute vec2 a_pos;
-        void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
-      `;
+    const container = document.getElementById('hero-waves');
+    if (container) {
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      svg.style.cssText = 'display:block;width:100%;height:100%;';
+      container.appendChild(svg);
 
-      const FRAG = `
-        precision highp float;
-        uniform vec2  u_res;
-        uniform float u_time;
-        uniform vec2  u_ptr;   // smoothed pointer, -1..1
+      const strokeColor = 'rgba(15,23,42,1)';
+      const mouse = { x: -10, y: 0, lx: 0, ly: 0, sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false };
+      let paths = [], lines = [];
+      const noise = createNoise2D();
+      let bounding = null;
 
-        // ---- hash / value-noise / fbm ----
-        float hash(vec2 p){
-          p = fract(p * vec2(123.34, 456.21));
-          p += dot(p, p + 45.32);
-          return fract(p.x * p.y);
-        }
-        float noise(vec2 p){
-          vec2 i = floor(p), f = fract(p);
-          float a = hash(i);
-          float b = hash(i + vec2(1.0, 0.0));
-          float c = hash(i + vec2(0.0, 1.0));
-          float d = hash(i + vec2(1.0, 1.0));
-          vec2 u = f * f * (3.0 - 2.0 * f);
-          return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-        }
-        float fbm(vec2 p){
-          float v = 0.0, amp = 0.5;
-          for (int i = 0; i < 5; i++){
-            v += amp * noise(p);
-            p *= 2.02;
-            amp *= 0.5;
+      function setSize() {
+        bounding = container.getBoundingClientRect();
+        svg.style.width = bounding.width + 'px';
+        svg.style.height = bounding.height + 'px';
+      }
+
+      function setLines() {
+        const { width, height } = bounding;
+        lines = [];
+        paths.forEach(p => p.remove());
+        paths = [];
+        const xGap = 8, yGap = 8;
+        const totalLines = Math.ceil((width + 200) / xGap);
+        const totalPoints = Math.ceil((height + 30) / yGap);
+        const xStart = (width - xGap * totalLines) / 2;
+        const yStart = (height - yGap * totalPoints) / 2;
+
+        for (let i = 0; i < totalLines; i++) {
+          const points = [];
+          for (let j = 0; j < totalPoints; j++) {
+            points.push({ x: xStart + xGap * i, y: yStart + yGap * j, wave: { x: 0, y: 0 }, cursor: { x: 0, y: 0, vx: 0, vy: 0 } });
           }
-          return v;
+          const path = document.createElementNS(ns, 'path');
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke', strokeColor);
+          path.setAttribute('stroke-width', '1');
+          path.setAttribute('stroke-opacity', '0.1');
+          svg.appendChild(path);
+          paths.push(path);
+          lines.push(points);
         }
-
-        mat2 rot(float a){ float s = sin(a), c = cos(a); return mat2(c, -s, s, c); }
-
-        // ChromaFlow-ish underlying field: soft, slow, orange "light" — returns intensity 0..1.
-        // Sampled in rotated (fluted) space so streaks align with the ridges.
-        float field(vec2 q, float t){
-          // stretch strongly along the streak direction -> long soft light bands
-          vec2 sp = vec2(q.x * 1.15, q.y * 0.32);
-          float n = fbm(sp * 1.6 + vec2(t * 0.09, -t * 0.05));
-          n = fbm(sp * 1.6 + n * 1.0 + vec2(-t * 0.04, t * 0.06));
-          return n;
-        }
-
-        void main(){
-          vec2 uv = gl_FragCoord.xy / u_res;
-          float aspect = u_res.x / u_res.y;
-          float t = u_time;
-
-          // Centered aspect-correct coords
-          vec2 c = uv - 0.5;
-          c.x *= aspect;
-
-          // --- FlutedGlass: rotate to 31°, build vertical ridges ---
-          float angle = radians(31.0);
-          vec2 rc = rot(angle) * c;
-          rc += vec2(u_ptr.x, -u_ptr.y) * 0.03;   // faint pointer drift
-
-          float freq = 6.5;
-          float phase = rc.x * freq;
-          float lens = fract(phase) - 0.5;          // -0.5..0.5 within one flute (rounded lens)
-          float disp = lens * 0.12;                 // refraction: bend sample toward lens center
-
-          // --- Chromatic aberration: sample the field per channel with split offsets ---
-          float ab = 0.052;                          // aberration 0.61 -> strong split
-          vec2 base = rc + vec2(disp, 0.0);
-          float fR = field(base + vec2( ab, 0.0), t);
-          float fG = field(base + vec2(0.0, 0.0), t);
-          float fB = field(base + vec2(-ab, 0.0), t);
-
-          // --- Concentrate the light toward the UPPER-RIGHT (uv.y=1 is top in WebGL) ---
-          // Clean white behind the left-aligned headline; streaks fill the right half.
-          float mask = smoothstep(0.46, 1.24, uv.x * 1.08 + uv.y * 0.5);
-          fR = smoothstep(0.28, 0.74, fR) * mask;
-          fG = smoothstep(0.28, 0.74, fG) * mask;
-          fB = smoothstep(0.28, 0.74, fB) * mask;
-
-          // --- Compose: white glass tinted by orange per-channel -> iridescent fringes ---
-          vec3 orange = vec3(1.0, 0.31, 0.02);       // ~#ff5f03
-          float s = 1.0;
-          vec3 col = vec3(1.0);
-          col.r = mix(1.0, orange.r, fR * s);
-          col.g = mix(1.0, orange.g, fG * s);
-          col.b = mix(1.0, orange.b, fB * s);
-
-          // deepen the strongest cores toward red for more saturated streaks
-          float core = smoothstep(0.55, 1.0, fG);
-          col = mix(col, vec3(0.86, 0.16, 0.05), core * 0.35);
-
-          // soft fluted highlight seams, only where light passes through
-          float lightAmt = max(max(fR, fG), fB);
-          float seam = smoothstep(0.44, 0.5, abs(lens));
-          col += seam * 0.10 * lightAmt;
-
-          // off-white base (#EFEFEF feel) fading into the colored streaks
-          col = mix(vec3(0.945), col, clamp(lightAmt * 3.1, 0.0, 1.0));
-
-          // --- FilmGrain (strength 0.05) ---
-          float grain = hash(gl_FragCoord.xy + u_time) - 0.5;
-          col += grain * 0.05;
-
-          gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
-        }
-      `;
-
-      function compile(type, src){
-        const s = gl.createShader(type);
-        gl.shaderSource(s, src);
-        gl.compileShader(s);
-        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-          console.warn('shader compile error:', gl.getShaderInfoLog(s));
-          return null;
-        }
-        return s;
-      }
-      const vs = compile(gl.VERTEX_SHADER, VERT);
-      const fs = compile(gl.FRAGMENT_SHADER, FRAG);
-      if (!vs || !fs) return;
-      const prog = gl.createProgram();
-      gl.attachShader(prog, vs);
-      gl.attachShader(prog, fs);
-      gl.linkProgram(prog);
-      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
-      gl.useProgram(prog);
-
-      const buf = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-      const aPos = gl.getAttribLocation(prog, 'a_pos');
-      gl.enableVertexAttribArray(aPos);
-      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-      const uRes  = gl.getUniformLocation(prog, 'u_res');
-      const uTime = gl.getUniformLocation(prog, 'u_time');
-      const uPtr  = gl.getUniformLocation(prog, 'u_ptr');
-
-      let dpr = Math.min(window.devicePixelRatio || 1, 2);
-      function resize(){
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
-        const w = canvas.clientWidth, h = canvas.clientHeight;
-        canvas.width = Math.max(1, Math.floor(w * dpr));
-        canvas.height = Math.max(1, Math.floor(h * dpr));
-        gl.viewport(0, 0, canvas.width, canvas.height);
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      const ptr = { x: 0, y: 0, tx: 0, ty: 0 };
-      window.addEventListener('mousemove', (e) => {
-        const b = canvas.getBoundingClientRect();
-        ptr.tx = ((e.clientX - b.left) / b.width) * 2 - 1;
-        ptr.ty = ((e.clientY - b.top) / b.height) * 2 - 1;
-      });
-
-      const start = performance.now();
-      let running = true;
-      // Pause when hero is offscreen to save GPU
-      const sect = canvas.closest('section');
-      if (sect && 'IntersectionObserver' in window) {
-        new IntersectionObserver((es) => { running = es[0].isIntersecting; if (running) requestAnimationFrame(frame); })
-          .observe(sect);
       }
 
-      function frame(now){
-        if (!running) return;
-        ptr.x += (ptr.tx - ptr.x) * 0.05;
-        ptr.y += (ptr.ty - ptr.y) * 0.05;
-        gl.uniform2f(uRes, canvas.width, canvas.height);
-        gl.uniform1f(uTime, (now - start) * 0.001);
-        gl.uniform2f(uPtr, ptr.x, ptr.y);
-        gl.drawArrays(gl.TRIANGLES, 0, 3);
-        requestAnimationFrame(frame);
+      function onMouseMove(e) {
+        if (!bounding) return;
+        mouse.x = e.clientX - bounding.left;
+        mouse.y = e.clientY - bounding.top + window.scrollY;
+        if (!mouse.set) { mouse.sx = mouse.x; mouse.sy = mouse.y; mouse.lx = mouse.x; mouse.ly = mouse.y; mouse.set = true; }
       }
-      requestAnimationFrame(frame);
-    })();
+
+      function movePoints(time) {
+        lines.forEach(points => {
+          points.forEach(p => {
+            const move = noise((p.x + time * 0.008) * 0.003, (p.y + time * 0.003) * 0.002) * 8;
+            p.wave.x = Math.cos(move) * 12;
+            p.wave.y = Math.sin(move) * 6;
+            const dx = p.x - mouse.sx, dy = p.y - mouse.sy;
+            const d = Math.hypot(dx, dy), l = Math.max(175, mouse.vs);
+            if (d < l) {
+              const s = 1 - d / l;
+              const f = Math.cos(d * 0.001) * s;
+              p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00035;
+              p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00035;
+            }
+            p.cursor.vx += (0 - p.cursor.x) * 0.01; p.cursor.vy += (0 - p.cursor.y) * 0.01;
+            p.cursor.vx *= 0.95; p.cursor.vy *= 0.95;
+            p.cursor.x += p.cursor.vx; p.cursor.y += p.cursor.vy;
+            p.cursor.x = Math.min(50, Math.max(-50, p.cursor.x));
+            p.cursor.y = Math.min(50, Math.max(-50, p.cursor.y));
+          });
+        });
+      }
+
+      function moved(p, withCursor = true) {
+        return { x: p.x + p.wave.x + (withCursor ? p.cursor.x : 0), y: p.y + p.wave.y + (withCursor ? p.cursor.y : 0) };
+      }
+
+      function drawLines() {
+        lines.forEach((points, i) => {
+          if (points.length < 2 || !paths[i]) return;
+          const f = moved(points[0], false);
+          let d = `M ${f.x} ${f.y}`;
+          for (let j = 1; j < points.length; j++) { const c = moved(points[j]); d += ` L ${c.x} ${c.y}`; }
+          paths[i].setAttribute('d', d);
+        });
+      }
+
+      function tick(time) {
+        mouse.sx += (mouse.x - mouse.sx) * 0.1;
+        mouse.sy += (mouse.y - mouse.sy) * 0.1;
+        const dx = mouse.x - mouse.lx, dy = mouse.y - mouse.ly;
+        mouse.v = Math.hypot(dx, dy);
+        mouse.vs += (mouse.v - mouse.vs) * 0.1;
+        mouse.vs = Math.min(100, mouse.vs);
+        mouse.lx = mouse.x; mouse.ly = mouse.y;
+        mouse.a = Math.atan2(dy, dx);
+        movePoints(time);
+        drawLines();
+        requestAnimationFrame(tick);
+      }
+
+      setSize();
+      setLines();
+      window.addEventListener('resize', () => { setSize(); setLines(); });
+      window.addEventListener('mousemove', onMouseMove);
+      requestAnimationFrame(tick);
+    }
   </script>
 </body>
 
