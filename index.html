@@ -1016,24 +1016,6 @@
         <!-- ── LEFT ── -->
         <div class="lg:col-span-7 flex flex-col gap-7 pt-4">
 
-          <!-- Glass badge -->
-          <div id="hero-badge" style="opacity:0">
-            <div class="inline-flex items-center gap-2.5 rounded-full px-4 py-2"
-              style="background:rgba(255,255,255,0.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.65);box-shadow:0 2px 12px rgba(0,0,0,0.06)">
-              <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                  style="background:#c0392b"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2" style="background:#c0392b"></span>
-              </span>
-              <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-600" data-i18n="badge">První
-                návrh zdarma do 24 hodin</span>
-              <svg class="w-3.5 h-3.5" fill="#d9453a" viewBox="0 0 20 20">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-            </div>
-          </div>
-
           <!-- H1 -->
           <h1 id="hero-title"
             class="text-[36px] sm:text-[46px] md:text-[52px] lg:text-[66px] font-black leading-[1.02] tracking-tight text-gray-900"
@@ -2091,8 +2073,7 @@
     // Hero staggered entrance
     const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     heroTl
-      .to('#hero-badge', { opacity: 1, y: 0, duration: 0.7, from: { y: 20 } })
-      .to('#hero-title', { opacity: 1, y: 0, duration: 0.85 }, '-=0.5')
+      .to('#hero-title', { opacity: 1, y: 0, duration: 0.85 })
       .to('#hero-sub', { opacity: 1, y: 0, duration: 0.7 }, '-=0.55')
       .to('#hero-btns', { opacity: 1, y: 0, duration: 0.65 }, '-=0.5')
       .to('#hero-proof', { opacity: 1, y: 0, duration: 0.6 }, '-=0.45')
@@ -2100,7 +2081,7 @@
       .to('#hero-marquee', { opacity: 1, y: 0, duration: 0.65 }, '-=0.5');
 
     // Fix: gsap.to needs fromVars set separately for initial state
-    gsap.set(['#hero-badge', '#hero-title', '#hero-sub', '#hero-btns', '#hero-proof', '#hero-card', '#hero-marquee'], { y: 28 });
+    gsap.set(['#hero-title', '#hero-sub', '#hero-btns', '#hero-proof', '#hero-card', '#hero-marquee'], { y: 28 });
 
     // Scroll-triggered reveals
     gsap.utils.toArray('.reveal').forEach(el => {
@@ -2422,7 +2403,6 @@
           'page-title': 'Philo Agency — Vytvoříme vám nový web',
           'nav-home': 'Domů', 'nav-price': 'Cena', 'nav-showcase': 'Ukázky',
           'nav-ref': 'Reference', 'nav-faq': 'Časté dotazy', 'nav-cta': 'Chci bezplatný návrh',
-          'badge': 'První návrh zdarma do 24 hodin',
           'h1-line1': 'Zařídíme vám', 'h1-line2': 'První návrh zdarma', 'h1-line3': 'do 24 hodin.',
           'hero-sub': 'Rozhodli jste se pro nový web, který vám pomůže získat více zákazníků. Pokud se vám návrh líbí, zaplatíte jen od <strong class="text-gray-700 font-semibold">9900 Kč</strong>, pokud ne, nic neplatíte.',
           'btn-main': 'Chci bezplatný návrh webu', 'btn-showcase': 'Zobrazit ukázky', 'btn-orange-cta': 'Objednejte návrh webu',
@@ -2513,7 +2493,6 @@
           'page-title': 'Philo Agency — We\'ll build your new website',
           'nav-home': 'Home', 'nav-price': 'Pricing', 'nav-showcase': 'Showcase',
           'nav-ref': 'Testimonials', 'nav-faq': 'FAQ', 'nav-cta': 'Get a free design',
-          'badge': 'First design free within 24 hours',
           'h1-line1': 'We\'ll build you', 'h1-line2': 'First design free', 'h1-line3': 'within 24 hours.',
           'hero-sub': 'You\'ve decided to get a new website that helps you win more customers. If you like the design, you pay from just <strong class="text-gray-700 font-semibold">399 €</strong> — if not, you pay nothing.',
           'btn-main': 'Get a free website design', 'btn-showcase': 'View showcase', 'btn-orange-cta': 'Order your website design',
@@ -2604,7 +2583,6 @@
           'page-title': 'Philo Agency — Wir erstellen Ihnen eine neue Website',
           'nav-home': 'Startseite', 'nav-price': 'Preise', 'nav-showcase': 'Portfolio',
           'nav-ref': 'Referenzen', 'nav-faq': 'FAQ', 'nav-cta': 'Kostenlosen Entwurf',
-          'badge': 'Erster Entwurf kostenlos in 24 Stunden',
           'h1-line1': 'Wir erstellen Ihnen', 'h1-line2': 'Erster Entwurf kostenlos', 'h1-line3': 'in 24 Stunden.',
           'hero-sub': 'Sie haben sich für eine neue Website entschieden, die Ihnen hilft, mehr Kunden zu gewinnen. Wenn Ihnen der Entwurf gefällt, zahlen Sie ab <strong class="text-gray-700 font-semibold">399 €</strong> — wenn nicht, zahlen Sie nichts.',
           'btn-main': 'Kostenlosen Website-Entwurf', 'btn-showcase': 'Portfolio ansehen', 'btn-orange-cta': 'Website-Design beauftragen',
