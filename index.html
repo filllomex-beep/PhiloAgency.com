@@ -32,7 +32,891 @@
   <script>tailwind.config = { theme: { fontFamily: { sans: ['inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] } } }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <link rel="stylesheet" href="assets/philo.css">
+  <style>
+    html body,
+    html body * {
+      font-family: 'inter', ui-sans-serif, system-ui, sans-serif !important;
+    }
+
+    /* ─── GLASS SYSTEM ─── */
+    .glass {
+      background: rgba(255, 255, 255, 0.62);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    .glass-sm {
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .glass-dark {
+      background: rgba(255, 255, 255, 0.11);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    }
+
+    /* ─── HERO BG ─── */
+    .hero-bg {
+      background: #f9f8f6;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── BLOB ─── */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── GRADIENT TEXT ─── */
+    .gradient-text {
+      background: linear-gradient(135deg, #c0392b 0%, #d9453a 55%, #d9453a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── MARQUEE ─── */
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @keyframes marquee-reverse {
+      from {
+        transform: translateX(-50%);
+      }
+
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .animate-marquee {
+      animation: marquee 28s linear infinite;
+    }
+
+    .animate-marquee-reverse {
+      animation: marquee-reverse 32s linear infinite;
+    }
+
+    /* ─── FLIP WORDS ─── */
+    .fw-letter {
+      display: inline-block;
+      opacity: 0;
+      animation: fw-in 0.2s ease forwards;
+    }
+
+    @keyframes fw-in {
+      from {
+        opacity: 0;
+        filter: blur(8px);
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fw-out {
+      from {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0) translateX(0) scale(1);
+      }
+
+      to {
+        opacity: 0;
+        filter: blur(8px);
+        transform: translateY(-40px) translateX(40px) scale(2);
+      }
+    }
+
+    .fw-ghost-exit {
+      animation: fw-out 0.35s cubic-bezier(0.4, 0, 1, 1) forwards !important;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn-dark,
+    .btn-glass {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      height: 48px;
+      padding: 4px 56px 4px 24px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+      transition: padding 0.5s;
+      width: fit-content;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+
+    .btn-dark {
+      background: #c0392b;
+      color: #fff;
+    }
+
+    .btn-black {
+      background: #111 !important;
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      color: #333;
+    }
+
+    .btn-dark:hover,
+    .btn-glass:hover {
+      padding: 4px 24px 4px 56px;
+    }
+
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 10;
+      transition: all 0.5s;
+    }
+
+    .btn-icon {
+      position: absolute;
+      right: 4px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: right 0.5s, transform 0.5s;
+      flex-shrink: 0;
+    }
+
+    .btn-dark .btn-icon {
+      background: #fff;
+      color: #c0392b;
+    }
+
+    .btn-black .btn-icon {
+      color: #111 !important;
+    }
+
+    .btn-glass .btn-icon {
+      background: #111;
+      color: #fff;
+    }
+
+    .btn-dark:hover .btn-icon,
+    .btn-glass:hover .btn-icon {
+      right: calc(100% - 44px);
+      transform: rotate(45deg);
+    }
+
+    .btn-orange {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      height: 52px;
+      padding: 4px 60px 4px 28px;
+      font-weight: 700;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+      transition: padding 0.5s;
+      width: fit-content;
+      white-space: nowrap;
+      box-sizing: border-box;
+      background: #c0392b;
+      color: #fff;
+    }
+
+    .btn-orange:hover {
+      padding: 4px 28px 4px 60px;
+    }
+
+    .btn-orange .btn-icon {
+      background: #fff;
+      color: #c0392b;
+    }
+
+    .btn-orange:hover .btn-icon {
+      right: calc(100% - 44px);
+      transform: rotate(45deg);
+    }
+
+    /* ─── SERVICES SLIDER ─── */
+    .svc-track {
+      position: relative;
+      display: flex;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 2px;
+    }
+
+    .svc-indicator {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      height: calc(100% - 8px);
+      background: #fff;
+      border-radius: 999px;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.10);
+      transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .svc-seg {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 7px 4px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #aaa;
+      transition: color 0.18s, box-shadow 0.18s;
+      white-space: nowrap;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .svc-seg:not(.active):hover {
+      color: #555;
+      box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.13);
+    }
+
+    .svc-seg.active {
+      color: #111;
+      font-weight: 600;
+    }
+
+    .svc-desc-box {
+      min-height: 34px;
+      margin-top: 10px;
+      font-size: 11px;
+      color: #888;
+      line-height: 1.55;
+      transition: opacity 0.15s ease, transform 0.18s ease;
+    }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-bar {
+      height: 6px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.07);
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #c0392b, #d9453a);
+    }
+
+    /* ─── FAQ ─── */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+    }
+
+    .faq-icon {
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    /* ─── STEP CONNECTOR ─── */
+    .step-connector {
+      position: absolute;
+      top: 27px;
+      left: calc(50% + 36px);
+      width: calc(100% - 72px);
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ─── SHOWCASE CAROUSEL ─── */
+    .showcase-viewport {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .showcase-viewport::before,
+    .showcase-viewport::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 90px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.3s;
+    }
+
+    .showcase-viewport::before {
+      left: 0;
+      background: linear-gradient(to left, transparent, #f7f5f3);
+      opacity: 0;
+    }
+
+    .showcase-viewport::after {
+      right: 0;
+      background: linear-gradient(to right, transparent, #f7f5f3);
+    }
+
+    .showcase-viewport.has-prev::before {
+      opacity: 1;
+    }
+
+    .showcase-viewport.at-end::after {
+      opacity: 0;
+    }
+
+    .showcase-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .showcase-card {
+      flex: 0 0 calc(44% - 10px);
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .showcase-card {
+        flex: 0 0 85%;
+      }
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
+    }
+
+    .showcase-img-wrap {
+      height: 240px;
+      overflow: hidden;
+      background: #ede8e4;
+    }
+
+    .showcase-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.42s;
+    }
+
+    .showcase-card:hover .showcase-img {
+      transform: scale(1.04);
+    }
+
+    .showcase-info {
+      padding: 20px 22px;
+      text-align: left;
+    }
+
+    .showcase-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #c0392b;
+    }
+
+    .showcase-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #111;
+      margin: 5px 0 4px;
+    }
+
+    .showcase-desc {
+      font-size: 12.5px;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    .showcase-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .showcase-arrow {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, opacity 0.2s;
+      flex-shrink: 0;
+    }
+
+    .showcase-arrow:hover {
+      background: #333;
+    }
+
+    .showcase-arrow:disabled {
+      opacity: 0.25;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .showcase-dots {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .showcase-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.15);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s, width 0.2s;
+    }
+
+    .showcase-dot.active {
+      background: #111;
+      width: 20px;
+    }
+
+    /* ─── GLASS CARD HOVER ─── */
+    .glass-hover {
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .glass-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    /* ─── CONTACT FORM ─── */
+    .form-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(0, 0, 0, 0.07);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #111;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+      box-sizing: border-box;
+      appearance: none;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: #bbb;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: rgba(192, 57, 43, 0.5);
+      box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.07);
+    }
+
+    .form-input.field-error,
+    .form-select.field-error,
+    .form-textarea.field-error {
+      border-color: #e03b30;
+      box-shadow: 0 0 0 3px rgba(224, 59, 48, 0.08);
+    }
+
+    #svc-chips.field-error {
+      outline: 1.5px solid #e03b30;
+      outline-offset: 6px;
+      border-radius: 12px;
+    }
+
+    .form-err-msg {
+      color: #e03b30;
+      font-size: 12.5px;
+      font-weight: 500;
+      margin-top: 6px;
+    }
+
+    /* Minimalist button spinner */
+    .btn-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: btn-spin 0.6s linear infinite;
+    }
+
+    @keyframes btn-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .form-textarea {
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-color: rgba(255, 255, 255, 0.65);
+      padding-right: 44px;
+      cursor: pointer;
+    }
+
+    .svc-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      user-select: none;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1.5px solid rgba(0, 0, 0, 0.08);
+      color: #555;
+      transition: border-color 0.18s, background 0.18s, color 0.18s;
+      backdrop-filter: blur(8px);
+    }
+
+    .svc-chip:hover {
+      border-color: rgba(192, 57, 43, 0.3);
+      color: #c0392b;
+    }
+
+    .svc-chip.selected {
+      background: rgba(192, 57, 43, 0.08);
+      border-color: #c0392b;
+      color: #c0392b;
+    }
+
+    .svc-chip.selected::before {
+      content: '✓';
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .form-check-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1.5px solid rgba(0, 0, 0, 0.07);
+      border-radius: 16px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .form-check-card:hover {
+      border-color: rgba(192, 57, 43, 0.25);
+    }
+
+    .form-check-card input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      accent-color: #c0392b;
+      cursor: pointer;
+      margin-top: 2px;
+    }
+
+    /* ─── DARK CTA ─── */
+    .dark-cta-bg {
+      background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(192, 57, 43, 0.28) 0%, transparent 60%), #0d0d0d;
+    }
+
+    /* ─── AVATAR STACK ─── */
+    .avatar-stack img {
+      border: 2.5px solid rgba(255, 255, 255, 0.9);
+    }
+
+    /* ─── REVIEW AVATAR (initials, no stock photos) ─── */
+    .review-avatar {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+    }
+
+    /* ─── REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    /* ─── MASK HELPERS ─── */
+    .mask-fade-r {
+      -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    }
+
+    /* ─── NAV BUTTON (30% smaller) ─── */
+    .btn-nav {
+      height: 34px;
+      padding: 3px 39px 3px 17px;
+      font-size: 10px;
+    }
+
+    .btn-nav .btn-icon {
+      width: 28px;
+      height: 28px;
+      right: 3px;
+    }
+
+    .btn-nav:hover {
+      padding: 3px 17px 3px 39px;
+    }
+
+    .btn-nav:hover .btn-icon {
+      right: calc(100% - 31px);
+    }
+
+    /* ─── LANG SWITCHER ─── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 1px;
+      flex-shrink: 0;
+      height: 34px;
+      box-sizing: border-box;
+    }
+
+    .lang-btn {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0 10px;
+      height: 100%;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #888;
+      transition: background 0.2s, color 0.2s;
+      line-height: 1;
+    }
+
+    .lang-btn.active {
+      background: #fff;
+      color: #111;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ─── HAMBURGER ─── */
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+
+    .hamburger-btn span {
+      display: block;
+      height: 2px;
+      background: #111;
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .hamburger-btn.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger-btn.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      z-index: 48;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu.open {
+      max-height: 480px;
+    }
+
+    .mobile-menu-inner {
+      padding: 20px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .mobile-nav-link {
+      display: block;
+      padding: 14px 0;
+      font-size: 17px;
+      font-weight: 600;
+      color: #111;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .mobile-nav-link:last-of-type {
+      border-bottom: none;
+    }
+
+    .mobile-nav-link:active {
+      color: #c0392b;
+    }
+
+    /* ─── MOBILE OVERRIDES ─── */
+    @media (max-width: 767px) {
+      .svc-track {
+        overflow: hidden;
+        flex-wrap: nowrap;
+        cursor: default;
+        user-select: none;
+      }
+
+      .svc-seg {
+        flex: 0 0 auto;
+        padding: 7px 16px;
+      }
+
+      .svc-indicator {
+        display: none;
+      }
+
+      .svc-seg.active {
+        background: rgba(255, 255, 255, 0.92) !important;
+        color: #c0392b !important;
+        font-weight: 700 !important;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-bg {
+        padding-top: 96px !important;
+        padding-bottom: 48px !important;
+      }
+    }
+  </style>
 </head>
 
 <body class="bg-white overflow-x-hidden">
@@ -46,13 +930,13 @@
       <div class="hidden md:flex items-center gap-7">
         <a href="#" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
           data-i18n="nav-home">Domů</a>
-        <a href="/tvorba-webu" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
-          data-i18n="nav-service">Tvorba webu</a>
-        <a href="/cenik" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
-          data-i18n="nav-price">Ceník</a>
-        <a href="/reference" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
+        <a href="#cena" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
+          data-i18n="nav-price">Cena</a>
+        <a href="#ukazky" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
+          data-i18n="nav-showcase">Ukázky</a>
+        <a href="#referencie" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
           data-i18n="nav-ref">Reference</a>
-        <a href="/faq" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
+        <a href="#faq" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
           data-i18n="nav-faq">Časté dotazy</a>
       </div>
       <div class="flex items-center gap-3">
@@ -80,11 +964,10 @@
   <div class="mobile-menu md:hidden" id="mobile-menu">
     <div class="mobile-menu-inner">
       <a href="#" class="mobile-nav-link" data-i18n="nav-home" id="mm-home">Domů</a>
-      <a href="/tvorba-webu" class="mobile-nav-link" data-i18n="nav-service" id="mm-showcase">Tvorba webu</a>
-      <a href="/cenik" class="mobile-nav-link" data-i18n="nav-price" id="mm-price">Ceník</a>
-      <a href="/reference" class="mobile-nav-link" data-i18n="nav-ref" id="mm-ref">Reference</a>
-      <a href="/faq" class="mobile-nav-link" data-i18n="nav-faq" id="mm-faq">Časté dotazy</a>
-      <a href="/kontakt" class="mobile-nav-link" data-i18n="nav-contact" id="mm-contact">Kontakt</a>
+      <a href="#cena" class="mobile-nav-link" data-i18n="nav-price" id="mm-price">Cena</a>
+      <a href="#ukazky" class="mobile-nav-link" data-i18n="nav-showcase" id="mm-showcase">Ukázky</a>
+      <a href="#referencie" class="mobile-nav-link" data-i18n="nav-ref" id="mm-ref">Reference</a>
+      <a href="#faq" class="mobile-nav-link" data-i18n="nav-faq" id="mm-faq">Časté dotazy</a>
       <button class="btn-dark mt-5" style="width:100%;justify-content:center" id="mm-cta">
         <span class="btn-text" data-i18n="nav-cta">Chci bezplatný návrh</span>
         <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
@@ -458,10 +1341,6 @@
             </svg></div>
         </button>
       </div>
-      <p class="mt-6 reveal">
-        <a href="/tvorba-webu" class="text-[13.5px] font-semibold transition-opacity hover:opacity-70"
-          style="color:rgba(255,255,255,0.85)">Jak tvorba webu probíhá krok za krokem →</a>
-      </p>
     </div>
   </section>
 
@@ -589,10 +1468,6 @@
             </svg></div>
         </button>
       </div>
-      <p class="mt-6 reveal">
-        <a href="/cenik" class="text-[13.5px] font-semibold transition-opacity hover:opacity-70"
-          style="color:#c0392b">Podrobný ceník a co cenu ovlivňuje →</a>
-      </p>
     </div>
   </section>
 
@@ -857,10 +1732,6 @@
             </svg></div>
         </button>
       </div>
-      <p class="mt-6 reveal">
-        <a href="/reference" class="text-[13.5px] font-semibold transition-opacity hover:opacity-70"
-          style="color:#c0392b">Všechny reference a ukázky webů →</a>
-      </p>
     </div>
   </section>
 
@@ -957,10 +1828,6 @@
         </div>
 
       </div>
-      <p class="mt-6 reveal text-center">
-        <a href="/faq" class="text-[13.5px] font-semibold transition-opacity hover:opacity-70"
-          style="color:rgba(255,255,255,0.85)">Všechny časté dotazy — 14 odpovědí →</a>
-      </p>
     </div>
   </section>
 
@@ -1093,15 +1960,13 @@
           <div class="space-y-2.5">
             <a href="#" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
               data-i18n="nav-home">Domů</a>
-            <a href="/tvorba-webu" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
-              data-i18n="nav-service">Tvorba webu</a>
-            <a href="/cenik" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
-              data-i18n="nav-price">Ceník</a>
-            <a href="/reference" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
+            <a href="#cena" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
+              data-i18n="nav-price">Cena</a>
+            <a href="#ukazky" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
+              data-i18n="nav-showcase">Ukázky</a>
+            <a href="#referencie" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
               data-i18n="nav-ref">Reference</a>
-            <a href="/faq" class="block text-gray-500 text-[13px] hover:text-white transition-colors">FAQ</a>
-            <a href="/kontakt" class="block text-gray-500 text-[13px] hover:text-white transition-colors"
-              data-i18n="nav-contact">Kontakt</a>
+            <a href="#faq" class="block text-gray-500 text-[13px] hover:text-white transition-colors">FAQ</a>
           </div>
         </div>
         <div>
@@ -1461,7 +2326,7 @@
       const TRANSLATIONS = {
         cs: {
           'page-title': 'Philo Agency — Vytvoříme vám nový web',
-          'nav-home': 'Domů', 'nav-price': 'Ceník', 'nav-showcase': 'Ukázky', 'nav-service': 'Tvorba webu', 'nav-contact': 'Kontakt',
+          'nav-home': 'Domů', 'nav-price': 'Cena', 'nav-showcase': 'Ukázky',
           'nav-ref': 'Reference', 'nav-faq': 'Časté dotazy', 'nav-cta': 'Chci bezplatný návrh',
           'h1-line1': 'Zařídíme vám', 'h1-line2': 'První návrh zdarma', 'h1-line3': 'do 24 hodin.',
           'hero-sub': 'Rozhodli jste se pro nový web, který vám pomůže získat více zákazníků. Pokud se vám návrh líbí, zaplatíte jen od <strong class="text-gray-700 font-semibold">9900 Kč</strong>, pokud ne, nic neplatíte.',
@@ -1550,7 +2415,7 @@
         },
         en: {
           'page-title': 'Philo Agency — We\'ll build your new website',
-          'nav-home': 'Home', 'nav-price': 'Pricing', 'nav-showcase': 'Showcase', 'nav-service': 'Web design', 'nav-contact': 'Contact',
+          'nav-home': 'Home', 'nav-price': 'Pricing', 'nav-showcase': 'Showcase',
           'nav-ref': 'Testimonials', 'nav-faq': 'FAQ', 'nav-cta': 'Get a free design',
           'h1-line1': 'We\'ll build you', 'h1-line2': 'First design free', 'h1-line3': 'within 24 hours.',
           'hero-sub': 'You\'ve decided to get a new website that helps you win more customers. If you like the design, you pay from just <strong class="text-gray-700 font-semibold">399 €</strong> — if not, you pay nothing.',
@@ -1639,7 +2504,7 @@
         },
         de: {
           'page-title': 'Philo Agency — Wir erstellen Ihnen eine neue Website',
-          'nav-home': 'Startseite', 'nav-price': 'Preise', 'nav-showcase': 'Portfolio', 'nav-service': 'Webdesign', 'nav-contact': 'Kontakt',
+          'nav-home': 'Startseite', 'nav-price': 'Preise', 'nav-showcase': 'Portfolio',
           'nav-ref': 'Referenzen', 'nav-faq': 'FAQ', 'nav-cta': 'Kostenlosen Entwurf',
           'h1-line1': 'Wir erstellen Ihnen', 'h1-line2': 'Erster Entwurf kostenlos', 'h1-line3': 'in 24 Stunden.',
           'hero-sub': 'Sie haben sich für eine neue Website entschieden, die Ihnen hilft, mehr Kunden zu gewinnen. Wenn Ihnen der Entwurf gefällt, zahlen Sie ab <strong class="text-gray-700 font-semibold">399 €</strong> — wenn nicht, zahlen Sie nichts.',
