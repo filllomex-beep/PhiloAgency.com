@@ -4,9 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project structure
 
-This is a **static single-file site** — the only deliverable is `index.html`. Everything (HTML, inline `<style>`, and inline `<script>`) lives there. The `app/`, `components/`, and `lib/` directories exist as an empty Next.js scaffold and are not used. There is no build step, no `package.json`, no bundler.
+This is a **static multi-page site**, no build step, no bundler:
 
-To preview the site: open `index.html` directly in a browser, or use Puppeteer for automated screenshots.
+- `index.html` — homepage. Fully self-contained: inline `<style>` (hero animations, i18n dictionaries CZ/EN/DE, language switcher) and inline `<script>` stay in this file only.
+- `tvorba-webu.html`, `cenik.html`, `reference.html`, `kontakt.html`, `faq.html` — CZ-only content subpages (400+ words each, real long-form copy for SEO/GEO — see repo history for the "13 fake vs 5 real pages" rationale). No i18n on these; the language switcher only lives on the homepage.
+- `assets/philo.css` — shared design system (all the `.glass` / button / marquee / etc. rules) used by every page, homepage included. Edit here, not inline, for anything not homepage-specific.
+- `assets/philo.js` — shared behavior for the subpages only: scroll reveals, mobile menu, FAQ accordion, contact form submit (Web3Forms). The homepage does NOT use this file — its equivalent logic is inline in `index.html`'s own `<script>` (kept separate because the homepage's hero/timeline animations and i18n are homepage-specific).
+- `vercel.json` — `cleanUrls: true` so `/cenik.html` serves at `/cenik`. Internal links must never include the `.html` extension.
+- `img/` — client photos referenced by the homepage showcase and `reference.html`.
+- `robots.txt`, `sitemap.xml` — list all six URLs (homepage + five subpages).
+- The `app/`, `components/`, and `lib/` directories are an empty Next.js scaffold and are not used.
+
+**Adding a new subpage**: copy the shell structure from an existing subpage (nav / breadcrumb / prose / CTA / footer), keep content CZ-only, add it to the nav (desktop + mobile + footer) on every page including `index.html`, and add it to `sitemap.xml`.
+
+To preview: open any `.html` file directly in a browser (relative links like `assets/philo.css` resolve fine over `file://`), or run a local static server to test clean URLs (e.g. a tiny Python handler that maps `/slug` → `slug.html`). Use Puppeteer for automated screenshots.
 
 ## Design system
 
