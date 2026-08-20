@@ -857,7 +857,8 @@
     }
 
     .mobile-menu.open {
-      max-height: 480px;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
     }
 
     .mobile-menu-inner {
@@ -883,6 +884,264 @@
     }
 
     .mobile-nav-link:active {
+      color: #c0392b;
+    }
+
+    /* ─── NAV DROPDOWN — Služby ─── */
+    .nav-drop {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-drop-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #6b7280;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: inherit;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .nav-drop:hover .nav-drop-trigger,
+    .nav-drop:focus-within .nav-drop-trigger,
+    .nav-drop.open .nav-drop-trigger {
+      color: #111827;
+    }
+
+    .nav-drop-caret {
+      opacity: 0.7;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-drop:hover .nav-drop-caret,
+    .nav-drop:focus-within .nav-drop-caret,
+    .nav-drop.open .nav-drop-caret {
+      transform: rotate(180deg);
+    }
+
+    .nav-drop-panel {
+      position: absolute;
+      top: calc(100% + 20px);
+      left: 50%;
+      width: 396px;
+      padding: 8px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      box-shadow: 0 28px 64px -14px rgba(0, 0, 0, 0.17), 0 6px 18px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(-10px) scale(0.96);
+      transform-origin: top center;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+      z-index: 60;
+    }
+
+    /* neviditelný můstek — kurzor nepropadne mezi navem a panelem */
+    .nav-drop-panel::before {
+      content: '';
+      position: absolute;
+      top: -22px;
+      left: 0;
+      right: 0;
+      height: 22px;
+    }
+
+    .nav-drop:hover .nav-drop-panel,
+    .nav-drop:focus-within .nav-drop-panel,
+    .nav-drop.open .nav-drop-panel {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    .nav-drop-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(9px);
+      transition: opacity 0.34s ease, transform 0.46s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+    }
+
+    .nav-drop:hover .nav-drop-item,
+    .nav-drop:focus-within .nav-drop-item,
+    .nav-drop.open .nav-drop-item {
+      opacity: 1;
+      transform: none;
+      transition-delay: var(--d, 0s);
+    }
+
+    .nav-drop-item:hover {
+      background: rgba(17, 24, 39, 0.045);
+    }
+
+    .nav-drop-ico {
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c0392b;
+      background: linear-gradient(145deg, rgba(192, 57, 43, 0.10), rgba(217, 69, 58, 0.04));
+      border: 1px solid rgba(192, 57, 43, 0.11);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .nav-drop-item:hover .nav-drop-ico {
+      transform: scale(1.07) rotate(-4deg);
+      background: linear-gradient(145deg, #c0392b, #d9453a);
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 7px 18px rgba(192, 57, 43, 0.3);
+    }
+
+    .nav-drop-title {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #111827;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-drop-desc {
+      display: block;
+      font-size: 11.5px;
+      line-height: 1.4;
+      color: #9ca3af;
+      margin-top: 1px;
+    }
+
+    .nav-drop-arrow {
+      margin-left: auto;
+      flex-shrink: 0;
+      color: #c0392b;
+      opacity: 0;
+      transform: translateX(-7px);
+      transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-drop-item:hover .nav-drop-arrow {
+      opacity: 1;
+      transform: none;
+    }
+
+    .nav-drop-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 6px 4px 2px;
+      padding: 11px 8px 3px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      font-size: 11.5px;
+      color: #9ca3af;
+      opacity: 0;
+      transform: translateY(9px);
+      transition: opacity 0.34s ease, transform 0.46s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-drop:hover .nav-drop-foot,
+    .nav-drop:focus-within .nav-drop-foot,
+    .nav-drop.open .nav-drop-foot {
+      opacity: 1;
+      transform: none;
+      transition-delay: 0.26s;
+    }
+
+    .nav-drop-foot a {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #c0392b;
+      text-decoration: none;
+      transition: gap 0.25s ease;
+    }
+
+    .nav-drop-foot a:hover {
+      gap: 8px;
+    }
+
+    /* ─── MOBILNÍ PODMENU ─── */
+    .mobile-sub-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 14px 0;
+      font-size: 17px;
+      font-weight: 600;
+      color: #111;
+      font-family: inherit;
+      background: none;
+      border: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+    }
+
+    .mobile-sub-toggle svg {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #9ca3af;
+    }
+
+    .mobile-sub.open .mobile-sub-toggle svg {
+      transform: rotate(180deg);
+      color: #c0392b;
+    }
+
+    .mobile-sub-list {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-sub.open .mobile-sub-list {
+      max-height: 340px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .mobile-sub-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 0 11px 2px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #4b5563;
+      text-decoration: none;
+    }
+
+    .mobile-sub-link::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #c0392b;
+      opacity: 0.55;
+      flex-shrink: 0;
+    }
+
+    .mobile-sub-link:active {
       color: #c0392b;
     }
 
@@ -930,6 +1189,104 @@
       <div class="hidden md:flex items-center gap-7">
         <a href="#" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
           data-i18n="nav-home">Domů</a>
+
+        <!-- Služby — rozbalovací menu -->
+        <div class="nav-drop" id="nav-drop">
+          <button class="nav-drop-trigger" id="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
+            <span data-i18n="nav-services">Služby</span>
+            <svg class="nav-drop-caret" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+          <div class="nav-drop-panel" role="menu">
+            <a class="nav-drop-item" style="--d:.04s" href="sluzby/tvorba-webu.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <rect width="20" height="14" x="2" y="3" rx="2" />
+                  <path d="M8 21h8M12 17v4" />
+                </svg></span>
+              <span>
+                <span class="nav-drop-title" data-i18n="nd-web-t">Tvorba webu</span>
+                <span class="nav-drop-desc" data-i18n="nd-web-d">Weby na míru, první návrh zdarma</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a class="nav-drop-item" style="--d:.085s" href="sluzby/vykonnostni-marketing.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                  <polyline points="16 7 22 7 22 13" />
+                </svg></span>
+              <span>
+                <span class="nav-drop-title" data-i18n="nd-mkt-t">Výkonnostní marketing</span>
+                <span class="nav-drop-desc" data-i18n="nd-mkt-d">Meta Ads kampaně zaměřené na tržby</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a class="nav-drop-item" style="--d:.13s" href="sluzby/tvorba-kontentu.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="m22 8-6 4 6 4V8Z" />
+                  <rect width="14" height="12" x="2" y="6" rx="2" />
+                </svg></span>
+              <span>
+                <span class="nav-drop-title" data-i18n="nd-con-t">Tvorba kontentu</span>
+                <span class="nav-drop-desc" data-i18n="nd-con-d">Foto, video a texty pro sociální sítě</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a class="nav-drop-item" style="--d:.175s" href="sluzby/automatizace.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+                </svg></span>
+              <span>
+                <span class="nav-drop-title" data-i18n="nd-aut-t">Automatizace</span>
+                <span class="nav-drop-desc" data-i18n="nd-aut-d">Propojíme nástroje, procesy běží samy</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a class="nav-drop-item" style="--d:.22s" href="sluzby/ai-agenti.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M12 8V4H8" />
+                  <rect width="16" height="12" x="4" y="8" rx="2" />
+                  <path d="M2 14h2M20 14h2M15 13v2M9 13v2" />
+                </svg></span>
+              <span>
+                <span class="nav-drop-title" data-i18n="nd-ai-t">AI agenti</span>
+                <span class="nav-drop-desc" data-i18n="nd-ai-d">Agenti pro podporu, prodej i obsah</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <div class="nav-drop-foot">
+              <span data-i18n="nd-foot">Nevíte, co potřebujete?</span>
+              <a href="#kontakt" data-i18n="nd-foot-cta">Ozvěte se nám →</a>
+            </div>
+          </div>
+        </div>
+
         <a href="#cena" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
           data-i18n="nav-price">Cena</a>
         <a href="#ukazky" class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors"
@@ -964,6 +1321,23 @@
   <div class="mobile-menu md:hidden" id="mobile-menu">
     <div class="mobile-menu-inner">
       <a href="#" class="mobile-nav-link" data-i18n="nav-home" id="mm-home">Domů</a>
+      <div class="mobile-sub" id="mobile-sub">
+        <button class="mobile-sub-toggle" id="mobile-sub-toggle" aria-expanded="false">
+          <span data-i18n="nav-services">Služby</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        <div class="mobile-sub-list">
+          <a href="sluzby/tvorba-webu.html" class="mobile-sub-link" data-i18n="nd-web-t">Tvorba webu</a>
+          <a href="sluzby/vykonnostni-marketing.html" class="mobile-sub-link" data-i18n="nd-mkt-t">Výkonnostní
+            marketing</a>
+          <a href="sluzby/tvorba-kontentu.html" class="mobile-sub-link" data-i18n="nd-con-t">Tvorba kontentu</a>
+          <a href="sluzby/automatizace.html" class="mobile-sub-link" data-i18n="nd-aut-t">Automatizace</a>
+          <a href="sluzby/ai-agenti.html" class="mobile-sub-link" data-i18n="nd-ai-t">AI agenti</a>
+        </div>
+      </div>
       <a href="#cena" class="mobile-nav-link" data-i18n="nav-price" id="mm-price">Cena</a>
       <a href="#ukazky" class="mobile-nav-link" data-i18n="nav-showcase" id="mm-showcase">Ukázky</a>
       <a href="#referencie" class="mobile-nav-link" data-i18n="nav-ref" id="mm-ref">Reference</a>
@@ -2328,6 +2702,13 @@
           'page-title': 'Philo Agency — Vytvoříme vám nový web',
           'nav-home': 'Domů', 'nav-price': 'Cena', 'nav-showcase': 'Ukázky',
           'nav-ref': 'Reference', 'nav-faq': 'Časté dotazy', 'nav-cta': 'Chci bezplatný návrh',
+          'nav-services': 'Služby',
+          'nd-web-t': 'Tvorba webu', 'nd-web-d': 'Weby na míru, první návrh zdarma',
+          'nd-mkt-t': 'Výkonnostní marketing', 'nd-mkt-d': 'Meta Ads kampaně zaměřené na tržby',
+          'nd-con-t': 'Tvorba kontentu', 'nd-con-d': 'Foto, video a texty pro sociální sítě',
+          'nd-aut-t': 'Automatizace', 'nd-aut-d': 'Propojíme nástroje, procesy běží samy',
+          'nd-ai-t': 'AI agenti', 'nd-ai-d': 'Agenti pro podporu, prodej i obsah',
+          'nd-foot': 'Nevíte, co potřebujete?', 'nd-foot-cta': 'Ozvěte se nám →',
           'h1-line1': 'Zařídíme vám', 'h1-line2': 'První návrh zdarma', 'h1-line3': 'do 24 hodin.',
           'hero-sub': 'Rozhodli jste se pro nový web, který vám pomůže získat více zákazníků. Pokud se vám návrh líbí, zaplatíte jen od <strong class="text-gray-700 font-semibold">9900 Kč</strong>, pokud ne, nic neplatíte.',
           'btn-main': 'Chci bezplatný návrh webu', 'btn-showcase': 'Zobrazit ukázky', 'btn-orange-cta': 'Objednejte návrh webu',
@@ -2417,6 +2798,13 @@
           'page-title': 'Philo Agency — We\'ll build your new website',
           'nav-home': 'Home', 'nav-price': 'Pricing', 'nav-showcase': 'Showcase',
           'nav-ref': 'Testimonials', 'nav-faq': 'FAQ', 'nav-cta': 'Get a free design',
+          'nav-services': 'Services',
+          'nd-web-t': 'Web design', 'nd-web-d': 'Custom websites, first design free',
+          'nd-mkt-t': 'Performance marketing', 'nd-mkt-d': 'Meta Ads campaigns built for revenue',
+          'nd-con-t': 'Content creation', 'nd-con-d': 'Photo, video and copy for social',
+          'nd-aut-t': 'Automation', 'nd-aut-d': 'We connect your tools, work runs itself',
+          'nd-ai-t': 'AI agents', 'nd-ai-d': 'Agents for support, sales and content',
+          'nd-foot': 'Not sure what you need?', 'nd-foot-cta': 'Get in touch →',
           'h1-line1': 'We\'ll build you', 'h1-line2': 'First design free', 'h1-line3': 'within 24 hours.',
           'hero-sub': 'You\'ve decided to get a new website that helps you win more customers. If you like the design, you pay from just <strong class="text-gray-700 font-semibold">399 €</strong> — if not, you pay nothing.',
           'btn-main': 'Get a free website design', 'btn-showcase': 'View showcase', 'btn-orange-cta': 'Order your website design',
@@ -2506,6 +2894,13 @@
           'page-title': 'Philo Agency — Wir erstellen Ihnen eine neue Website',
           'nav-home': 'Startseite', 'nav-price': 'Preise', 'nav-showcase': 'Portfolio',
           'nav-ref': 'Referenzen', 'nav-faq': 'FAQ', 'nav-cta': 'Kostenlosen Entwurf',
+          'nav-services': 'Leistungen',
+          'nd-web-t': 'Webdesign', 'nd-web-d': 'Websites nach Maß, erster Entwurf gratis',
+          'nd-mkt-t': 'Performance-Marketing', 'nd-mkt-d': 'Meta-Ads-Kampagnen für mehr Umsatz',
+          'nd-con-t': 'Content-Erstellung', 'nd-con-d': 'Foto, Video und Texte für Social Media',
+          'nd-aut-t': 'Automatisierung', 'nd-aut-d': 'Wir verbinden Tools, Prozesse laufen selbst',
+          'nd-ai-t': 'KI-Agenten', 'nd-ai-d': 'Agenten für Support, Vertrieb und Content',
+          'nd-foot': 'Sie wissen nicht, was Sie brauchen?', 'nd-foot-cta': 'Schreiben Sie uns →',
           'h1-line1': 'Wir erstellen Ihnen', 'h1-line2': 'Erster Entwurf kostenlos', 'h1-line3': 'in 24 Stunden.',
           'hero-sub': 'Sie haben sich für eine neue Website entschieden, die Ihnen hilft, mehr Kunden zu gewinnen. Wenn Ihnen der Entwurf gefällt, zahlen Sie ab <strong class="text-gray-700 font-semibold">399 €</strong> — wenn nicht, zahlen Sie nichts.',
           'btn-main': 'Kostenlosen Website-Entwurf', 'btn-showcase': 'Portfolio ansehen', 'btn-orange-cta': 'Website-Design beauftragen',
@@ -2680,6 +3075,35 @@
           });
         });
       }
+      // Mobilní podmenu Služby
+      const mobileSub = document.getElementById('mobile-sub');
+      const mobileSubToggle = document.getElementById('mobile-sub-toggle');
+      if (mobileSub && mobileSubToggle) {
+        mobileSubToggle.addEventListener('click', () => {
+          const isOpen = mobileSub.classList.toggle('open');
+          mobileSubToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+      }
+
+      // Dropdown Služby — hover řeší CSS, tady jen dotyk, klik mimo a Escape
+      const navDrop = document.getElementById('nav-drop');
+      const navDropTrigger = document.getElementById('nav-drop-trigger');
+      if (navDrop && navDropTrigger) {
+        const closeDrop = () => {
+          navDrop.classList.remove('open');
+          navDropTrigger.setAttribute('aria-expanded', 'false');
+        };
+        navDropTrigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isOpen = navDrop.classList.toggle('open');
+          navDropTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+        navDrop.addEventListener('mouseenter', () => navDropTrigger.setAttribute('aria-expanded', 'true'));
+        navDrop.addEventListener('mouseleave', closeDrop);
+        document.addEventListener('click', (e) => { if (!navDrop.contains(e.target)) closeDrop(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrop(); });
+      }
+
       // Mobile menu CTA scrolls to form
       const mmCta = document.getElementById('mm-cta');
       if (mmCta) mmCta.addEventListener('click', () => {

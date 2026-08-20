@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Výkonnostní marketing a Meta Ads — Philo Agency</title>
+  <meta name="description" content="Spravujeme výkonnostní kampaně na Facebooku a Instagramu. Cílem nejsou lajky, ale poptávky, objednávky a měřitelná návratnost investice.">
+  <meta name="keywords" content="výkonnostní marketing, Meta Ads, Facebook reklama, Instagram reklama, PPC, správa kampaní, online marketing, získávání zákazníků, marketingová agentura">
+  <meta name="author" content="Philo Agency">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://philoagency.com/sluzby/vykonnostni-marketing.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="cs_CZ">
+  <meta property="og:site_name" content="Philo Agency">
+  <meta property="og:title" content="Výkonnostní marketing a Meta Ads — Philo Agency">
+  <meta property="og:description" content="Spravujeme výkonnostní kampaně na Facebooku a Instagramu. Cílem nejsou lajky, ale poptávky, objednávky a měřitelná návratnost investice.">
+  <meta property="og:url" content="https://philoagency.com/sluzby/vykonnostni-marketing.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Výkonnostní marketing a Meta Ads — Philo Agency">
+  <meta name="twitter:description" content="Spravujeme výkonnostní kampaně na Facebooku a Instagramu. Cílem nejsou lajky, ale poptávky, objednávky a měřitelná návratnost investice.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=inter:wght@100..900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { fontFamily: { sans: ['inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] } } }</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="../assets/philo-sub.css">
+  <script src="../assets/philo-sub.js"></script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Výkonnostní marketing a správa Meta Ads",
+  "serviceType": "Výkonnostní marketing a správa Meta Ads",
+  "description": "Spravujeme výkonnostní kampaně na Facebooku a Instagramu. Cílem nejsou lajky, ale poptávky, objednávky a měřitelná návratnost investice.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Philo Agency",
+    "url": "https://philoagency.com/",
+    "email": "philoagency.info@gmail.com",
+    "telephone": "+420777859980"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Česká republika"
+  },
+  "url": "https://philoagency.com/sluzby/vykonnostni-marketing.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kolik musím dát do reklamy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Doporučujeme začít alespoň na 15 000 Kč měsíčně v samotném rozpočtu na reklamu. S nižší částkou nemá algoritmus dost dat a testování se zbytečně protáhne. K tomu se připočítává naše odměna za správu."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Za jak dlouho uvidím výsledky?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "První poptávky se obvykle objeví během několika dní. Skutečně vypovídající čísla ale máme po dvou až třech týdnech, kdy kampaň projde učící fází a ustálí se cena za poptávku."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Děláte i Google Ads?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Naše hlavní síla je Meta Ads, kde z rozpočtu vytáhneme nejvíc. Vyhledávací kampaně řešíme podle typu projektu — rádi poradíme, jestli se ve vašem oboru vyplatí."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Jsem vázaný smlouvou na rok?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ne. Spolupracujeme po měsících. Chceme, abyste pokračovali proto, že se vám to vyplácí, ne proto, že musíte."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+
+<body class="bg-white overflow-x-hidden">
+
+  <!-- ───── NAV ───── -->
+  <nav class="glass-nav fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-2">
+        <span class="font-bold text-[17px] text-gray-900 tracking-tight">Philo Agency</span>
+      </a>
+      <div class="hidden md:flex items-center gap-7">
+        <a href="../index.html"
+          class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Domů</a>
+
+        <!-- Služby — rozbalovací menu -->
+        <div class="nav-drop" id="nav-drop">
+          <button class="nav-drop-trigger" id="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">
+            <span>Služby</span>
+            <svg class="nav-drop-caret" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+          <div class="nav-drop-panel" role="menu">
+            <a class="nav-drop-item" style="--d:.04s" href="tvorba-webu.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+              <span>
+                <span class="nav-drop-title">Tvorba webu</span>
+                <span class="nav-drop-desc">Weby na míru, první návrh zdarma</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="nav-drop-item" style="--d:.085s" href="vykonnostni-marketing.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span>
+              <span>
+                <span class="nav-drop-title">Výkonnostní marketing</span>
+                <span class="nav-drop-desc">Meta Ads kampaně zaměřené na tržby</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="nav-drop-item" style="--d:.13s" href="tvorba-kontentu.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2"/></svg></span>
+              <span>
+                <span class="nav-drop-title">Tvorba kontentu</span>
+                <span class="nav-drop-desc">Foto, video a texty pro sociální sítě</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="nav-drop-item" style="--d:.175s" href="automatizace.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg></span>
+              <span>
+                <span class="nav-drop-title">Automatizace</span>
+                <span class="nav-drop-desc">Propojíme nástroje, procesy běží samy</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="nav-drop-item" style="--d:.22s" href="ai-agenti.html" role="menuitem">
+              <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg></span>
+              <span>
+                <span class="nav-drop-title">AI agenti</span>
+                <span class="nav-drop-desc">Agenti pro podporu, prodej i obsah</span>
+              </span>
+              <svg class="nav-drop-arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <div class="nav-drop-foot">
+              <span>Nevíte, co potřebujete?</span>
+              <a href="../index.html#kontakt">Ozvěte se nám →</a>
+            </div>
+          </div>
+        </div>
+
+        <a href="../index.html#cena"
+          class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Cena</a>
+        <a href="../index.html#ukazky"
+          class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Ukázky</a>
+        <a href="../index.html#referencie"
+          class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Reference</a>
+        <a href="../index.html#faq"
+          class="text-[13.5px] text-gray-500 hover:text-gray-900 font-medium transition-colors">Časté dotazy</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="../index.html#kontakt" class="btn-dark btn-nav hidden md:inline-flex">
+          <span class="btn-text">Chci bezplatný návrh</span>
+          <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+        </a>
+        <button class="hamburger-btn md:hidden" id="hamburger-btn" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ───── MOBILNÍ MENU ───── -->
+  <div class="mobile-menu md:hidden" id="mobile-menu">
+    <div class="mobile-menu-inner">
+      <a href="../index.html" class="mobile-nav-link">Domů</a>
+      <div class="mobile-sub open" id="mobile-sub">
+        <button class="mobile-sub-toggle" id="mobile-sub-toggle" aria-expanded="true">
+          <span>Služby</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        <div class="mobile-sub-list">
+          <a href="tvorba-webu.html" class="mobile-sub-link">Tvorba webu</a>
+          <a href="vykonnostni-marketing.html" class="mobile-sub-link">Výkonnostní marketing</a>
+          <a href="tvorba-kontentu.html" class="mobile-sub-link">Tvorba kontentu</a>
+          <a href="automatizace.html" class="mobile-sub-link">Automatizace</a>
+          <a href="ai-agenti.html" class="mobile-sub-link">AI agenti</a>
+        </div>
+      </div>
+      <a href="../index.html#cena" class="mobile-nav-link">Cena</a>
+      <a href="../index.html#ukazky" class="mobile-nav-link">Ukázky</a>
+      <a href="../index.html#referencie" class="mobile-nav-link">Reference</a>
+      <a href="../index.html#faq" class="mobile-nav-link">Časté dotazy</a>
+      <a href="../index.html#kontakt" class="btn-dark mt-5" style="width:100%;justify-content:center">
+        <span class="btn-text">Chci bezplatný návrh</span>
+        <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ───── HERO ───── -->
+  <section class="hero-bg pt-36 pb-24 px-6">
+    <div class="blob"
+      style="width:720px;height:720px;background:radial-gradient(circle,rgba(192,57,43,0.13),transparent 65%);top:-240px;right:-140px;filter:blur(90px)">
+    </div>
+    <div class="blob"
+      style="width:560px;height:560px;background:radial-gradient(circle,rgba(139,92,246,0.08),transparent 65%);top:40px;left:-180px;filter:blur(90px)">
+    </div>
+    <div class="blob"
+      style="width:420px;height:420px;background:radial-gradient(circle,rgba(244,114,182,0.07),transparent 65%);bottom:-60px;right:240px;filter:blur(80px)">
+    </div>
+
+    <div class="max-w-4xl mx-auto relative z-10 text-center">
+      <div class="flex items-center justify-center gap-2 text-[12px] text-gray-400 mb-7" id="sp-eyebrow">
+        <a href="../index.html" class="hover:text-gray-600 transition-colors">Domů</a>
+        <span>/</span>
+        <span>Služby</span>
+        <span>/</span>
+        <span class="text-gray-600 font-medium">Výkonnostní marketing</span>
+      </div>
+
+      <h1 class="text-[40px] sm:text-[52px] md:text-[62px] font-bold tracking-[-0.035em] leading-[1.04] text-gray-900 mb-6"
+        id="sp-title">
+        Výkonnostní marketing<br class="hidden sm:block"><span class="gradient-text">měřený v tržbách</span>
+      </h1>
+
+      <p class="text-gray-500 text-[16px] sm:text-[17px] leading-[1.65] max-w-2xl mx-auto mb-9" id="sp-sub">
+        Spravujeme kampaně na Facebooku a Instagramu. Neplatíte za lajky ani za dosah — cílem je poptávka, objednávka a návratnost, kterou vidíte v číslech.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10" id="sp-btns">
+        <a href="../index.html#kontakt" class="btn-dark">
+          <span class="btn-text">Chci nezávaznou konzultaci</span>
+          <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+        </a>
+        <a href="../index.html#ukazky" class="btn-glass">
+          <span class="btn-text">Zobrazit ukázky</span>
+          <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+        </a>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-2.5" id="sp-meta">
+          <div class="glass-sm rounded-full px-4 py-2 flex items-center gap-2">
+            <span class="text-[#c0392b] text-[12px]">✓</span>
+            <span class="text-[12.5px] font-medium text-gray-600">Týdenní reporting</span>
+          </div>
+          <div class="glass-sm rounded-full px-4 py-2 flex items-center gap-2">
+            <span class="text-[#c0392b] text-[12px]">✓</span>
+            <span class="text-[12.5px] font-medium text-gray-600">Bez závazku na rok</span>
+          </div>
+          <div class="glass-sm rounded-full px-4 py-2 flex items-center gap-2">
+            <span class="text-[#c0392b] text-[12px]">✓</span>
+            <span class="text-[12.5px] font-medium text-gray-600">Kreativy v ceně</span>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── ÚVOD ───── -->
+  <section class="bg-white py-24 px-6">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div class="lg:col-span-7 reveal">
+        <h2 class="text-[28px] sm:text-[34px] font-bold tracking-[-0.03em] leading-[1.15] text-gray-900 mb-6">
+          Reklama, u které víte, co vám vydělala</h2>
+          <p class="text-gray-500 text-[15.5px] leading-[1.75] mb-5">Většina firem utrácí za reklamu naslepo. Vidí, že příspěvek má dosah, ale netuší, kolik z toho byly skutečné objednávky. Výkonnostní marketing je pravý opak: každá kampaň má jeden konkrétní cíl a vy každý týden víte, kolik vás stál jeden získaný zákazník a jestli se vám to při vašich maržích vyplácí.</p>
+          <p class="text-gray-500 text-[15.5px] leading-[1.75] mb-5">Pracujeme hlavně s Meta Ads — Facebook a Instagram dnes stále nabízejí nejlevnější kvalitní zásah pro české firmy. Kampaně stavíme kolem konkrétní nabídky, ne kolem obecné image. Testujeme více variant kreativy a textu současně a rozpočet postupně přesouváme do sestav, které reálně přivádějí poptávky. Co nefunguje, vypínáme bez sentimentu.</p>
+          <p class="text-gray-500 text-[15.5px] leading-[1.75] mb-5">Reklama ale sama o sobě nestačí. Když návštěvník klikne a přistane na pomalé stránce bez jasné nabídky, peníze jsou pryč. Proto řešíme celou cestu — od prvního zhlédnutí přes vstupní stránku až po formulář a follow-up e-mail. Díky tomu, že děláme i weby, se nemusíte dohadovat mezi dvěma dodavateli, kdo za slabý výsledek může.</p>
+      </div>
+      <div class="lg:col-span-5 reveal">
+        <div class="glass rounded-3xl p-7">
+          <div class="flex items-center gap-2.5 mb-5">
+            <span
+              class="w-8 h-8 rounded-lg bg-gradient-to-br from-[#c0392b] to-[#d9453a] flex items-center justify-center text-white"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect width="4" height="7" x="7" y="10" rx="1"/><rect width="4" height="12" x="14" y="5" rx="1"/></svg></span>
+            <h3 class="text-[15px] font-semibold text-gray-900 tracking-tight">Co sledujeme každý týden</h3>
+          </div>
+          <ul class="space-y-3.5">
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-[3px] w-4 h-4 rounded-full bg-[#c0392b]/10 flex items-center justify-center flex-shrink-0"><span
+                  class="w-1.5 h-1.5 rounded-full bg-[#c0392b]"></span></span>
+              <span class="text-[14px] text-gray-600 leading-snug">Cena za jednu poptávku a za získaného zákazníka</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-[3px] w-4 h-4 rounded-full bg-[#c0392b]/10 flex items-center justify-center flex-shrink-0"><span
+                  class="w-1.5 h-1.5 rounded-full bg-[#c0392b]"></span></span>
+              <span class="text-[14px] text-gray-600 leading-snug">Návratnost investice do reklamy (ROAS)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-[3px] w-4 h-4 rounded-full bg-[#c0392b]/10 flex items-center justify-center flex-shrink-0"><span
+                  class="w-1.5 h-1.5 rounded-full bg-[#c0392b]"></span></span>
+              <span class="text-[14px] text-gray-600 leading-snug">Míra prokliku a výkon jednotlivých kreativ</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-[3px] w-4 h-4 rounded-full bg-[#c0392b]/10 flex items-center justify-center flex-shrink-0"><span
+                  class="w-1.5 h-1.5 rounded-full bg-[#c0392b]"></span></span>
+              <span class="text-[14px] text-gray-600 leading-snug">Počet a kvalita nových kontaktů</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-[3px] w-4 h-4 rounded-full bg-[#c0392b]/10 flex items-center justify-center flex-shrink-0"><span
+                  class="w-1.5 h-1.5 rounded-full bg-[#c0392b]"></span></span>
+              <span class="text-[14px] text-gray-600 leading-snug">Frekvence zobrazení a únava publika</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── CO DODÁVÁME ───── -->
+  <section class="py-24 px-6" style="background:#f9f8f6">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-2xl mb-12 reveal">
+        <h2 class="text-[28px] sm:text-[34px] font-bold tracking-[-0.03em] leading-[1.15] text-gray-900 mb-4">
+          Co pro vás děláme</h2>
+        <p class="text-gray-500 text-[15.5px] leading-relaxed">Od nastavení účtu po týdenní optimalizaci. Kompletní správu kampaní včetně kreativ i vstupních stránek.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="glass glass-hover rounded-2xl p-6 reveal">
+          <div
+            class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+          </div>
+          <h3 class="text-[15.5px] font-semibold text-gray-900 mb-2 tracking-tight">Strategie a nastavení</h3>
+          <p class="text-[13.5px] text-gray-500 leading-relaxed">Nastavíme reklamní účet, publika, pixel i měření konverzí. Když už účet máte, uděláme audit a opravíme, co brzdí výkon.</p>
+        </div>
+        <div class="glass glass-hover rounded-2xl p-6 reveal">
+          <div
+            class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>
+          </div>
+          <h3 class="text-[15.5px] font-semibold text-gray-900 mb-2 tracking-tight">Kreativy, které fungují</h3>
+          <p class="text-[13.5px] text-gray-500 leading-relaxed">Připravíme statické i video reklamy a testujeme je proti sobě. Rozhoduje výkon, ne vkus.</p>
+        </div>
+        <div class="glass glass-hover rounded-2xl p-6 reveal">
+          <div
+            class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <h3 class="text-[15.5px] font-semibold text-gray-900 mb-2 tracking-tight">Testování nabídek</h3>
+          <p class="text-[13.5px] text-gray-500 leading-relaxed">Zkoušíme různé úhly — slevu, ukázku zdarma, konzultaci — dokud nenajdeme ten, který přináší nejlevnější poptávky.</p>
+        </div>
+        <div class="glass glass-hover rounded-2xl p-6 reveal">
+          <div
+            class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3 class="text-[15.5px] font-semibold text-gray-900 mb-2 tracking-tight">Vstupní stránky</h3>
+          <p class="text-[13.5px] text-gray-500 leading-relaxed">Postavíme landing page navrženou k jedinému cíli: aby návštěvník odeslal formulář nebo objednal.</p>
+        </div>
+        <div class="glass glass-hover rounded-2xl p-6 reveal">
+          <div
+            class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect width="4" height="7" x="7" y="10" rx="1"/><rect width="4" height="12" x="14" y="5" rx="1"/></svg>
+          </div>
+          <h3 class="text-[15.5px] font-semibold text-gray-900 mb-2 tracking-tight">Měření a reporting</h3>
+          <p class="text-[13.5px] text-gray-500 leading-relaxed">Napojíme analytiku a posíláme přehledný report, kterému rozumíte i bez marketingového slovníku.</p>
+        </div>
+        <div class="glass glass-hover rounded-2xl p-6 reveal">
+          <div
+            class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <h3 class="text-[15.5px] font-semibold text-gray-900 mb-2 tracking-tight">Průběžná optimalizace</h3>
+          <p class="text-[13.5px] text-gray-500 leading-relaxed">Kampaně nejsou hotové spuštěním. Každý týden vyhodnocujeme a přesouváme rozpočet tam, kde se vrací.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── POSTUP ───── -->
+  <section class="bg-black py-24 px-6 relative overflow-hidden">
+    <div class="blob"
+      style="width:600px;height:600px;background:radial-gradient(circle,rgba(192,57,43,0.22),transparent 65%);top:-180px;left:-120px;filter:blur(100px)">
+    </div>
+    <div class="max-w-6xl mx-auto relative z-10">
+      <div class="max-w-2xl mb-12 reveal">
+        <h2 class="text-[28px] sm:text-[34px] font-bold tracking-[-0.03em] leading-[1.15] text-white mb-4">
+          Jak kampaně stavíme</h2>
+        <p class="text-gray-400 text-[15.5px] leading-relaxed">Nejdřív data, pak škálování. Rozpočet přiléváme až do toho, co prokazatelně funguje.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="glass-dark rounded-2xl p-6 reveal">
+          <div class="text-[#d9453a] text-[12px] font-bold tracking-[0.18em] mb-3">01</div>
+          <h3 class="text-white text-[15.5px] font-semibold mb-2 tracking-tight">Analýza</h3>
+          <p class="text-gray-400 text-[13.5px] leading-relaxed">Projdeme vaši nabídku, marže, dosavadní kampaně i konkurenci. Určíme, kolik smí stát jeden zákazník.</p>
+        </div>
+        <div class="glass-dark rounded-2xl p-6 reveal">
+          <div class="text-[#d9453a] text-[12px] font-bold tracking-[0.18em] mb-3">02</div>
+          <h3 class="text-white text-[15.5px] font-semibold mb-2 tracking-tight">Příprava</h3>
+          <p class="text-gray-400 text-[13.5px] leading-relaxed">Vytvoříme kreativy, texty a vstupní stránku, nastavíme měření a strukturu kampaní.</p>
+        </div>
+        <div class="glass-dark rounded-2xl p-6 reveal">
+          <div class="text-[#d9453a] text-[12px] font-bold tracking-[0.18em] mb-3">03</div>
+          <h3 class="text-white text-[15.5px] font-semibold mb-2 tracking-tight">Testovací fáze</h3>
+          <p class="text-gray-400 text-[13.5px] leading-relaxed">První dva až tři týdny sbíráme data z více variant. Hledáme vítěznou kombinaci publika a sdělení.</p>
+        </div>
+        <div class="glass-dark rounded-2xl p-6 reveal">
+          <div class="text-[#d9453a] text-[12px] font-bold tracking-[0.18em] mb-3">04</div>
+          <h3 class="text-white text-[15.5px] font-semibold mb-2 tracking-tight">Škálování</h3>
+          <p class="text-gray-400 text-[13.5px] leading-relaxed">Do toho, co funguje, přiléváme rozpočet a hlídáme, aby cena za poptávku nerostla.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── PRO KOHO ───── -->
+  <section class="bg-white py-24 px-6">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div class="lg:col-span-7 reveal">
+        <h2 class="text-[28px] sm:text-[34px] font-bold tracking-[-0.03em] leading-[1.15] text-gray-900 mb-6">
+          Pro koho má výkonnostní marketing smysl</h2>
+        <p class="text-gray-500 text-[15.5px] leading-[1.75] mb-5">Reklama dává smysl tehdy, když máte co nabídnout a zvládnete poptávku obsloužit. Ideální je situace, kdy znáte přibližnou hodnotu zákazníka a jste ochotní dát kampani alespoň měsíc a rozumný rozpočet — z pár set korun se použitelná data nasbírat nedají a jakýkoli závěr by byl náhoda.</p>
+        <p class="text-gray-500 text-[15.5px] leading-[1.75]">Pokud si nejste jistí, jestli je vaše nabídka na reklamu připravená, řekneme vám to na rovinu ještě před podpisem. Utrácet váš rozpočet za kampaň, která nemůže vydělat, nechceme ani my — spolupráce dává smysl jen tehdy, když se vám vrátí.</p>
+      </div>
+      <div class="lg:col-span-5 reveal">
+        <div class="grid grid-cols-3 gap-3">
+          <div class="glass rounded-2xl px-5 py-5 text-center">
+            <div class="text-[20px] font-bold text-gray-900 tracking-tight mb-1">15 000 Kč</div>
+            <div class="text-[12px] text-gray-500 leading-snug">doporučený měsíční rozpočet</div>
+          </div>
+          <div class="glass rounded-2xl px-5 py-5 text-center">
+            <div class="text-[20px] font-bold text-gray-900 tracking-tight mb-1">2–3 týdny</div>
+            <div class="text-[12px] text-gray-500 leading-snug">než se kampaň usadí</div>
+          </div>
+          <div class="glass rounded-2xl px-5 py-5 text-center">
+            <div class="text-[20px] font-bold text-gray-900 tracking-tight mb-1">1×</div>
+            <div class="text-[12px] text-gray-500 leading-snug">report každý týden</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── FAQ ───── -->
+  <section class="py-24 px-6" style="background:#f9f8f6">
+    <div class="max-w-3xl mx-auto">
+      <h2
+        class="text-[28px] sm:text-[34px] font-bold tracking-[-0.03em] leading-[1.15] text-gray-900 mb-10 text-center reveal">
+        Časté dotazy</h2>
+      <div class="space-y-3">
+        <div class="faq-item glass rounded-2xl px-6 py-1 reveal">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 py-5 text-left">
+            <span class="text-[15px] font-semibold text-gray-900 tracking-tight">Kolik musím dát do reklamy?</span>
+            <span class="faq-icon text-[#c0392b] text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="text-[14px] text-gray-500 leading-relaxed pb-5 pr-8">Doporučujeme začít alespoň na 15 000 Kč měsíčně v samotném rozpočtu na reklamu. S nižší částkou nemá algoritmus dost dat a testování se zbytečně protáhne. K tomu se připočítává naše odměna za správu.</p>
+          </div>
+        </div>
+        <div class="faq-item glass rounded-2xl px-6 py-1 reveal">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 py-5 text-left">
+            <span class="text-[15px] font-semibold text-gray-900 tracking-tight">Za jak dlouho uvidím výsledky?</span>
+            <span class="faq-icon text-[#c0392b] text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="text-[14px] text-gray-500 leading-relaxed pb-5 pr-8">První poptávky se obvykle objeví během několika dní. Skutečně vypovídající čísla ale máme po dvou až třech týdnech, kdy kampaň projde učící fází a ustálí se cena za poptávku.</p>
+          </div>
+        </div>
+        <div class="faq-item glass rounded-2xl px-6 py-1 reveal">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 py-5 text-left">
+            <span class="text-[15px] font-semibold text-gray-900 tracking-tight">Děláte i Google Ads?</span>
+            <span class="faq-icon text-[#c0392b] text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="text-[14px] text-gray-500 leading-relaxed pb-5 pr-8">Naše hlavní síla je Meta Ads, kde z rozpočtu vytáhneme nejvíc. Vyhledávací kampaně řešíme podle typu projektu — rádi poradíme, jestli se ve vašem oboru vyplatí.</p>
+          </div>
+        </div>
+        <div class="faq-item glass rounded-2xl px-6 py-1 reveal">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 py-5 text-left">
+            <span class="text-[15px] font-semibold text-gray-900 tracking-tight">Jsem vázaný smlouvou na rok?</span>
+            <span class="faq-icon text-[#c0392b] text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </button>
+          <div class="faq-answer">
+            <p class="text-[14px] text-gray-500 leading-relaxed pb-5 pr-8">Ne. Spolupracujeme po měsících. Chceme, abyste pokračovali proto, že se vám to vyplácí, ne proto, že musíte.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── DALŠÍ SLUŽBY ───── -->
+  <section class="bg-white py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-[20px] font-bold tracking-[-0.02em] text-gray-900 mb-7 reveal">Další služby</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="tvorba-webu.html" class="glass glass-hover rounded-2xl p-5 flex items-center gap-3.5 reveal">
+          <span
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+          <span class="min-w-0">
+            <span class="block text-[14px] font-semibold text-gray-900 tracking-tight">Tvorba webu</span>
+            <span class="block text-[12px] text-gray-500 truncate">Weby na míru, první návrh zdarma</span>
+          </span>
+        </a>
+        <a href="tvorba-kontentu.html" class="glass glass-hover rounded-2xl p-5 flex items-center gap-3.5 reveal">
+          <span
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2"/></svg></span>
+          <span class="min-w-0">
+            <span class="block text-[14px] font-semibold text-gray-900 tracking-tight">Tvorba kontentu</span>
+            <span class="block text-[12px] text-gray-500 truncate">Foto, video a texty pro sociální sítě</span>
+          </span>
+        </a>
+        <a href="automatizace.html" class="glass glass-hover rounded-2xl p-5 flex items-center gap-3.5 reveal">
+          <span
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg></span>
+          <span class="min-w-0">
+            <span class="block text-[14px] font-semibold text-gray-900 tracking-tight">Automatizace</span>
+            <span class="block text-[12px] text-gray-500 truncate">Propojíme nástroje, procesy běží samy</span>
+          </span>
+        </a>
+        <a href="ai-agenti.html" class="glass glass-hover rounded-2xl p-5 flex items-center gap-3.5 reveal">
+          <span
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c0392b]/10 to-[#d9453a]/5 border border-[#c0392b]/10 flex items-center justify-center text-[#c0392b] flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg></span>
+          <span class="min-w-0">
+            <span class="block text-[14px] font-semibold text-gray-900 tracking-tight">AI agenti</span>
+            <span class="block text-[12px] text-gray-500 truncate">Agenti pro podporu, prodej i obsah</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── CTA ───── -->
+  <section class="bg-black py-20 px-6 relative overflow-hidden">
+    <div class="blob"
+      style="width:640px;height:640px;background:radial-gradient(circle,rgba(192,57,43,0.28),transparent 65%);top:-200px;right:-140px;filter:blur(100px)">
+    </div>
+    <div class="max-w-3xl mx-auto text-center relative z-10 reveal">
+      <h2 class="text-[28px] sm:text-[36px] font-bold tracking-[-0.03em] leading-[1.15] text-white mb-4">
+        Chcete vědět, co by reklama zvládla ve vašem oboru?</h2>
+      <p class="text-gray-400 text-[15.5px] leading-relaxed mb-8 max-w-xl mx-auto">Napište nám, co prodáváte a jaký rozpočet zvažujete. Ozveme se s odhadem ceny za poptávku a s návrhem, čím začít.</p>
+      <div class="flex justify-center">
+        <a href="../index.html#kontakt" class="btn-dark">
+          <span class="btn-text">Chci nezávaznou konzultaci</span>
+          <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── FOOTER ───── -->
+  <footer class="bg-black py-14 px-6 border-t border-white/5">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between gap-10">
+      <div class="max-w-xs">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="font-bold text-white text-[16px]">Philo Agency</span>
+        </div>
+        <p class="text-gray-500 text-[13.5px] leading-relaxed">Tvoříme weby pro firmy a podnikatele v České republice.
+          První návrh zdarma.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-10 sm:gap-14">
+        <div>
+          <h4 class="text-white font-semibold text-[13px] mb-4">Služby</h4>
+          <div class="space-y-2.5">
+            <a href="tvorba-webu.html" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Tvorba webu</a>
+            <a href="vykonnostni-marketing.html" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Výkonnostní marketing</a>
+            <a href="tvorba-kontentu.html" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Tvorba kontentu</a>
+            <a href="automatizace.html" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Automatizace</a>
+            <a href="ai-agenti.html" class="block text-gray-500 text-[13px] hover:text-white transition-colors">AI agenti</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-[13px] mb-4">Navigace</h4>
+          <div class="space-y-2.5">
+            <a href="../index.html" class="block text-gray-500 text-[13px] hover:text-white transition-colors">Domů</a>
+            <a href="../index.html#cena"
+              class="block text-gray-500 text-[13px] hover:text-white transition-colors">Cena</a>
+            <a href="../index.html#ukazky"
+              class="block text-gray-500 text-[13px] hover:text-white transition-colors">Ukázky</a>
+            <a href="../index.html#referencie"
+              class="block text-gray-500 text-[13px] hover:text-white transition-colors">Reference</a>
+            <a href="../index.html#faq" class="block text-gray-500 text-[13px] hover:text-white transition-colors">FAQ</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-[13px] mb-4">Kontakt</h4>
+          <div class="space-y-2.5">
+            <a href="mailto:philoagency.info@gmail.com"
+              class="block text-gray-500 text-[13px] hover:text-white transition-colors">philoagency.info@gmail.com</a>
+            <a href="tel:+420777859980" class="block text-gray-500 text-[13px] hover:text-white transition-colors">+420
+              777 859 980</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-5xl mx-auto mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between gap-3">
+      <p class="text-gray-600 text-[12px]">© 2026 Philo Agency. Všechna práva vyhrazena.</p>
+      <div class="flex gap-5">
+        <a href="../index.html" class="text-gray-600 text-[12px] hover:text-gray-500 transition-colors">Ochrana
+          soukromí</a>
+        <a href="../index.html" class="text-gray-600 text-[12px] hover:text-gray-500 transition-colors">Podmínky
+          použití</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
