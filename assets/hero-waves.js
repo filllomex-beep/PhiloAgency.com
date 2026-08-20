@@ -82,32 +82,12 @@
     return true;
   }
 
-  /* ─── kurzor ─── */
-  var mouse = { cx: -9999, cy: -9999, x: -9999, y: -9999, sx: -9999, sy: -9999, set: false };
-  var RADIUS = 190, RADIUS2 = RADIUS * RADIUS;
-
-  /* Posluchač jen zapíše souřadnice. Přepočet přes rect děláme jednou za snímek,
-     ne při každém pohybu myši — jinak bychom si vynucovali layout 100× za vteřinu. */
-  window.addEventListener('mousemove', function (e) {
-    mouse.cx = e.clientX;
-    mouse.cy = e.clientY;
-  }, { passive: true });
-
-  function syncMouse() {
-    if (mouse.cx === -9999) return;
-    var rect = container.getBoundingClientRect();
-    mouse.x = mouse.cx - rect.left;
-    mouse.y = mouse.cy - rect.top;
-    if (!mouse.set) { mouse.sx = mouse.x; mouse.sy = mouse.y; mouse.set = true; }
-  }
-
   /* ─── kreslení ─── */
   function draw(time) {
     ctx.clearRect(0, 0, W, H);
     ctx.beginPath();
 
     var driftX = time * 0.000024, driftY = time * 0.000006;
-    var mx = mouse.sx, my = mouse.sy, hasMouse = mouse.set;
 
     for (var i = 0; i < nLines; i++) {
       var x = xStart + xGap * i;
@@ -117,17 +97,6 @@
         var m = noise(nx, y * 0.002 + driftY) * 8;
         var px = x + Math.cos(m) * 12;
         var py = y + Math.sin(m) * 6;
-
-        if (hasMouse) {
-          var dx = px - mx, dy = py - my, d2 = dx * dx + dy * dy;
-          if (d2 < RADIUS2) {
-            var d = Math.sqrt(d2) || 1;
-            var f = (1 - d / RADIUS) * 26 / d;
-            px += dx * f;
-            py += dy * f;
-          }
-        }
-
         if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
       }
     }
@@ -144,9 +113,6 @@
     rafId = requestAnimationFrame(frame);
     if (now - lastFrame < FRAME_MS) return;
     lastFrame = now;
-    syncMouse();
-    mouse.sx += (mouse.x - mouse.sx) * 0.12;
-    mouse.sy += (mouse.y - mouse.sy) * 0.12;
     draw(now - t0);
   }
 
