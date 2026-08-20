@@ -23,10 +23,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=inter:wght@100..900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { theme: { fontFamily: { sans: ['inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] } } }</script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <link rel="stylesheet" href="../assets/philo-sub.css">
   <script src="../assets/philo-sub.js"></script>
   <script type="application/ld+json">
@@ -90,6 +86,7 @@
   ]
 }
   </script>
+  <link rel="stylesheet" href="../assets/tailwind.css">
 </head>
 
 <body class="bg-white overflow-x-hidden">
@@ -226,7 +223,7 @@
     </div>
 
     <div class="max-w-4xl mx-auto relative z-10 text-center">
-      <div class="flex items-center justify-center gap-2 text-[12px] text-gray-400 mb-7" id="sp-eyebrow">
+      <div class="flex items-center justify-center gap-2 text-[12px] text-gray-400 mb-7" id="sp-eyebrow" style="opacity:0">
         <a href="../index.html" class="hover:text-gray-600 transition-colors">Domů</a>
         <span>/</span>
         <span>Služby</span>
@@ -235,15 +232,15 @@
       </div>
 
       <h1 class="text-[40px] sm:text-[52px] md:text-[62px] font-bold tracking-[-0.035em] leading-[1.04] text-gray-900 mb-6"
-        id="sp-title">
+        id="sp-title" style="opacity:0">
         AI agenti,<br class="hidden sm:block"><span class="gradient-text">kteří pracují za vás</span>
       </h1>
 
-      <p class="text-gray-500 text-[16px] sm:text-[17px] leading-[1.65] max-w-2xl mx-auto mb-9" id="sp-sub">
+      <p class="text-gray-500 text-[16px] sm:text-[17px] leading-[1.65] max-w-2xl mx-auto mb-9" id="sp-sub" style="opacity:0">
         Nasazujeme AI asistenty, kteří odpovídají zákazníkům, kvalifikují poptávky a připravují podklady. Fungují nepřetržitě a odpovídají podle vašich vlastních dat.
       </p>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10" id="sp-btns">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10" id="sp-btns" style="opacity:0">
         <a href="../index.html#kontakt" class="btn-dark">
           <span class="btn-text">Chci nezávaznou konzultaci</span>
           <div class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
@@ -254,7 +251,7 @@
         </a>
       </div>
 
-      <div class="flex flex-wrap items-center justify-center gap-2.5" id="sp-meta">
+      <div class="flex flex-wrap items-center justify-center gap-2.5" id="sp-meta" style="opacity:0">
           <div class="glass-sm rounded-full px-4 py-2 flex items-center gap-2">
             <span class="text-[#c0392b] text-[12px]">✓</span>
             <span class="text-[12.5px] font-medium text-gray-600">Postavené na vašich datech</span>
@@ -611,6 +608,9 @@
       </div>
     </div>
   </footer>
+
+  <script src="../assets/gsap.min.js"></script>
+  <script src="../assets/ScrollTrigger.min.js"></script>
 
 </body>
 

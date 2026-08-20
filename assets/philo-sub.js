@@ -27,6 +27,16 @@
         gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.7 } })
           .to(heroBits, { opacity: 1, y: 0, stagger: 0.09, delay: 0.05 });
       }
+    } else {
+      /* Pojistka: kdyby se GSAP nenačetl, obsah nesmí zůstat neviditelný. */
+      document.querySelectorAll('.reveal').forEach(function (el) {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+      ['#sp-eyebrow', '#sp-title', '#sp-sub', '#sp-btns', '#sp-meta'].forEach(function (sel) {
+        var el = document.querySelector(sel);
+        if (el) el.style.opacity = '1';
+      });
     }
 
     /* ─── Hamburger + mobilní menu ─── */

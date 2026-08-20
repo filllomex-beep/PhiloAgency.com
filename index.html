@@ -28,10 +28,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=inter:wght@100..900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { theme: { fontFamily: { sans: ['inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] } } }</script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
     html body,
     html body * {
@@ -719,8 +715,10 @@
     }
 
     /* ─── AVATAR STACK ─── */
-    .avatar-stack img {
+    .avatar-stack img,
+    .avatar-stack .avatar-initial {
       border: 2.5px solid rgba(255, 255, 255, 0.9);
+      box-sizing: border-box;
     }
 
     /* ─── REVIEW AVATAR (initials, no stock photos) ─── */
@@ -1174,6 +1172,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="assets/tailwind.css">
 </head>
 
 <body class="bg-white overflow-x-hidden">
@@ -1354,7 +1353,8 @@
   <!-- ───── HERO ───── -->
   <section class="hero-bg pt-36 pb-28 px-6">
     <!-- Wave background -->
-    <div id="hero-waves" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0"></div>
+    <div id="hero-waves"
+      style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;background:url('img/hero-waves.svg') center center / cover no-repeat"></div>
     <!-- Colored blobs for glass effect -->
     <div class="blob"
       style="width:720px;height:720px;background:radial-gradient(circle,rgba(192,57,43,0.13),transparent 65%);top:-200px;right:-120px;filter:blur(90px)">
@@ -1417,16 +1417,11 @@
           <div id="hero-proof" class="flex flex-col sm:flex-row items-start sm:items-center gap-5" style="opacity:0">
             <div class="flex items-center gap-3">
               <div class="avatar-stack flex -space-x-2.5">
-                <img src="https://placehold.co/38x38/e8d5b7/a0784d?text=A" class="w-9 h-9 rounded-full object-cover"
-                  alt="">
-                <img src="https://placehold.co/38x38/d4c4f0/7c5cbf?text=B" class="w-9 h-9 rounded-full object-cover"
-                  alt="">
-                <img src="https://placehold.co/38x38/fccb9e/c05621?text=C" class="w-9 h-9 rounded-full object-cover"
-                  alt="">
-                <img src="https://placehold.co/38x38/c9f0e8/276749?text=D" class="w-9 h-9 rounded-full object-cover"
-                  alt="">
-                <img src="https://placehold.co/38x38/fed7e2/97266d?text=E" class="w-9 h-9 rounded-full object-cover"
-                  alt="">
+                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#e8d5b7;color:#a0784d" aria-hidden="true">A</span>
+                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#d4c4f0;color:#7c5cbf" aria-hidden="true">B</span>
+                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#fccb9e;color:#c05621" aria-hidden="true">C</span>
+                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#c9f0e8;color:#276749" aria-hidden="true">D</span>
+                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#fed7e2;color:#97266d" aria-hidden="true">E</span>
               </div>
               <div>
                 <div class="text-sm leading-none" style="color:#c0392b">★★★★★</div>
@@ -1872,7 +1867,7 @@
             <!-- Card 1 -->
             <a href="https://www.emspulse.cz/" target="_blank" rel="noopener" class="showcase-card glass">
               <div class="showcase-img-wrap">
-                <img src="img/emspulse.jpg" alt="EMS Pulse" class="showcase-img">
+                <img src="img/emspulse.jpg" alt="EMS Pulse" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
               </div>
               <div class="showcase-info">
                 <span class="showcase-tag" data-i18n="card1-tag">Fitness & zdraví</span>
@@ -1885,7 +1880,7 @@
             <!-- Card 2 -->
             <a href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" class="showcase-card glass">
               <div class="showcase-img-wrap">
-                <img src="img/absolutestudio.jpg" alt="Absolute Studio" class="showcase-img">
+                <img src="img/absolutestudio.jpg" alt="Absolute Studio" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
               </div>
               <div class="showcase-info">
                 <span class="showcase-tag" data-i18n="card4-tag">Fitness & wellness</span>
@@ -1898,7 +1893,7 @@
             <!-- Card 3 -->
             <a href="https://longvacation.eu/" target="_blank" rel="noopener" class="showcase-card glass">
               <div class="showcase-img-wrap">
-                <img src="img/longvacation.jpg" alt="Long Vacation" class="showcase-img">
+                <img src="img/longvacation.jpg" alt="Long Vacation" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
               </div>
               <div class="showcase-info">
                 <span class="showcase-tag" data-i18n="card3-tag">SaaS & produkty</span>
@@ -1911,7 +1906,7 @@
             <!-- Card 4 -->
             <a href="https://www.danenula.cz/" target="_blank" rel="noopener" class="showcase-card glass">
               <div class="showcase-img-wrap">
-                <img src="img/danenula.jpg" alt="DaněNula.cz" class="showcase-img">
+                <img src="img/danenula.jpg" alt="DaněNula.cz" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
               </div>
               <div class="showcase-info">
                 <span class="showcase-tag" data-i18n="card2-tag">Účetnictví & daně</span>
@@ -2363,6 +2358,8 @@
     </div>
   </footer>
 
+  <script src="assets/gsap.min.js"></script>
+  <script src="assets/ScrollTrigger.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
@@ -2673,15 +2670,36 @@
         track.addEventListener('click', () => pauseFor(2500));
         track.addEventListener('touchstart', () => pauseFor(3000), { passive: true });
 
-        (function loop() {
-          if (!paused) {
+        // Šířku měříme jen při změně velikosti — čtení scrollWidth v každém snímku
+        // vynucovalo layout a marquee sekal.
+        let halfW = inner.scrollWidth / 2;
+        window.addEventListener('resize', () => { halfW = inner.scrollWidth / 2; }, { passive: true });
+
+        // Běží jen když je pruh vidět a záložka je aktivní.
+        let visible = true;
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(entries => { visible = entries[0].isIntersecting; }, { threshold: 0 })
+            .observe(track);
+        }
+
+        let rafId = null;
+        function loop() {
+          if (!paused && visible && halfW > 0) {
             offset += 0.5;
-            const halfW = inner.scrollWidth / 2;
             if (offset >= halfW) offset -= halfW;
             inner.style.transform = 'translateX(-' + offset + 'px)';
           }
-          requestAnimationFrame(loop);
-        })();
+          rafId = requestAnimationFrame(loop);
+        }
+        loop();
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+          } else if (rafId === null) {
+            halfW = inner.scrollWidth / 2;
+            loop();
+          }
+        });
       }
 
       // Re-position on resize
@@ -3280,121 +3298,15 @@
     })();
   </script>
 
-  <script type="module">
-    import { createNoise2D } from 'https://cdn.jsdelivr.net/npm/simplex-noise@4.0.1/+esm';
-
-    const container = document.getElementById('hero-waves');
-    if (container) {
-      const ns = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(ns, 'svg');
-      svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-      svg.style.cssText = 'display:block;width:100%;height:100%;';
-      container.appendChild(svg);
-
-      const strokeColor = 'rgba(15,23,42,1)';
-      const mouse = { x: -10, y: 0, lx: 0, ly: 0, sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false };
-      let paths = [], lines = [];
-      const noise = createNoise2D();
-      let bounding = null;
-
-      function setSize() {
-        bounding = container.getBoundingClientRect();
-        svg.style.width = bounding.width + 'px';
-        svg.style.height = bounding.height + 'px';
-      }
-
-      function setLines() {
-        const { width, height } = bounding;
-        lines = [];
-        paths.forEach(p => p.remove());
-        paths = [];
-        const xGap = 8, yGap = 8;
-        const totalLines = Math.ceil((width + 200) / xGap);
-        const totalPoints = Math.ceil((height + 30) / yGap);
-        const xStart = (width - xGap * totalLines) / 2;
-        const yStart = (height - yGap * totalPoints) / 2;
-
-        for (let i = 0; i < totalLines; i++) {
-          const points = [];
-          for (let j = 0; j < totalPoints; j++) {
-            points.push({ x: xStart + xGap * i, y: yStart + yGap * j, wave: { x: 0, y: 0 }, cursor: { x: 0, y: 0, vx: 0, vy: 0 } });
-          }
-          const path = document.createElementNS(ns, 'path');
-          path.setAttribute('fill', 'none');
-          path.setAttribute('stroke', strokeColor);
-          path.setAttribute('stroke-width', '1');
-          path.setAttribute('stroke-opacity', '0.1');
-          svg.appendChild(path);
-          paths.push(path);
-          lines.push(points);
-        }
-      }
-
-      function onMouseMove(e) {
-        if (!bounding) return;
-        mouse.x = e.clientX - bounding.left;
-        mouse.y = e.clientY - bounding.top + window.scrollY;
-        if (!mouse.set) { mouse.sx = mouse.x; mouse.sy = mouse.y; mouse.lx = mouse.x; mouse.ly = mouse.y; mouse.set = true; }
-      }
-
-      function movePoints(time) {
-        lines.forEach(points => {
-          points.forEach(p => {
-            const move = noise((p.x + time * 0.008) * 0.003, (p.y + time * 0.003) * 0.002) * 8;
-            p.wave.x = Math.cos(move) * 12;
-            p.wave.y = Math.sin(move) * 6;
-            const dx = p.x - mouse.sx, dy = p.y - mouse.sy;
-            const d = Math.hypot(dx, dy), l = Math.max(175, mouse.vs);
-            if (d < l) {
-              const s = 1 - d / l;
-              const f = Math.cos(d * 0.001) * s;
-              p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00035;
-              p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00035;
-            }
-            p.cursor.vx += (0 - p.cursor.x) * 0.01; p.cursor.vy += (0 - p.cursor.y) * 0.01;
-            p.cursor.vx *= 0.95; p.cursor.vy *= 0.95;
-            p.cursor.x += p.cursor.vx; p.cursor.y += p.cursor.vy;
-            p.cursor.x = Math.min(50, Math.max(-50, p.cursor.x));
-            p.cursor.y = Math.min(50, Math.max(-50, p.cursor.y));
-          });
-        });
-      }
-
-      function moved(p, withCursor = true) {
-        return { x: p.x + p.wave.x + (withCursor ? p.cursor.x : 0), y: p.y + p.wave.y + (withCursor ? p.cursor.y : 0) };
-      }
-
-      function drawLines() {
-        lines.forEach((points, i) => {
-          if (points.length < 2 || !paths[i]) return;
-          const f = moved(points[0], false);
-          let d = `M ${f.x} ${f.y}`;
-          for (let j = 1; j < points.length; j++) { const c = moved(points[j]); d += ` L ${c.x} ${c.y}`; }
-          paths[i].setAttribute('d', d);
-        });
-      }
-
-      function tick(time) {
-        mouse.sx += (mouse.x - mouse.sx) * 0.1;
-        mouse.sy += (mouse.y - mouse.sy) * 0.1;
-        const dx = mouse.x - mouse.lx, dy = mouse.y - mouse.ly;
-        mouse.v = Math.hypot(dx, dy);
-        mouse.vs += (mouse.v - mouse.vs) * 0.1;
-        mouse.vs = Math.min(100, mouse.vs);
-        mouse.lx = mouse.x; mouse.ly = mouse.y;
-        mouse.a = Math.atan2(dy, dx);
-        movePoints(time);
-        drawLines();
-        requestAnimationFrame(tick);
-      }
-
-      setSize();
-      setLines();
-      window.addEventListener('resize', () => { setSize(); setLines(); });
-      window.addEventListener('mousemove', onMouseMove);
-      requestAnimationFrame(tick);
+  <script>
+    // Pojistka: kdyby se GSAP nenačetl, obsah nesmí zůstat neviditelný.
+    if (!window.gsap) {
+      document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+      ['#hero-title', '#hero-sub', '#hero-btns', '#hero-proof', '#hero-card', '#hero-marquee']
+        .forEach(sel => { const el = document.querySelector(sel); if (el) el.style.opacity = '1'; });
     }
   </script>
+
 </body>
 
 </html>
