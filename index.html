@@ -305,6 +305,9 @@
       position: relative;
       z-index: 1;
       flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 10.5px;
       font-weight: 500;
       padding: 7px 4px;
@@ -313,6 +316,7 @@
       cursor: pointer;
       background: transparent;
       color: #aaa;
+      text-decoration: none;
       transition: color 0.18s, box-shadow 0.18s;
       white-space: nowrap;
       text-align: center;
@@ -1418,17 +1422,16 @@
               <!-- Services Slider -->
               <div class="mb-7">
                 <div class="svc-track">
-                  <button class="svc-seg active"
-                    data-desc="Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru — od designu po spuštění do 14 dní.">Weby</button>
-                  <button class="svc-seg"
-                    data-desc="Spravujeme výkonnostní Meta Ads kampaně na Facebooku a Instagramu s přímým zaměřením na akvizici zákazníků a růst tržeb.">Marketing</button>
-                  <button class="svc-seg"
-                    data-desc="Propojujeme nástroje a procesy, aby váš byznys fungoval na autopilotu bez zbytečné práce.">Automatizace</button>
-                  <button class="svc-seg"
-                    data-desc="Inteligentní AI agenti pro péči o zákazníky, tvorbu obsahu a analýzu dat.">AI
-                    agenti</button>
-                  <button class="svc-seg"
-                    data-desc="Profesionální fotografie produktů, které zaujmou na první pohled a zvýší vaše prodeje.">Fotografie</button>
+                  <a class="svc-seg active" href="/sluzby/tvorba-webu" data-svc="0"
+                    data-desc="Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru — od designu po spuštění do 14 dní.">Weby</a>
+                  <a class="svc-seg" href="/sluzby/vykonnostni-marketing" data-svc="1"
+                    data-desc="Spravujeme výkonnostní Meta Ads kampaně na Facebooku a Instagramu s přímým zaměřením na akvizici zákazníků a růst tržeb.">Marketing</a>
+                  <a class="svc-seg" href="/sluzby/automatizace" data-svc="2"
+                    data-desc="Propojujeme nástroje a procesy, aby váš byznys fungoval na autopilotu bez zbytečné práce.">Automatizace</a>
+                  <a class="svc-seg" href="/sluzby/ai-agenti" data-svc="3"
+                    data-desc="Inteligentní AI agenti pro péči o zákazníky, tvorbu obsahu a analýzu dat.">AI agenti</a>
+                  <a class="svc-seg" href="/sluzby/tvorba-kontentu" data-svc="4"
+                    data-desc="Profesionální fotografie produktů, které zaujmou na první pohled a zvýší vaše prodeje.">Fotografie</a>
                 </div>
                 <p class="svc-desc-box" id="svc-desc">Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru — od
                   designu po spuštění do 14 dní.</p>
@@ -2592,6 +2595,11 @@
         }
       }
 
+      window._svcRelayout = function () {
+        const active = track.querySelector('.svc-seg.active') || segs[0];
+        if (active) moveToSeg(active);
+      };
+
       // Init on first active
       const first = segs.find(s => s.classList.contains('active')) || segs[0];
       // Wait one frame so layout is ready
@@ -2607,7 +2615,7 @@
         track.querySelectorAll('.svc-seg').forEach(s => s.classList.remove('active'));
         seg.classList.add('active');
         // Mirror active to original if clone clicked
-        const origSeg = segs.find(s => s.dataset.desc === seg.dataset.desc);
+        const origSeg = segs.find(s => s.dataset.svc === seg.dataset.svc);
         if (origSeg) origSeg.classList.add('active');
         moveToSeg(seg);
         svcDesc.style.opacity = '0';
@@ -2619,9 +2627,12 @@
         }, 80);
       }
 
-      segs.forEach(seg => {
-        seg.addEventListener('click', () => activateSeg(seg));
-      });
+      // Klik na segment vede na stránku služby. Aby karta nepřišla o svou roli
+      // rozcestníku, na desktopu si popisky prolistuješ pouhým přejetím myší;
+      // na dotyku hover neexistuje, tam ťuknutí rovnou otevře stránku.
+      if (!window.matchMedia || window.matchMedia('(hover: hover)').matches) {
+        segs.forEach(seg => seg.addEventListener('mouseenter', () => activateSeg(seg)));
+      }
 
       // Mobile: CSS-transform marquee loop (works on iOS Safari)
       if (window.innerWidth < 768) {
@@ -2636,11 +2647,10 @@
         // Clone originals for seamless loop
         [...inner.querySelectorAll('.svc-seg')].forEach(seg => {
           const clone = seg.cloneNode(true);
+          // Klon je jen vizuální dvojník — čtečky ho mají přeskočit a nesmí se
+          // na něj dát tabulátorem, jinak by byl v pořadí dvakrát.
           clone.setAttribute('aria-hidden', 'true');
-          clone.addEventListener('click', () => {
-            const orig = segs.find(s => s.dataset.desc === clone.dataset.desc);
-            if (orig) activateSeg(orig);
-          });
+          clone.setAttribute('tabindex', '-1');
           inner.appendChild(clone);
         });
 
@@ -3012,14 +3022,18 @@
         if (strip1 && t['marquee-items']) strip1.innerHTML = buildMarqueeStrip(t['marquee-items']);
 
         // Services slider
-        const svcSegs = document.querySelectorAll('.svc-seg');
         const svcData = t['svc-segments'];
         if (svcData) {
-          svcSegs.forEach((seg, i) => {
-            if (svcData[i]) { seg.textContent = svcData[i].label; seg.dataset.desc = svcData[i].desc; }
+          // Na mobilu jsou v pásu i klony, takže párujeme podle data-svc, ne podle
+          // pořadí v DOM — jinak by klonům zůstal text v původním jazyce.
+          document.querySelectorAll('.svc-seg').forEach(seg => {
+            const d = svcData[+seg.dataset.svc];
+            if (d) { seg.textContent = d.label; seg.dataset.desc = d.desc; }
           });
           const activeSeg = document.querySelector('.svc-seg.active');
           if (activeSeg) document.getElementById('svc-desc').textContent = activeSeg.dataset.desc;
+          // Popisky mají v každém jazyce jinou šířku — posuvná pilulka se musí přeměřit.
+          if (window._svcRelayout) window._svcRelayout();
         }
 
         // FlipWords
