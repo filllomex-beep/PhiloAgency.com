@@ -119,6 +119,79 @@
       animation: marquee-reverse 32s linear infinite;
     }
 
+    /* ─── LOGA KLIENTŮ POD HERO ─── */
+    /* Dvě shodné řady vedle sebe posunuté o -50 %: druhá dojede přesně tam,
+       kde první začínala, takže smyčka nikde neskočí. Odsazení vpravo musí
+       být stejné jako mezera, jinak by se na švu mezera ztratila. */
+    /* Animaci nese dráha, ne jednotlivé řady: obsahuje přesně dvě shodné
+       řady, takže posun o -50 % je právě o jednu řadu a sedne na sebe. */
+    .logo-track {
+      display: flex;
+      width: max-content;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      flex: 0 0 auto;
+      gap: 56px;
+      padding-right: 56px;
+    }
+
+    .logo-row img {
+      flex: 0 0 auto;
+      /* Šířka z proměnné, ať jde celá sada zmenšit jediným číslem a přitom
+         si každé logo udrží svůj vlastní optický poměr. */
+      width: calc(var(--w) * var(--logo-scale, 1));
+      height: auto;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 640px) {
+      .logo-row {
+        gap: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    /* Na nízkých obrazovkách (typicky notebook 1280×720) by se pás pod ohyb
+       nevešel — hero má štědré odsazení, tak ho tam ubereme. */
+    /* Tailwind se načítá až za tímhle blokem, takže jeho pt-36/pb-28 by
+       stejně specifické pravidlo přebily — proto selektor s elementem. */
+    @media (min-width: 768px) and (max-height: 820px) {
+      section.hero-bg {
+        padding-top: 80px;
+        padding-bottom: 32px;
+      }
+
+      div.hero-logos {
+        margin-top: 18px;
+      }
+
+      .hero-logos p {
+        margin-bottom: 12px;
+      }
+
+      .logo-track {
+        --logo-scale: 0.82;
+      }
+
+      .logo-row {
+        gap: 44px;
+        padding-right: 44px;
+      }
+    }
+
+    /* Nekonečný posun je pohyb bez konce — kdo si vyžádal omezené animace,
+       dostane pás stojící na místě. */
+    @media (prefers-reduced-motion: reduce) {
+
+      .animate-marquee,
+      .animate-marquee-reverse {
+        animation: none;
+      }
+    }
+
     /* ─── FLIP WORDS ─── */
     .fw-letter {
       display: inline-block;
@@ -1611,6 +1684,40 @@
         </div>
       </div>
     </div>
+
+      <!-- Loga klientů -->
+      <div class="hero-logos max-w-6xl mx-auto mt-12 md:mt-14 relative z-10">
+        <p class="text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-6"
+          data-i18n="logos-title">S kým spolupracujeme</p>
+        <div class="relative flex overflow-hidden mask-fade-r">
+          <div class="logo-track animate-marquee">
+            <div class="logo-row">
+              <img style="--w:125px" src="img/logos/absolutestudio.png" alt="Absolute Studio" width="125" height="36"
+                loading="eager" decoding="async">
+              <img style="--w:155px" src="img/logos/danenula.png" alt="DaněNula.cz" width="155" height="34"
+                loading="eager" decoding="async">
+              <img style="--w:165px" src="img/logos/emspulse.png" alt="EMS Pulse" width="165" height="23"
+                loading="eager" decoding="async">
+              <img style="--w:142px" src="img/logos/studioitta.png" alt="studio itta" width="142" height="34"
+                loading="eager" decoding="async">
+              <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="Vacation Optimizer" width="205" height="21"
+                loading="eager" decoding="async">
+            </div>
+            <div class="logo-row" aria-hidden="true">
+              <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
+                loading="eager" decoding="async">
+              <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
+                loading="eager" decoding="async">
+              <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
+                loading="eager" decoding="async">
+              <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
+                loading="eager" decoding="async">
+              <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
+                loading="eager" decoding="async">
+            </div>
+          </div>
+        </div>
+      </div>
   </section>
 
   <!-- ───── HOW IT WORKS ───── -->
@@ -2717,6 +2824,7 @@
           'proof-clients': '50 spokojených klientů', 'proof-delivery': 'Doručení do 14 dní',
           'card-title': 'Objevte naše služby',
           'stat-first': 'První návrh', 'stat-delivery': 'Doručení', 'stat-price': 'Cena od', 'stat-price-val': '9900 Kč',
+          'logos-title': 'S kým spolupracujeme',
           'marquee-title-1': 'Naše záruky pro klienty', 'marquee-title-2': 'S kým spolupracujeme',
           'marquee-items': ['První návrh zdarma', 'Doručení do 14 dní', '50+ spokojených klientů', 'Responzivní design', 'Základní SEO'],
           'flip-words': ['moderní web.', 'online marketing.', 'automatizace.', 'ai agenty.', 'photo/video.'],
@@ -2810,6 +2918,7 @@
           'proof-clients': '50 satisfied clients', 'proof-delivery': 'Delivery in 14 days',
           'card-title': 'Discover our services',
           'stat-first': 'First design', 'stat-delivery': 'Delivery', 'stat-price': 'From', 'stat-price-val': '399 €',
+          'logos-title': 'Who we work with',
           'marquee-title-1': 'Our client guarantees', 'marquee-title-2': 'Who we work with',
           'marquee-items': ['First design free', 'Delivery in 14 days', '50+ satisfied clients', 'Responsive design', 'Basic SEO'],
           'flip-words': ['a modern website.', 'online marketing.', 'automation.', 'AI agents.', 'photo/video.'],
@@ -2903,6 +3012,7 @@
           'proof-clients': '50 zufriedene Kunden', 'proof-delivery': 'Lieferung in 14 Tagen',
           'card-title': 'Unsere Leistungen entdecken',
           'stat-first': 'Erster Entwurf', 'stat-delivery': 'Lieferung', 'stat-price': 'Ab', 'stat-price-val': '399 €',
+          'logos-title': 'Unsere Partner',
           'marquee-title-1': 'Unsere Garantien', 'marquee-title-2': 'Unsere Partner',
           'marquee-items': ['Erster Entwurf kostenlos', 'Lieferung in 14 Tagen', '50+ zufriedene Kunden', 'Responsives Design', 'Basis-SEO'],
           'flip-words': ['eine moderne Website.', 'Online-Marketing.', 'Automatisierung.', 'KI-Agenten.', 'Foto/Video.'],
