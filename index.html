@@ -2345,14 +2345,54 @@
       });
     });
 
+    // Cena/Ukázky/Reference/FAQ jsou sekce homepage, ne podstránky — hash držíme mimo adresní řádek
+    const stripHash = () => {
+      if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    };
+
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const id = a.getAttribute('href');
         const target = id && id !== '#' ? document.querySelector(id) : null;
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          stripHash();
+        }
       });
     });
+
+    // Kotva v URL (příchod z podstránky, sdílený odkaz, back/forward) — doscrollujeme
+    // sami a hash z adresního řádku zahodíme.
+    (function () {
+      function handleHash() {
+        if (location.hash.length < 2) return null;
+        let target = null;
+        try { target = document.querySelector(location.hash); } catch (e) { }
+        if (!target) return null;
+        target.scrollIntoView({ block: 'start' });
+        stripHash();
+        return target;
+      }
+
+      // Skok na hash uvnitř už načtené stránky stránku nereloaduje, skript se tedy
+      // znovu nespustí — musíme ho odchytit zvlášť.
+      window.addEventListener('hashchange', handleHash);
+
+      const target = handleHash();
+      if (!target) return;
+
+      // Fonty a obrázky můžou po dopočítání layoutu pozici posunout — doladíme,
+      // ale jen dokud do scrollování nezasáhl sám uživatel.
+      let touched = false;
+      const markTouched = () => { touched = true; };
+      ['wheel', 'touchstart', 'keydown'].forEach(ev =>
+        window.addEventListener(ev, markTouched, { once: true, passive: true }));
+      window.addEventListener('load', () => {
+        if (!touched) target.scrollIntoView({ block: 'start' });
+      }, { once: true });
+    })();
 
     // FlipWords hero headline
     window._flipWordsSet = null;
