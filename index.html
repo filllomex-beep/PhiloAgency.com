@@ -123,11 +123,25 @@
     /* Dvě shodné řady vedle sebe posunuté o -50 %: druhá dojede přesně tam,
        kde první začínala, takže smyčka nikde neskočí. Odsazení vpravo musí
        být stejné jako mezera, jinak by se na švu mezera ztratila. */
-    /* Animaci nese dráha, ne jednotlivé řady: obsahuje přesně dvě shodné
-       řady, takže posun o -50 % je právě o jednu řadu a sedne na sebe. */
+    /* Posun o jednu řadu musí nechat ve výřezu ještě aspoň celou jeho šířku
+       zbylého obsahu, jinak na konci cyklu vznikne prázdné místo a pás jako
+       by se na chvíli zadrhl. Jedna řada je užší než široká obrazovka, proto
+       jsou v dráze čtyři a posouvá se o čtvrtinu: i po posunu zbývají tři
+       řady, což pokryje i velmi široký displej. */
+    @keyframes logo-marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-25%);
+      }
+    }
+
     .logo-track {
       display: flex;
       width: max-content;
+      animation: logo-marquee 32s linear infinite;
     }
 
     .logo-row {
@@ -138,13 +152,25 @@
       padding-right: 56px;
     }
 
+    /* Pás jde přes celou šířku okna — vyruší vodorovné odsazení hero sekce.
+       Krátký závoj u samých okrajů, aby loga nevyskakovala hranou. */
+    .hero-logos {
+      margin-left: -24px;
+      margin-right: -24px;
+    }
+
+    .logo-mask {
+      -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+    }
+
     .logo-row img {
       flex: 0 0 auto;
       /* Šířka z proměnné, ať jde celá sada zmenšit jediným číslem a přitom
          si každé logo udrží svůj vlastní optický poměr. */
-      width: calc(var(--w) * var(--logo-scale, 1));
+      width: calc(var(--w) * var(--logo-scale, 1.1));
       height: auto;
-      opacity: 0.6;
+      opacity: 0.8;
     }
 
     @media (max-width: 640px) {
@@ -164,12 +190,20 @@
       section.hero-bg {
         display: flex;
         flex-direction: column;
-        min-height: 100vh;
+        /* O proužek nižší než okno, aby zespoda vykoukl kousek další sekce
+           a bylo poznat, že se dá rolovat. */
+        min-height: calc(100vh - 56px);
       }
 
       div.hero-logos {
         margin-top: auto;
-        padding-top: 56px;
+        padding-top: 28px;
+      }
+
+      /* Štědré spodní odsazení hero sekce by proužek další sekce zase
+         zatlačilo pod ohyb. */
+      section.hero-bg {
+        padding-bottom: 72px;
       }
     }
 
@@ -191,7 +225,7 @@
       }
 
       .logo-track {
-        --logo-scale: 0.82;
+        --logo-scale: 0.9;
       }
 
       .logo-row {
@@ -205,7 +239,8 @@
     @media (prefers-reduced-motion: reduce) {
 
       .animate-marquee,
-      .animate-marquee-reverse {
+      .animate-marquee-reverse,
+      .logo-track {
         animation: none;
       }
     }
@@ -1637,9 +1672,9 @@
     </div>
 
       <!-- Loga klientů -->
-      <div class="hero-logos max-w-6xl mx-auto mt-12 md:mt-14 relative z-10">
-        <div class="relative flex overflow-hidden mask-fade-r">
-          <div class="logo-track animate-marquee">
+      <div class="hero-logos relative z-10">
+        <div class="relative flex overflow-hidden logo-mask">
+          <div class="logo-track">
             <div class="logo-row">
               <img style="--w:125px" src="img/logos/absolutestudio.png" alt="Absolute Studio" width="125" height="36"
                 loading="eager" decoding="async">
@@ -1650,6 +1685,30 @@
               <img style="--w:142px" src="img/logos/studioitta.png" alt="studio itta" width="142" height="34"
                 loading="eager" decoding="async">
               <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="Vacation Optimizer" width="205" height="21"
+                loading="eager" decoding="async">
+            </div>
+            <div class="logo-row" aria-hidden="true">
+              <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
+                loading="eager" decoding="async">
+              <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
+                loading="eager" decoding="async">
+              <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
+                loading="eager" decoding="async">
+              <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
+                loading="eager" decoding="async">
+              <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
+                loading="eager" decoding="async">
+            </div>
+            <div class="logo-row" aria-hidden="true">
+              <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
+                loading="eager" decoding="async">
+              <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
+                loading="eager" decoding="async">
+              <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
+                loading="eager" decoding="async">
+              <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
+                loading="eager" decoding="async">
+              <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
                 loading="eager" decoding="async">
             </div>
             <div class="logo-row" aria-hidden="true">
