@@ -2517,7 +2517,7 @@
     (function () {
       const track = document.querySelector('.logo-track');
       if (!track || !track.getAnimations) return;
-      const NORMAL = 32000, SLOW = 120000;
+      const NORMAL = 32000, SLOW = 48000;   // při najetí jen mírné přibrzdění, ne zastavení
       let current = NORMAL;
 
       function retime(ms) {
