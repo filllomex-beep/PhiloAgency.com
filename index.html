@@ -212,9 +212,11 @@
         /* O proužek nižší než okno, aby zespoda vykoukl kousek další sekce
            a bylo poznat, že se dá rolovat. */
         min-height: calc(100vh - 39px);
-        /* Navigace je fixní a leží přes hero, takže horní odsazení musí být
-           o její výšku větší, aby mezera nad obsahem nevypadala menší. */
-        padding-top: 136px;
+        /* Volné místo si obsah a loga dělí rovným dílem (auto marginy níž),
+           takže o rovnosti mezer rozhoduje jen tohle: horní odsazení musí
+           být výška navigace plus přesně to, co mají loga nad sebou.
+           Navigace je fixní a leží přes hero, proto se připočítává. */
+        padding-top: calc(64px + 40px);
         padding-bottom: 28px;
       }
 
@@ -235,7 +237,7 @@
        stejně specifické pravidlo přebily — proto selektor s elementem. */
     @media (min-width: 768px) and (max-height: 820px) {
       section.hero-bg {
-        padding-top: 96px;
+        padding-top: calc(64px + 18px);
         padding-bottom: 32px;
       }
 
