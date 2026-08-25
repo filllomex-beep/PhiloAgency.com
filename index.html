@@ -568,8 +568,7 @@
     }
 
     .form-input,
-    .form-select,
-    .form-textarea {
+    .form-select {
       width: 100%;
       background: rgba(255, 255, 255, 0.65);
       backdrop-filter: blur(12px);
@@ -586,21 +585,18 @@
       appearance: none;
     }
 
-    .form-input::placeholder,
-    .form-textarea::placeholder {
+    .form-input::placeholder {
       color: #bbb;
     }
 
     .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
+    .form-select:focus {
       border-color: rgba(192, 57, 43, 0.5);
       box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.07);
     }
 
     .form-input.field-error,
-    .form-select.field-error,
-    .form-textarea.field-error {
+    .form-select.field-error {
       border-color: #e03b30;
       box-shadow: 0 0 0 3px rgba(224, 59, 48, 0.08);
     }
@@ -633,12 +629,6 @@
       to {
         transform: rotate(360deg);
       }
-    }
-
-    .form-textarea {
-      min-height: 110px;
-      resize: vertical;
-      line-height: 1.6;
     }
 
     .form-select {
@@ -682,31 +672,6 @@
       content: '✓';
       font-size: 11px;
       font-weight: 800;
-    }
-
-    .form-check-card {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      background: rgba(255, 255, 255, 0.55);
-      border: 1.5px solid rgba(0, 0, 0, 0.07);
-      border-radius: 16px;
-      padding: 16px 18px;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-
-    .form-check-card:hover {
-      border-color: rgba(192, 57, 43, 0.25);
-    }
-
-    .form-check-card input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      accent-color: #c0392b;
-      cursor: pointer;
-      margin-top: 2px;
     }
 
     /* ─── DARK CTA ─── */
@@ -2251,7 +2216,7 @@
           </div>
 
           <!-- JAKÁ SLUŽBA VÁS ZAJÍMÁ -->
-          <div class="mb-5">
+          <div class="mb-8">
             <label class="form-label" data-i18n="form-service-label">Jaké služby vás zajímají</label>
             <div class="flex flex-wrap gap-2" id="svc-chips">
               <button type="button" class="svc-chip" data-i18n="form-svc-1">Tvorba webu</button>
@@ -2263,24 +2228,6 @@
             </div>
             <input type="hidden" id="cf-service" name="service">
           </div>
-
-          <!-- POPIS PROJEKTU -->
-          <div class="mb-6">
-            <label class="form-label" data-i18n="form-desc-label">Popis projektu</label>
-            <textarea class="form-textarea" id="cf-desc" name="popis_projektu" data-i18n-placeholder="form-desc-ph"
-              placeholder="Čím více napíšete, tím přesnější návrh dostanete — např. obor podnikání, styl, funkce…"></textarea>
-          </div>
-
-          <!-- Checkbox card -->
-          <label class="form-check-card mb-8 block">
-            <input type="checkbox" id="cf-free" name="prvni_navrh_zdarma" value="ano">
-            <div>
-              <div class="font-semibold text-gray-900 text-[14px] mb-1" data-i18n="form-check-title">Chci první návrh
-                webu zcela zdarma</div>
-              <div class="text-gray-500 text-[13px] leading-relaxed" data-i18n="form-check-desc">Připravíme vám návrh
-                webu do 24 hodin zdarma a bez závazků — abyste viděli kvalitu na vlastní oči.</div>
-            </div>
-          </label>
 
           <!-- Submit -->
           <button type="submit" class="btn-orange" style="width:100%;justify-content:center;padding-left:60px">
@@ -2800,9 +2747,6 @@
           'form-svc-1': 'Tvorba webu', 'form-svc-2': 'Online marketing',
           'form-svc-3': 'Automatizace', 'form-svc-4': 'AI agenti',
           'form-svc-5': 'Fotografie', 'form-svc-6': 'Nevím, poradíte mi',
-          'form-desc-label': 'Popis projektu', 'form-desc-ph': 'Čím více napíšete, tím lépe vám poradíme…',
-          'form-check-title': 'Chci první návrh webu zcela zdarma',
-          'form-check-desc': 'Připravíme vám návrh webu do 24 hodin zdarma a bez závazků. Neplatíte nic, dokud nebudete spokojeni.',
           'form-submit': 'Odeslat poptávku', 'form-response': 'Odpovíme do 24 hodin',
           'form-success-title': 'Poptávka odeslána!',
           'form-success-sub': 'Ozveme se vám do 24 hodin s bezplatným návrhem webu.',
@@ -2896,9 +2840,6 @@
           'form-svc-1': 'Website creation', 'form-svc-2': 'Online marketing',
           'form-svc-3': 'Automation', 'form-svc-4': 'AI agents',
           'form-svc-5': 'Photography', 'form-svc-6': 'Not sure, advise me',
-          'form-desc-label': 'Project description', 'form-desc-ph': 'The more you write, the better we can advise you…',
-          'form-check-title': 'I want the first website design completely free',
-          'form-check-desc': 'We\'ll prepare a website design for you within 24 hours, free of charge and with no commitment. You pay nothing until you\'re satisfied.',
           'form-submit': 'Send inquiry', 'form-response': 'We respond within 24 hours',
           'form-err-required': 'This field is required.',
           'form-err-email': 'Enter a valid email.',
@@ -2992,9 +2933,6 @@
           'form-svc-1': 'Website-Erstellung', 'form-svc-2': 'Online-Marketing',
           'form-svc-3': 'Automatisierung', 'form-svc-4': 'KI-Agenten',
           'form-svc-5': 'Fotografie', 'form-svc-6': 'Weiß nicht, beraten Sie mich',
-          'form-desc-label': 'Projektbeschreibung', 'form-desc-ph': 'Je mehr Sie schreiben, desto besser können wir Sie beraten…',
-          'form-check-title': 'Ich möchte den ersten Website-Entwurf völlig kostenlos',
-          'form-check-desc': 'Wir bereiten Ihnen innerhalb von 24 Stunden einen Website-Entwurf kostenlos und unverbindlich vor. Sie zahlen nichts, bis Sie zufrieden sind.',
           'form-submit': 'Anfrage senden', 'form-response': 'Wir antworten innerhalb von 24 Stunden',
           'form-err-required': 'Dieses Feld ist erforderlich.',
           'form-err-email': 'Geben Sie eine gültige E-Mail ein.',
