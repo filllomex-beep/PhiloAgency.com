@@ -170,12 +170,6 @@
         padding-top: 16px;
       }
 
-      /* Pás záruk je užší než karta nad ním a stojí pod ní na střed. */
-      #hero-marquee {
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-      }
     }
 
     /* Pás jde přes celou šířku okna — vyruší vodorovné odsazení hero sekce.
@@ -215,15 +209,21 @@
       section.hero-bg {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         /* O proužek nižší než okno, aby zespoda vykoukl kousek další sekce
            a bylo poznat, že se dá rolovat. */
         min-height: calc(100vh - 39px);
         /* Navigace je fixní a leží přes hero, takže horní odsazení musí být
-           o její výšku větší — jinak by mezera nad obsahem vypadala menší
-           než pod ním, i když by si v kódu byly rovné. */
+           o její výšku větší, aby mezera nad obsahem nevypadala menší. */
         padding-top: 136px;
-        padding-bottom: 72px;
+        padding-bottom: 28px;
+      }
+
+      /* Volné místo si bere obsah nad logy, ne prostor pod nimi: loga tak
+         sedí u spodní hrany hero a text s kartou zůstane vycentrovaný
+         v tom, co zbude. */
+      .hero-main {
+        margin-top: auto;
+        margin-bottom: auto;
       }
 
       div.hero-logos {
@@ -1472,7 +1472,7 @@
       style="width:420px;height:420px;background:radial-gradient(circle,rgba(244,114,182,0.07),transparent 65%);bottom:-40px;right:280px;filter:blur(80px)">
     </div>
 
-    <div class="max-w-6xl mx-auto relative z-10">
+    <div class="hero-main max-w-6xl mx-auto relative z-10">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-8 items-start">
 
         <!-- ── LEFT ── -->
