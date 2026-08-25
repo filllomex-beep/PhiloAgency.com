@@ -2,8 +2,12 @@
  *
  * Původní verze překreslovala 200+ SVG cest (21 tisíc bodů) v každém snímku,
  * což zatěžovalo procesor a web sekal. Tahle kreslí to samé na jedno canvas
- * plátno: jeden path a jeden stroke na snímek, řidší vzorkování po svislici,
- * strop 30 fps a smyčka stojí, jakmile je hero mimo obraz nebo je karta skrytá.
+ * plátno: jeden path a jeden stroke na snímek a smyčka stojí, jakmile je hero
+ * mimo obraz nebo je karta skrytá.
+ *
+ * Čáry jsou vedené jako kvadratické křivky přes středy vzorků, ne jako lomená
+ * čára — díky tomu jsou hladké i při řidším vzorkování, takže menší počet bodů
+ * zaplatí za ostřejší rasterizaci na retina displejích.
  */
 (function () {
   'use strict';
@@ -57,7 +61,8 @@
   }
 
   /* ─── mřížka ─── */
-  var W = 0, H = 0, xGap = 8, yGap = 20, nLines = 0, nPoints = 0, xStart = 0, yStart = 0;
+  var W = 0, H = 0, xGap = 8, yGap = 26, nLines = 0, nPoints = 0, xStart = 0, yStart = 0;
+  var pts = new Float32Array(0);   // body jedné svislice, recyklovaný buffer
 
   function build() {
     var rect = container.getBoundingClientRect();
@@ -65,18 +70,23 @@
     H = Math.ceil(rect.height);
     if (W === 0 || H === 0) return false;
 
-    // Čáry jsou vlasové a na 10 % krytí — vyšší než 1,25× hustota pixelů
-    // by stála výkon, aniž by to kdokoli poznal.
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+    // Vlasové čáry na 1,25× hustotě pixelů se na retině rozmazávaly do šedi.
+    // Plná hustota (strop 2×) je vykreslí ostře; zaplatíme to řidším vzorkováním
+    // po svislici, které je díky vyhlazení křivkami stejně neznatelné.
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(W * dpr);
     canvas.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'rgba(15,23,42,0.1)';
+    ctx.lineWidth = 0.9;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'rgba(15,23,42,0.12)';
 
     xGap = W < 640 ? 12 : 8;
+    yGap = W < 640 ? 30 : 26;
     nLines = Math.ceil((W + 200) / xGap);
     nPoints = Math.ceil((H + 60) / yGap);
+    if (pts.length < nPoints * 2) pts = new Float32Array(nPoints * 2);
     xStart = (W - xGap * nLines) / 2;
     yStart = (H - yGap * nPoints) / 2;
     return true;
@@ -92,13 +102,22 @@
     for (var i = 0; i < nLines; i++) {
       var x = xStart + xGap * i;
       var nx = x * 0.003 + driftX;
+
       for (var j = 0; j < nPoints; j++) {
         var y = yStart + yGap * j;
         var m = noise(nx, y * 0.002 + driftY) * 8;
-        var px = x + Math.cos(m) * 12;
-        var py = y + Math.sin(m) * 6;
-        if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        pts[j * 2] = x + Math.cos(m) * 12;
+        pts[j * 2 + 1] = y + Math.sin(m) * 6;
       }
+
+      // Vzorky bereme jako řídicí body a projíždíme je křivkou přes jejich středy.
+      // Lomy v místě vzorku tím zmizí a čára je hladká po celé délce.
+      ctx.moveTo(pts[0], pts[1]);
+      for (var k = 1; k < nPoints - 1; k++) {
+        var cx = pts[k * 2], cy = pts[k * 2 + 1];
+        ctx.quadraticCurveTo(cx, cy, (cx + pts[k * 2 + 2]) * 0.5, (cy + pts[k * 2 + 3]) * 0.5);
+      }
+      ctx.lineTo(pts[(nPoints - 1) * 2], pts[(nPoints - 1) * 2 + 1]);
     }
     ctx.stroke();
   }
