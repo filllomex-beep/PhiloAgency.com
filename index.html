@@ -152,6 +152,32 @@
       padding-right: 56px;
     }
 
+    /* Pravý sloupec drží stejnou svislou úroveň jako text vlevo: jeho obsah
+       se rozloží na střed řádku mřížky, takže ani jeden blok nepřečnívá. */
+    @media (min-width: 1024px) {
+      .hero-right {
+        /* Mřížka má items-start, takže se sloupec sám neroztáhne. Roztažením
+           na výšku řádku a rozestupem space-between drží karta horní a pás
+           spodní hranu levého sloupce — bez dopočítávání pixelů, takže to
+           platí i když text vlevo naroste (němčina je delší). */
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* Levý sloupec má pt-4, takže jeho text začíná o kousek níž než
+           sloupec samotný — zrcadlíme to, aby karta začínala na úrovni
+           nadpisu, ne na úrovni sloupce. */
+        padding-top: 16px;
+      }
+
+      /* Pás záruk je užší než karta nad ním a stojí pod ní na střed. */
+      #hero-marquee {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
     /* Pás jde přes celou šířku okna — vyruší vodorovné odsazení hero sekce.
        Krátký závoj u samých okrajů, aby loga nevyskakovala hranou. */
     .hero-logos {
@@ -1496,7 +1522,7 @@
         </div>
 
         <!-- ── RIGHT ── -->
-        <div class="lg:col-span-5 space-y-4 lg:mt-8">
+        <div class="hero-right lg:col-span-5 space-y-4">
 
           <!-- Stats Glass Card -->
           <div id="hero-card" class="glass rounded-3xl p-7 relative overflow-hidden" style="opacity:0;background-image:radial-gradient(circle 140px at calc(100% - 40px) 40px,rgba(192,57,43,0.11),rgba(192,57,43,0.055) 45%,transparent 72%)">
@@ -1550,12 +1576,12 @@
           </div>
 
           <!-- Trust Marquee Glass Card -->
-          <div id="hero-marquee" class="glass rounded-3xl py-6 relative overflow-hidden" style="opacity:0">
+          <div id="hero-marquee" class="glass rounded-3xl py-4 relative overflow-hidden" style="opacity:0">
 
             <!-- Strip 1: Záruky → left -->
-            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4"
+            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2.5"
               data-i18n="marquee-title-1">Naše záruky pro klienty</h3>
-            <div class="relative flex overflow-hidden mask-fade-r mb-5">
+            <div class="relative flex overflow-hidden mask-fade-r mb-4">
               <div class="animate-marquee flex gap-8 whitespace-nowrap pl-4" id="marquee-strip-1">
                 <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span
                     style="color:#c0392b">✓</span> První návrh zdarma</span>
@@ -1591,10 +1617,10 @@
             </div>
 
             <!-- Divider -->
-            <div class="mx-7 mb-5 h-px" style="background:rgba(0,0,0,0.06)"></div>
+            <div class="mx-7 mb-4 h-px" style="background:rgba(0,0,0,0.06)"></div>
 
             <!-- Strip 2: Spolupráce → right (reverse) -->
-            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4"
+            <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2.5"
               data-i18n="marquee-title-2">Co je v ceně</h3>
             <div class="relative flex overflow-hidden mask-fade-r">
               <div class="animate-marquee-reverse flex gap-10 whitespace-nowrap pl-4" id="marquee-strip-2">
