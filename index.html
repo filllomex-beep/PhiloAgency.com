@@ -156,6 +156,23 @@
 
     /* Na nízkých obrazovkách (typicky notebook 1280×720) by se pás pod ohyb
        nevešel — hero má štědré odsazení, tak ho tam ubereme. */
+    /* Hero musí zabrat aspoň celé okno, jinak na vysokých displejích vykoukne
+       zespoda červená sekce. Loga se pak odsadí až k jeho spodní hraně —
+       margin-top:auto spolkne přebytek, padding drží minimální mezeru
+       i tam, kde žádný přebytek není. */
+    @media (min-width: 768px) {
+      section.hero-bg {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      div.hero-logos {
+        margin-top: auto;
+        padding-top: 56px;
+      }
+    }
+
     /* Tailwind se načítá až za tímhle blokem, takže jeho pt-36/pb-28 by
        stejně specifické pravidlo přebily — proto selektor s elementem. */
     @media (min-width: 768px) and (max-height: 820px) {
@@ -165,7 +182,8 @@
       }
 
       div.hero-logos {
-        margin-top: 18px;
+        margin-top: auto;
+        padding-top: 18px;
       }
 
       .hero-logos p {
@@ -1576,106 +1594,39 @@
 
             <!-- Strip 2: Spolupráce → right (reverse) -->
             <h3 class="px-7 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4"
-              data-i18n="marquee-title-2">S kým spolupracujeme</h3>
+              data-i18n="marquee-title-2">Co je v ceně</h3>
             <div class="relative flex overflow-hidden mask-fade-r">
-              <div class="animate-marquee-reverse flex gap-10 whitespace-nowrap pl-4">
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#d9453a">E</span> EMS Pulse
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#1f2937">A</span> Absolute Studio
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#0ea5e9">L</span> Long Vacation
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#10b981">D</span> DaněNula.cz
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#d9453a">E</span> EMS Pulse
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#1f2937">A</span> Absolute Studio
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#0ea5e9">L</span> Long Vacation
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#10b981">D</span> DaněNula.cz
-                </span>
-                <span class="text-gray-200">·</span>
-                <!-- duplicate for seamless loop -->
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#d9453a">E</span> EMS Pulse
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#1f2937">A</span> Absolute Studio
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#0ea5e9">L</span> Long Vacation
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#10b981">D</span> DaněNula.cz
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#d9453a">E</span> EMS Pulse
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#1f2937">A</span> Absolute Studio
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#0ea5e9">L</span> Long Vacation
-                </span>
-                <span class="text-gray-200">·</span>
-                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2">
-                  <span
-                    class="w-4 h-4 rounded flex items-center justify-center text-[9px] font-black text-white flex-shrink-0"
-                    style="background:#10b981">D</span> DaněNula.cz
-                </span>
-                <span class="text-gray-200">·</span>
+              <div class="animate-marquee-reverse flex gap-10 whitespace-nowrap pl-4" id="marquee-strip-2">
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Responzivní design</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Až 5 podstránek</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Základní SEO</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Připojení domény</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Kontaktní formulář</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Responzivní design</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Až 5 podstránek</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Základní SEO</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Připojení domény</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-semibold text-gray-500 flex items-center gap-2"><span
+                    style="color:#c0392b">✓</span> Kontaktní formulář</span>
+                <span class="text-gray-300">·</span>
               </div>
             </div>
 
@@ -1687,8 +1638,6 @@
 
       <!-- Loga klientů -->
       <div class="hero-logos max-w-6xl mx-auto mt-12 md:mt-14 relative z-10">
-        <p class="text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-6"
-          data-i18n="logos-title">S kým spolupracujeme</p>
         <div class="relative flex overflow-hidden mask-fade-r">
           <div class="logo-track animate-marquee">
             <div class="logo-row">
@@ -2824,8 +2773,8 @@
           'proof-clients': '50 spokojených klientů', 'proof-delivery': 'Doručení do 14 dní',
           'card-title': 'Objevte naše služby',
           'stat-first': 'První návrh', 'stat-delivery': 'Doručení', 'stat-price': 'Cena od', 'stat-price-val': '9900 Kč',
-          'logos-title': 'S kým spolupracujeme',
-          'marquee-title-1': 'Naše záruky pro klienty', 'marquee-title-2': 'S kým spolupracujeme',
+          'marquee-title-1': 'Naše záruky pro klienty', 'marquee-title-2': 'Co je v ceně',
+          'marquee-items-2': ['Responzivní design', 'Až 5 podstránek', 'Základní SEO', 'Připojení domény', 'Kontaktní formulář'],
           'marquee-items': ['První návrh zdarma', 'Doručení do 14 dní', '50+ spokojených klientů', 'Responzivní design', 'Základní SEO'],
           'flip-words': ['moderní web.', 'online marketing.', 'automatizace.', 'ai agenty.', 'photo/video.'],
           'svc-segments': [
@@ -2918,8 +2867,8 @@
           'proof-clients': '50 satisfied clients', 'proof-delivery': 'Delivery in 14 days',
           'card-title': 'Discover our services',
           'stat-first': 'First design', 'stat-delivery': 'Delivery', 'stat-price': 'From', 'stat-price-val': '399 €',
-          'logos-title': 'Who we work with',
-          'marquee-title-1': 'Our client guarantees', 'marquee-title-2': 'Who we work with',
+          'marquee-title-1': 'Our client guarantees', 'marquee-title-2': 'What\'s included',
+          'marquee-items-2': ['Responsive design', 'Up to 5 subpages', 'Basic SEO', 'Domain connection', 'Contact form'],
           'marquee-items': ['First design free', 'Delivery in 14 days', '50+ satisfied clients', 'Responsive design', 'Basic SEO'],
           'flip-words': ['a modern website.', 'online marketing.', 'automation.', 'AI agents.', 'photo/video.'],
           'svc-segments': [
@@ -3012,8 +2961,8 @@
           'proof-clients': '50 zufriedene Kunden', 'proof-delivery': 'Lieferung in 14 Tagen',
           'card-title': 'Unsere Leistungen entdecken',
           'stat-first': 'Erster Entwurf', 'stat-delivery': 'Lieferung', 'stat-price': 'Ab', 'stat-price-val': '399 €',
-          'logos-title': 'Unsere Partner',
-          'marquee-title-1': 'Unsere Garantien', 'marquee-title-2': 'Unsere Partner',
+          'marquee-title-1': 'Unsere Garantien', 'marquee-title-2': 'Was enthalten ist',
+          'marquee-items-2': ['Responsives Design', 'Bis zu 5 Unterseiten', 'Basis-SEO', 'Domain-Verbindung', 'Kontaktformular'],
           'marquee-items': ['Erster Entwurf kostenlos', 'Lieferung in 14 Tagen', '50+ zufriedene Kunden', 'Responsives Design', 'Basis-SEO'],
           'flip-words': ['eine moderne Website.', 'Online-Marketing.', 'Automatisierung.', 'KI-Agenten.', 'Foto/Video.'],
           'svc-segments': [
@@ -3119,6 +3068,8 @@
         // Marquee strip 1
         const strip1 = document.getElementById('marquee-strip-1');
         if (strip1 && t['marquee-items']) strip1.innerHTML = buildMarqueeStrip(t['marquee-items']);
+        const strip2 = document.getElementById('marquee-strip-2');
+        if (strip2 && t['marquee-items-2']) strip2.innerHTML = buildMarqueeStrip(t['marquee-items-2']);
 
         // Services slider
         const svcData = t['svc-segments'];
