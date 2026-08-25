@@ -183,27 +183,25 @@
     /* Na nízkých obrazovkách (typicky notebook 1280×720) by se pás pod ohyb
        nevešel — hero má štědré odsazení, tak ho tam ubereme. */
     /* Hero musí zabrat aspoň celé okno, jinak na vysokých displejích vykoukne
-       zespoda červená sekce. Loga se pak odsadí až k jeho spodní hraně —
-       margin-top:auto spolkne přebytek, padding drží minimální mezeru
-       i tam, kde žádný přebytek není. */
+       zespoda červená sekce. Obsah se v něm rozloží na střed, takže mezera
+       nad ním i pod ním vyjde stejně. */
     @media (min-width: 768px) {
       section.hero-bg {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         /* O proužek nižší než okno, aby zespoda vykoukl kousek další sekce
            a bylo poznat, že se dá rolovat. */
         min-height: calc(100vh - 39px);
+        /* Navigace je fixní a leží přes hero, takže horní odsazení musí být
+           o její výšku větší — jinak by mezera nad obsahem vypadala menší
+           než pod ním, i když by si v kódu byly rovné. */
+        padding-top: 136px;
+        padding-bottom: 72px;
       }
 
       div.hero-logos {
-        margin-top: auto;
         padding-top: 40px;
-      }
-
-      /* Štědré spodní odsazení hero sekce by proužek další sekce zase
-         zatlačilo pod ohyb. */
-      section.hero-bg {
-        padding-bottom: 72px;
       }
     }
 
@@ -211,17 +209,12 @@
        stejně specifické pravidlo přebily — proto selektor s elementem. */
     @media (min-width: 768px) and (max-height: 820px) {
       section.hero-bg {
-        padding-top: 80px;
+        padding-top: 96px;
         padding-bottom: 32px;
       }
 
       div.hero-logos {
-        margin-top: auto;
         padding-top: 18px;
-      }
-
-      .hero-logos p {
-        margin-bottom: 12px;
       }
 
       .logo-track {
@@ -807,13 +800,6 @@
     /* ─── DARK CTA ─── */
     .dark-cta-bg {
       background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(192, 57, 43, 0.28) 0%, transparent 60%), #0d0d0d;
-    }
-
-    /* ─── AVATAR STACK ─── */
-    .avatar-stack img,
-    .avatar-stack .avatar-initial {
-      border: 2.5px solid rgba(255, 255, 255, 0.9);
-      box-sizing: border-box;
     }
 
     /* ─── REVIEW AVATAR (initials, no stock photos) ─── */
@@ -1507,26 +1493,6 @@
             </button>
           </div>
 
-          <!-- Social proof -->
-          <div id="hero-proof" class="flex flex-col sm:flex-row items-start sm:items-center gap-5" style="opacity:0">
-            <div class="flex items-center gap-3">
-              <div class="avatar-stack flex -space-x-2.5">
-                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#e8d5b7;color:#a0784d" aria-hidden="true">A</span>
-                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#d4c4f0;color:#7c5cbf" aria-hidden="true">B</span>
-                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#fccb9e;color:#c05621" aria-hidden="true">C</span>
-                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#c9f0e8;color:#276749" aria-hidden="true">D</span>
-                <span class="avatar-initial w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold" style="background:#fed7e2;color:#97266d" aria-hidden="true">E</span>
-              </div>
-              <div>
-                <div class="text-sm leading-none" style="color:#c0392b">★★★★★</div>
-                <div class="text-xs text-gray-500 mt-0.5" data-i18n="proof-clients">50 spokojených klientů</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-5 text-[13px] text-gray-500 flex-wrap">
-              <span class="flex items-center gap-1.5"><span class="text-green-500 font-bold">✓</span> <span
-                  data-i18n="proof-delivery">Doručení do 14 dní</span></span>
-            </div>
-          </div>
         </div>
 
         <!-- ── RIGHT ── -->
@@ -2424,12 +2390,11 @@
       .to('#hero-title', { opacity: 1, y: 0, duration: 0.85 })
       .to('#hero-sub', { opacity: 1, y: 0, duration: 0.7 }, '-=0.55')
       .to('#hero-btns', { opacity: 1, y: 0, duration: 0.65 }, '-=0.5')
-      .to('#hero-proof', { opacity: 1, y: 0, duration: 0.6 }, '-=0.45')
       .to('#hero-card', { opacity: 1, y: 0, duration: 0.75 }, '-=0.7')
       .to('#hero-marquee', { opacity: 1, y: 0, duration: 0.65 }, '-=0.5');
 
     // Fix: gsap.to needs fromVars set separately for initial state
-    gsap.set(['#hero-title', '#hero-sub', '#hero-btns', '#hero-proof', '#hero-card', '#hero-marquee'], { y: 28 });
+    gsap.set(['#hero-title', '#hero-sub', '#hero-btns', '#hero-card', '#hero-marquee'], { y: 28 });
 
     // Scroll-triggered reveals
     gsap.utils.toArray('.reveal').forEach(el => {
@@ -2829,7 +2794,6 @@
           'h1-line1': 'Zařídíme vám', 'h1-line2': 'První návrh zdarma', 'h1-line3': 'do 24 hodin.',
           'hero-sub': 'Rozhodli jste se pro nový web, který vám pomůže získat více zákazníků. Pokud se vám návrh líbí, zaplatíte jen od <strong class="text-gray-700 font-semibold">9900 Kč</strong>, pokud ne, nic neplatíte.',
           'btn-main': 'Kontaktujte nás', 'btn-showcase': 'Zobrazit ukázky', 'btn-orange-cta': 'Objednejte návrh webu',
-          'proof-clients': '50 spokojených klientů', 'proof-delivery': 'Doručení do 14 dní',
           'card-title': 'Objevte naše služby',
           'stat-first': 'První návrh', 'stat-delivery': 'Doručení', 'stat-price': 'Cena od', 'stat-price-val': '9900 Kč',
           'marquee-title-1': 'Naše záruky pro klienty', 'marquee-title-2': 'Co je v ceně',
@@ -2923,7 +2887,6 @@
           'h1-line1': 'We\'ll build you', 'h1-line2': 'First design free', 'h1-line3': 'within 24 hours.',
           'hero-sub': 'You\'ve decided to get a new website that helps you win more customers. If you like the design, you pay from just <strong class="text-gray-700 font-semibold">399 €</strong> — if not, you pay nothing.',
           'btn-main': 'Contact us', 'btn-showcase': 'View showcase', 'btn-orange-cta': 'Order your website design',
-          'proof-clients': '50 satisfied clients', 'proof-delivery': 'Delivery in 14 days',
           'card-title': 'Discover our services',
           'stat-first': 'First design', 'stat-delivery': 'Delivery', 'stat-price': 'From', 'stat-price-val': '399 €',
           'marquee-title-1': 'Our client guarantees', 'marquee-title-2': 'What\'s included',
@@ -3017,7 +2980,6 @@
           'h1-line1': 'Wir erstellen Ihnen', 'h1-line2': 'Erster Entwurf kostenlos', 'h1-line3': 'in 24 Stunden.',
           'hero-sub': 'Sie haben sich für eine neue Website entschieden, die Ihnen hilft, mehr Kunden zu gewinnen. Wenn Ihnen der Entwurf gefällt, zahlen Sie ab <strong class="text-gray-700 font-semibold">399 €</strong> — wenn nicht, zahlen Sie nichts.',
           'btn-main': 'Kontaktieren Sie uns', 'btn-showcase': 'Portfolio ansehen', 'btn-orange-cta': 'Website-Design beauftragen',
-          'proof-clients': '50 zufriedene Kunden', 'proof-delivery': 'Lieferung in 14 Tagen',
           'card-title': 'Unsere Leistungen entdecken',
           'stat-first': 'Erster Entwurf', 'stat-delivery': 'Lieferung', 'stat-price': 'Ab', 'stat-price-val': '399 €',
           'marquee-title-1': 'Unsere Garantien', 'marquee-title-2': 'Was enthalten ist',
@@ -3403,7 +3365,7 @@
     // Pojistka: kdyby se GSAP nenačetl, obsah nesmí zůstat neviditelný.
     if (!window.gsap) {
       document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
-      ['#hero-title', '#hero-sub', '#hero-btns', '#hero-proof', '#hero-card', '#hero-marquee']
+      ['#hero-title', '#hero-sub', '#hero-btns', '#hero-card', '#hero-marquee']
         .forEach(sel => { const el = document.querySelector(sel); if (el) el.style.opacity = '1'; });
     }
   </script>
