@@ -184,8 +184,19 @@
       mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
     }
 
+    .logo-link {
+      display: block;
+      flex: 0 0 auto;
+      line-height: 0;
+    }
+
+    .logo-link:hover img {
+      opacity: 1;
+    }
+
     .logo-row img {
       flex: 0 0 auto;
+      transition: opacity 0.25s;
       /* Šířka z proměnné, ať jde celá sada zmenšit jediným číslem a přitom
          si každé logo udrží svůj vlastní optický poměr. */
       width: calc(var(--w) * var(--logo-scale, 1.1));
@@ -1669,52 +1680,84 @@
         <div class="relative flex overflow-hidden logo-mask">
           <div class="logo-track">
             <div class="logo-row">
-              <img style="--w:125px" src="img/logos/absolutestudio.png" alt="Absolute Studio" width="125" height="36"
-                loading="eager" decoding="async">
-              <img style="--w:155px" src="img/logos/danenula.png" alt="DaněNula.cz" width="155" height="34"
-                loading="eager" decoding="async">
-              <img style="--w:165px" src="img/logos/emspulse.png" alt="EMS Pulse" width="165" height="23"
-                loading="eager" decoding="async">
+              <a class="logo-link" href="https://www.absolutestudio.cz/" target="_blank" rel="noopener">
+                <img style="--w:125px" src="img/logos/absolutestudio.png" alt="Absolute Studio" width="125" height="36"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.danenula.cz/" target="_blank" rel="noopener">
+                <img style="--w:155px" src="img/logos/danenula.png" alt="DaněNula.cz" width="155" height="34"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.emspulse.cz/" target="_blank" rel="noopener">
+                <img style="--w:165px" src="img/logos/emspulse.png" alt="EMS Pulse" width="165" height="23"
+                  loading="eager" decoding="async">
+              </a>
               <img style="--w:142px" src="img/logos/studioitta.png" alt="studio itta" width="142" height="34"
                 loading="eager" decoding="async">
-              <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="Vacation Optimizer" width="205" height="21"
-                loading="eager" decoding="async">
+              <a class="logo-link" href="https://longvacation.eu/" target="_blank" rel="noopener">
+                <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="Vacation Optimizer" width="205" height="21"
+                  loading="eager" decoding="async">
+              </a>
             </div>
             <div class="logo-row" aria-hidden="true">
-              <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
-                loading="eager" decoding="async">
-              <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
-                loading="eager" decoding="async">
-              <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
-                loading="eager" decoding="async">
+              <a class="logo-link" href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.danenula.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.emspulse.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
+                  loading="eager" decoding="async">
+              </a>
               <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
                 loading="eager" decoding="async">
-              <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
-                loading="eager" decoding="async">
+              <a class="logo-link" href="https://longvacation.eu/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
+                  loading="eager" decoding="async">
+              </a>
             </div>
             <div class="logo-row" aria-hidden="true">
-              <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
-                loading="eager" decoding="async">
-              <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
-                loading="eager" decoding="async">
-              <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
-                loading="eager" decoding="async">
+              <a class="logo-link" href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.danenula.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.emspulse.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
+                  loading="eager" decoding="async">
+              </a>
               <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
                 loading="eager" decoding="async">
-              <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
-                loading="eager" decoding="async">
+              <a class="logo-link" href="https://longvacation.eu/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
+                  loading="eager" decoding="async">
+              </a>
             </div>
             <div class="logo-row" aria-hidden="true">
-              <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
-                loading="eager" decoding="async">
-              <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
-                loading="eager" decoding="async">
-              <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
-                loading="eager" decoding="async">
+              <a class="logo-link" href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.danenula.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.emspulse.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
+                  loading="eager" decoding="async">
+              </a>
               <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
                 loading="eager" decoding="async">
-              <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
-                loading="eager" decoding="async">
+              <a class="logo-link" href="https://longvacation.eu/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
+                  loading="eager" decoding="async">
+              </a>
             </div>
           </div>
         </div>
@@ -2465,6 +2508,35 @@
         }
       });
     });
+
+    // Nájezd na logo pás zpomalí, ať se dá pohodlně kliknout.
+    // Pouhá změna animation-duration nestačí: prohlížeč si drží čas, který
+    // animace už běží, takže při jiné délce cyklu vyjde jiná fáze a pás
+    // viditelně poskočí. Přes Web Animations API se dá fáze po změně délky
+    // rovnou dopočítat zpět.
+    (function () {
+      const track = document.querySelector('.logo-track');
+      if (!track || !track.getAnimations) return;
+      const NORMAL = 32000, SLOW = 120000;
+      let current = NORMAL;
+
+      function retime(ms) {
+        if (ms === current) return;
+        const anim = track.getAnimations()[0];
+        if (!anim || !anim.effect) return;          // omezené animace — není co zpomalovat
+        const old = anim.effect.getTiming().duration;
+        if (!old || anim.currentTime == null) return;
+        const progress = (anim.currentTime % old) / old;
+        anim.effect.updateTiming({ duration: ms });
+        anim.currentTime = progress * ms;
+        current = ms;
+      }
+
+      track.addEventListener('mouseover', e => retime(e.target.closest('a') ? SLOW : NORMAL));
+      track.addEventListener('mouseout', e => {
+        if (!track.contains(e.relatedTarget)) retime(NORMAL);
+      });
+    })();
 
     // Kotva v URL (příchod z podstránky, sdílený odkaz, back/forward) — doscrollujeme
     // sami a hash z adresního řádku zahodíme.
