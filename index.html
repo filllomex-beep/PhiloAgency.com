@@ -1096,18 +1096,21 @@
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     }
 
-    /* Na mobilu jen aktivní jazyk — klepnutí přepne na další v pořadí */
+    /* Na mobilu jen jazyk, na který se přepne (CZ → EN → DE → CZ) */
     @media (max-width: 767px) {
       .lang-switcher {
         height: 38px;
       }
 
-      .lang-btn:not(.active) {
+      .lang-btn:not(.lang-next) {
         display: none;
       }
 
-      .lang-btn.active {
+      .lang-btn.lang-next {
         min-width: 38px;
+        background: #fff;
+        color: #111;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         animation: lang-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       }
     }
@@ -1121,7 +1124,7 @@
         gap: 6px;
       }
 
-      nav .lang-btn.active {
+      nav .lang-btn.lang-next {
         min-width: 34px;
         padding: 0 7px;
       }
@@ -1646,9 +1649,9 @@
           <div class="btn-icon"><svg width="15" height="15" aria-hidden="true"><use href="#wa-glyph" /></svg></div>
         </a>
         <div class="lang-switcher" id="lang-switcher">
-          <button class="lang-btn active" data-lang="cs">CZ</button>
-          <button class="lang-btn" data-lang="en">EN</button>
-          <button class="lang-btn" data-lang="de">DE</button>
+          <button class="lang-btn active" data-lang="cs" aria-label="Čeština">CZ</button>
+          <button class="lang-btn lang-next" data-lang="en" aria-label="English">EN</button>
+          <button class="lang-btn" data-lang="de" aria-label="Deutsch">DE</button>
         </div>
         <button class="hamburger-btn md:hidden" id="hamburger-btn" aria-label="Menu">
           <span></span><span></span><span></span>
@@ -3449,8 +3452,12 @@
         });
 
         // Update switcher buttons
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.lang === lang);
+        // Na mobilu je vidět jen „lang-next“ — jazyk, na který klepnutí přepne
+        const langBtns = [...document.querySelectorAll('.lang-btn')];
+        const activeIdx = langBtns.findIndex(btn => btn.dataset.lang === lang);
+        langBtns.forEach((btn, i) => {
+          btn.classList.toggle('active', i === activeIdx);
+          btn.classList.toggle('lang-next', i === (activeIdx + 1) % langBtns.length);
         });
 
         localStorage.setItem('philoLang', lang);
@@ -3459,14 +3466,7 @@
       // Wire up buttons
       document.getElementById('lang-switcher').addEventListener('click', function (e) {
         const btn = e.target.closest('.lang-btn');
-        if (!btn) return;
-        // Na mobilu je vidět jen aktivní jazyk, klepnutí na něj přepne na další
-        if (btn.classList.contains('active') && window.matchMedia('(max-width: 767px)').matches) {
-          const btns = [...this.querySelectorAll('.lang-btn')];
-          setLang(btns[(btns.indexOf(btn) + 1) % btns.length].dataset.lang);
-        } else {
-          setLang(btn.dataset.lang);
-        }
+        if (btn) setLang(btn.dataset.lang);
       });
 
       // Restore saved language
