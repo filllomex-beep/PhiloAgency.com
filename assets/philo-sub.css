@@ -179,6 +179,67 @@ html body * {
   right: calc(100% - 31px);
 }
 
+/* ─── WHATSAPP V NAVIGACI ─── */
+/* Logo se při najetí neotáčí, jen přejede doleva */
+.btn-wa .btn-icon {
+  color: #25d366;
+}
+
+.btn-wa:hover .btn-icon {
+  transform: none;
+}
+
+.wa-badge {
+  display: none;
+  position: relative;
+  z-index: 10;
+  flex-direction: column;
+  line-height: 1.08;
+  text-align: left;
+}
+
+.wa-badge small {
+  font-size: 9px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.wa-badge strong {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Na mobilu dvouřádkový odznak „Napište na / WhatsApp“ s ikonou vlevo */
+@media (max-width: 767px) {
+  .btn-wa,
+  .btn-wa:hover {
+    height: 38px;
+    padding: 0 13px 0 39px;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .btn-wa:active {
+    transform: scale(0.96);
+  }
+
+  .btn-wa .btn-text {
+    display: none;
+  }
+
+  .btn-wa .wa-badge {
+    display: flex;
+  }
+
+  .btn-wa .btn-icon,
+  .btn-wa:hover .btn-icon {
+    left: 4px;
+    right: auto;
+    width: 30px;
+    height: 30px;
+  }
+}
+
 /* ─── REVEAL ─── */
 .reveal {
   opacity: 0;
