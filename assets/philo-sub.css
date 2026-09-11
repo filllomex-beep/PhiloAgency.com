@@ -271,6 +271,8 @@ html body * {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* Safari/Chrome dávají tlačítkům align-items: flex-start — čárky by bez šířky zmizely */
+  align-items: center;
   gap: 5px;
   width: 36px;
   height: 36px;
@@ -283,6 +285,7 @@ html body * {
 
 .hamburger-btn span {
   display: block;
+  width: 22px;
   height: 2px;
   background: #111;
   border-radius: 2px;
