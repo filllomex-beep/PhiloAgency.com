@@ -42,17 +42,21 @@
     /* ─── Hamburger + mobilní menu ─── */
     var hamburgerBtn = document.getElementById('hamburger-btn');
     var mobileMenu = document.getElementById('mobile-menu');
+    // Jako na hlavní stránce: při otevřeném menu zůstane v navigaci jen křížek
+    var navWaBtn = document.querySelector('nav .btn-wa');
     if (hamburgerBtn && mobileMenu) {
       hamburgerBtn.addEventListener('click', function () {
         var isOpen = hamburgerBtn.classList.toggle('open');
         mobileMenu.classList.toggle('open', isOpen);
         document.body.style.overflow = isOpen ? 'hidden' : '';
+        if (navWaBtn) navWaBtn.style.visibility = isOpen ? 'hidden' : '';
       });
       mobileMenu.querySelectorAll('a').forEach(function (el) {
         el.addEventListener('click', function () {
           hamburgerBtn.classList.remove('open');
           mobileMenu.classList.remove('open');
           document.body.style.overflow = '';
+          if (navWaBtn) navWaBtn.style.visibility = '';
         });
       });
     }
