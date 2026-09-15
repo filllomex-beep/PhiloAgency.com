@@ -646,6 +646,9 @@
       aspect-ratio: 4 / 3;
       border-radius: 15px;
       overflow: hidden;
+      isolation: isolate;
+      perspective: 1800px;
+      perspective-origin: 50% 35%;
       background:
         radial-gradient(90% 80% at 88% 8%, rgba(var(--accent), 0.22), transparent 70%),
         linear-gradient(160deg, #fbfaf8 0%, #f1eeea 100%);
@@ -660,28 +663,44 @@
       transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* Follow-up page peeking out behind the landing page */
-    .showcase-window--back {
-      top: 6%;
-      right: 4%;
-      width: 72%;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 0, 0, 0.08);
+    /* Tilted 3D plane holding both pages */
+    .showcase-plane {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transform: translate(3%, 5%) rotateX(38deg) rotateZ(-26deg) scale(0.96);
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    /* Follow-up page lying behind the landing page */
+    .showcase-window--back {
+      top: 2%;
+      left: 3%;
+      width: 74%;
+      transform: translateZ(0);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), -10px 16px 30px rgba(20, 16, 12, 0.12);
+    }
+
+    /* Landing page floating above it */
     .showcase-window--front {
-      left: 4%;
-      bottom: 5%;
+      right: 3%;
+      bottom: 3%;
       width: 76%;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 24px 50px rgba(20, 16, 12, 0.2);
+      transform: translateZ(40px);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), -24px 36px 56px rgba(20, 16, 12, 0.28);
+    }
+
+    .showcase-card:hover .showcase-plane {
+      transform: translate(3%, 3%) rotateX(32deg) rotateZ(-22deg) scale(0.98);
     }
 
     .showcase-card:hover .showcase-window--back {
-      transform: translate(6px, -6px);
+      transform: translate3d(-8px, -10px, 0);
     }
 
     .showcase-card:hover .showcase-window--front {
-      transform: translate(-6px, 6px);
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 32px 64px rgba(20, 16, 12, 0.26);
+      transform: translate3d(6px, 6px, 80px);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), -34px 52px 70px rgba(20, 16, 12, 0.3);
     }
 
     .showcase-bar {
@@ -2247,6 +2266,7 @@
       <a href="https://www.emspulse.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 176, 141, 87">
         <div class="showcase-inner glass">
           <div class="showcase-stage">
+            <div class="showcase-plane">
             <div class="showcase-window showcase-window--back" aria-hidden="true">
               <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
               <img src="img/emspulse-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
@@ -2257,6 +2277,7 @@
                 <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>emspulse.cz</span>
               </div>
               <img src="img/emspulse.jpg" alt="EMS Pulse" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+            </div>
             </div>
           </div>
           <div class="showcase-meta">
@@ -2271,6 +2292,7 @@
       <a href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 43, 138, 128" data-delay="0.12">
         <div class="showcase-inner glass">
           <div class="showcase-stage">
+            <div class="showcase-plane">
             <div class="showcase-window showcase-window--back" aria-hidden="true">
               <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
               <img src="img/absolutestudio-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
@@ -2281,6 +2303,7 @@
                 <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>absolutestudio.cz</span>
               </div>
               <img src="img/absolutestudio.jpg" alt="Absolute Studio" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+            </div>
             </div>
           </div>
           <div class="showcase-meta">
@@ -2295,6 +2318,7 @@
       <a href="https://longvacation.eu/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 20, 112, 124">
         <div class="showcase-inner glass">
           <div class="showcase-stage">
+            <div class="showcase-plane">
             <div class="showcase-window showcase-window--back" aria-hidden="true">
               <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
               <img src="img/longvacation-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
@@ -2305,6 +2329,7 @@
                 <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>longvacation.eu</span>
               </div>
               <img src="img/longvacation.jpg" alt="Long Vacation" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+            </div>
             </div>
           </div>
           <div class="showcase-meta">
@@ -2319,6 +2344,7 @@
       <a href="https://www.danenula.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 22, 184, 134" data-delay="0.12">
         <div class="showcase-inner glass">
           <div class="showcase-stage">
+            <div class="showcase-plane">
             <div class="showcase-window showcase-window--back" aria-hidden="true">
               <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
               <img src="img/danenula-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
@@ -2329,6 +2355,7 @@
                 <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>danenula.cz</span>
               </div>
               <img src="img/danenula.jpg" alt="DaněNula.cz" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+            </div>
             </div>
           </div>
           <div class="showcase-meta">
