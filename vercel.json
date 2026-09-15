@@ -1,4 +1,16 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/redesign-webu",
+      "destination": "/webdesign",
+      "permanent": true
+    },
+    {
+      "source": "/redesign-webu.html",
+      "destination": "/webdesign",
+      "permanent": true
+    }
+  ]
 }
