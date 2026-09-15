@@ -40,13 +40,17 @@
     }
 
     .ba-wrap {
-      max-width: 880px;
+      max-width: 1056px;
       margin: 0 auto;
     }
 
     .ba-intro {
-      padding-top: 120px;
-      padding-bottom: 8px;
+      padding-bottom: 88px;
+    }
+
+    .ba-intro .ba-wrap {
+      padding-top: 48px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
     }
 
     .ba-eyebrow {
@@ -76,31 +80,6 @@
       color: #111;
     }
 
-    .ba-jump {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 22px;
-    }
-
-    .ba-jump a {
-      padding: 8px 15px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 500;
-      color: #555;
-      text-decoration: none;
-      background: rgba(255, 255, 255, 0.75);
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.07);
-      transition: color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .ba-jump a:hover {
-      color: #fff;
-      background: #111;
-      box-shadow: 0 0 0 1px #111;
-    }
-
     .ba-section {
       padding-block: 52px;
       scroll-margin-top: 64px;
@@ -110,9 +89,18 @@
       border-top: 1px solid rgba(0, 0, 0, 0.06);
     }
 
+    /* stránka začíná rovnou první ukázkou — jen místo pro fixní navigaci */
+    .ba-section:first-of-type {
+      padding-top: 104px;
+    }
+
     @media (max-width: 767px) {
       .ba-intro {
-        padding-top: 100px;
+        padding-bottom: 64px;
+      }
+
+      .ba-section:first-of-type {
+        padding-top: 88px;
       }
 
       .ba-lead {
@@ -164,7 +152,7 @@
     }
 
     .ba-desc {
-      max-width: 520px;
+      max-width: 600px;
       margin-top: 10px;
       font-size: 14.5px;
       line-height: 1.6;
@@ -400,7 +388,7 @@
     }
 
     .ba-page {
-      --frame-h: 320px;
+      --frame-h: 384px;
       margin: 0;
       padding: 8px;
       border-radius: 20px;
@@ -480,7 +468,7 @@
       }
 
       .ba-page {
-        --frame-h: 240px;
+        --frame-h: 288px;
         padding: 5px;
         border-radius: 14px;
       }
@@ -669,19 +657,6 @@
     </div>
   </div>
 
-  <!-- ───── ÚVOD ───── -->
-  <section class="ba-intro px-6">
-    <div class="ba-wrap">
-      <p class="ba-eyebrow" id="sp-eyebrow" style="opacity:0">Webdesign <span>Před <span class="ba-and">a</span> po</span></p>
-      <h1 class="ba-lead" id="sp-title" style="opacity:0">Neděláme jen weby od nuly — takhle jsme předělali stávající weby našich klientů. Posuňte jezdcem a porovnejte.</h1>
-      <nav class="ba-jump" id="sp-meta" style="opacity:0" aria-label="Projekty">
-        <a href="#absolute-studio">Absolute Studio</a>
-        <a href="#studio-itta">Studio Itta</a>
-        <a href="#michal-ricica">Michal Řičica</a>
-      </nav>
-    </div>
-  </section>
-
   <!-- ───── 01 ABSOLUTE STUDIO ───── -->
   <section class="ba-section px-6" id="absolute-studio">
     <div class="ba-wrap">
@@ -690,7 +665,7 @@
           <span class="ba-num">01</span>
           <h2 class="ba-title">Absolute Studio</h2>
           <p class="ba-cat">EMS a kryolipolýza · Čáslav</p>
-          <p class="ba-desc">Nová vizuální identita webu, přehledně rozdělené služby a samostatné stránky pro každou lekci — od EMS tréninku po Kryo Cool 360.</p>
+          <p class="ba-desc">Studio v srdci Čáslavi, které od roku 2018 nabízí bezdrátový EMS trénink s technologií Justfit a neinvazivní kryolipolýzu Kryo Cool 360.</p>
         </div>
         <a class="ba-visit glass" href="https://www.absolutestudio.cz/" target="_blank" rel="noopener">
           Navštívit web
@@ -738,7 +713,7 @@
           <span class="ba-num">02</span>
           <h2 class="ba-title">Studio Itta</h2>
           <p class="ba-cat">Kadeřnictví a kosmetika · Praha 1</p>
-          <p class="ba-desc">Z jednoduché stránky vznikl elegantní web s přehledným ceníkem, galerií prostor a přímým kontaktem na jednotlivé specialisty.</p>
+          <p class="ba-desc">Kadeřnictví, kosmetika GIGI, manikúra a pedikúra v centru Prahy u Václavského náměstí — italská škola vlasů a izraelská péče o pleť pod jednou střechou.</p>
         </div>
         <a class="ba-visit glass" href="https://studio-itta.cz/" target="_blank" rel="noopener">
           Navštívit web
@@ -786,7 +761,7 @@
           <span class="ba-num">03</span>
           <h2 class="ba-title">Michal Řičica</h2>
           <p class="ba-cat">Ebenista a restaurátor nábytku · Praha</p>
-          <p class="ba-desc">Dlouhý textový web jsme proměnili v řemeslnou prezentaci — s galerií realizací, přehledem služeb a příběhem dílny od roku 1988.</p>
+          <p class="ba-desc">Umělecký truhlář a restaurátor historického nábytku z Prahy — ruční repase, opravy intarzií, šelakové povrchy, repliky i autorský nábytek, od roku 1988.</p>
         </div>
         <a class="ba-visit glass" href="https://ebenist-net.vercel.app/" target="_blank" rel="noopener">
           Navštívit web
@@ -823,6 +798,14 @@
           <div class="ba-scroll"><img src="img/pred-po/ricica-po-full.jpg" alt="Michal Řičica — nový web, celá stránka" width="720" loading="lazy" decoding="async"><div class="ba-shot" aria-hidden="true" data-top="0.081772" data-height="0.163543"><div class="ba-shot-frame"><img src="img/pred-po/ricica-shot.jpg" alt="" width="1200" height="795" loading="lazy" decoding="async"></div><div class="ba-shot-veil"></div></div></div>
         </figure>
       </div>
+    </div>
+  </section>
+
+  <!-- ───── O ČEM TO JE ───── -->
+  <section class="ba-intro px-6">
+    <div class="ba-wrap reveal">
+      <p class="ba-eyebrow">Webdesign <span>Před <span class="ba-and">a</span> po</span></p>
+      <h1 class="ba-lead">Neděláme jen weby od nuly — takhle jsme předělali stávající weby našich klientů. Posuňte jezdcem a porovnejte.</h1>
     </div>
   </section>
 
