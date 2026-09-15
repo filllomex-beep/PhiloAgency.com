@@ -909,65 +909,49 @@
       box-shadow: 0 22px 48px rgba(0, 0, 0, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
 
-    /* Miniatura před / po — jako jezdec na stránce, při najetí se dělicí čára posune */
-    .redesign-cta-thumb {
-      position: relative;
+    /* Kulatý odznak „PŘED & PO“ v barvě webu */
+    .redesign-cta-badge {
       flex-shrink: 0;
-      width: 80px;
-      height: 50px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #ede8e4;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 6px 16px rgba(0, 0, 0, 0.08);
-    }
-
-    .redesign-cta-thumb img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
-    }
-
-    .redesign-cta-before {
-      position: absolute;
-      inset: 0;
-      clip-path: inset(0 50% 0 0);
-      transition: clip-path 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .redesign-cta-knob {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 2px;
-      margin-left: -1px;
-      background: #fff;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
-      transition: left 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .redesign-cta-knob::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 12px;
-      height: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-      transform: translate(-50%, -50%);
+      line-height: 1;
+      color: #fff;
+      background: linear-gradient(135deg, #c0392b 0%, #d9453a 100%);
+      box-shadow: 0 8px 20px rgba(192, 57, 43, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .redesign-cta:hover .redesign-cta-before {
-      clip-path: inset(0 80% 0 0);
+    .redesign-cta-badge span {
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-right: -0.14em;
     }
 
-    .redesign-cta:hover .redesign-cta-knob {
-      left: 20%;
+    .redesign-cta-badge em {
+      margin: 1px 0 2px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 19px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 0.85;
+    }
+
+    .redesign-cta:hover .redesign-cta-badge {
+      transform: rotate(-10deg) scale(1.05);
+      box-shadow: 0 12px 26px rgba(192, 57, 43, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .redesign-accent {
+      color: #c0392b;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
 
     .redesign-cta-text strong {
@@ -979,7 +963,7 @@
       color: #111;
     }
 
-    .redesign-cta-text span {
+    .redesign-cta-text > span {
       display: block;
       margin-top: 2px;
       font-size: 13px;
@@ -1015,17 +999,24 @@
         border-radius: 22px;
       }
 
-      .redesign-cta-thumb {
-        width: 66px;
-        height: 42px;
-        border-radius: 10px;
+      .redesign-cta-badge {
+        width: 52px;
+        height: 52px;
+      }
+
+      .redesign-cta-badge span {
+        font-size: 7.5px;
+      }
+
+      .redesign-cta-badge em {
+        font-size: 17px;
       }
 
       .redesign-cta-text strong {
         font-size: 14px;
       }
 
-      .redesign-cta-text span {
+      .redesign-cta-text > span {
         font-size: 13px;
       }
     }
@@ -2670,13 +2661,9 @@
     <!-- Redesign — odkaz na stránku před a po -->
     <div class="redesign-cta-wrap relative z-10 reveal">
       <a href="/redesign-webu" class="redesign-cta glass">
-        <span class="redesign-cta-thumb" aria-hidden="true">
-          <img src="img/pred-po/cta-po.jpg" alt="" width="192" height="120" loading="lazy" decoding="async">
-          <span class="redesign-cta-before"><img src="img/pred-po/cta-pred.jpg" alt="" width="192" height="120" loading="lazy" decoding="async"></span>
-          <span class="redesign-cta-knob"></span>
-        </span>
+        <span class="redesign-cta-badge" aria-hidden="true"><span>Před</span><em>&amp;</em><span>Po</span></span>
         <span class="redesign-cta-text">
-          <strong data-i18n="redesign-title">Podívejte se na webdesign před a po</strong>
+          <strong data-i18n-html="redesign-title">Podívejte se na webdesign <span class="redesign-accent">před a po</span></strong>
           <span data-i18n="redesign-sub">Neděláme jen weby od nuly — předěláváme i ty stávající.</span>
         </span>
         <span class="redesign-cta-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
@@ -3505,7 +3492,7 @@
           'card4-tag': 'Fitness & wellness',
           'card5-tag': 'Kadeřnictví & beauty',
           'card6-tag': 'Restaurování nábytku',
-          'redesign-title': 'Podívejte se na webdesign před a po', 'redesign-sub': 'Neděláme jen weby od nuly — předěláváme i ty stávající.',
+          'redesign-title': 'Podívejte se na webdesign <span class="redesign-accent">před a po</span>', 'redesign-sub': 'Neděláme jen weby od nuly — předěláváme i ty stávající.',
           'test-label': 'Reference',
           'test-title': 'Co říkají <span class="gradient-text">naši klienti</span>',
           'test-sub': 'Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili profesionální web.',
@@ -3604,7 +3591,7 @@
           'card4-tag': 'Fitness & wellness',
           'card5-tag': 'Hair & beauty',
           'card6-tag': 'Furniture restoration',
-          'redesign-title': 'See our before & after web design', 'redesign-sub': 'We don\'t just build websites from scratch — we also redesign existing ones.',
+          'redesign-title': 'See our <span class="redesign-accent">before &amp; after</span> web design', 'redesign-sub': 'We don\'t just build websites from scratch — we also redesign existing ones.',
           'test-label': 'Testimonials',
           'test-title': 'What our <span class="gradient-text">clients say</span>',
           'test-sub': 'Read the experiences of entrepreneurs for whom we created a professional website.',
@@ -3703,7 +3690,7 @@
           'card4-tag': 'Fitness & Wellness',
           'card5-tag': 'Friseur & Beauty',
           'card6-tag': 'Möbelrestaurierung',
-          'redesign-title': 'Webdesign vorher und nachher ansehen', 'redesign-sub': 'Wir bauen Websites nicht nur neu — wir überarbeiten auch bestehende.',
+          'redesign-title': 'Webdesign <span class="redesign-accent">vorher und nachher</span> ansehen', 'redesign-sub': 'Wir bauen Websites nicht nur neu — wir überarbeiten auch bestehende.',
           'test-label': 'Referenzen',
           'test-title': 'Was unsere <span class="gradient-text">Kunden sagen</span>',
           'test-sub': 'Lesen Sie die Erfahrungen von Unternehmern, für die wir eine professionelle Website erstellt haben.',
