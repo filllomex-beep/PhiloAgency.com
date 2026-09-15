@@ -371,7 +371,7 @@
     }
 
     /* Stránka se při najetí plynule projede shora dolů (délka podle výšky) */
-    .ba-scroll img {
+    .ba-scroll > img {
       display: block;
       width: 100%;
       height: auto;
@@ -380,8 +380,8 @@
       will-change: transform;
     }
 
-    .ba-page:hover .ba-scroll img,
-    .ba-page.is-playing .ba-scroll img {
+    .ba-page:hover .ba-scroll > img,
+    .ba-page.is-playing .ba-scroll > img {
       transform: translateY(calc(-100% + var(--frame-h)));
       transition: transform var(--dur, 8s) cubic-bezier(0.45, 0, 0.55, 1);
     }
@@ -431,8 +431,44 @@
       }
     }
 
+    /* ─── ŽIVÝ ÚSEK ebenist.net: fotka se při projetí otevře z rámečku přes celou šířku.
+       --p (0 → 1) počítá JS stejně jako skutečný web; clip, přiblížení i závoj jsou jeho. */
+    .ba-shot {
+      --p: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    .ba-shot-frame {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #1e1713;
+      clip-path: inset(calc((1 - var(--p)) * 17%) calc((1 - var(--p)) * 22%) calc((1 - var(--p)) * 17%) calc((1 - var(--p)) * 22%) round calc((1 - var(--p)) * 4px));
+    }
+
+    .ba-shot-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 60% 50%;
+      transform: translateX(calc(-14% * (1 - var(--p)))) scale(calc(1 + 0.28 * (1 - var(--p))));
+    }
+
+    .ba-shot-veil {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(20, 15, 12, 0) 55%, rgba(20, 15, 12, 0.62) 100%);
+      opacity: var(--p);
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .ba-scroll img {
+      .ba-scroll > img {
         transition: none !important;
       }
     }
@@ -743,7 +779,7 @@
         </figure>
         <figure class="ba-page ba-page--after glass reveal">
           <figcaption>Nový web <span class="ba-hint">Celá stránka</span></figcaption>
-          <div class="ba-scroll"><img src="img/pred-po/ricica-po-full.jpg" alt="Michal Řičica — nový web, celá stránka" width="720" loading="lazy" decoding="async"></div>
+          <div class="ba-scroll"><img src="img/pred-po/ricica-po-full.jpg" alt="Michal Řičica — nový web, celá stránka" width="720" loading="lazy" decoding="async"><div class="ba-shot" aria-hidden="true" data-top="0.081772" data-height="0.163543"><div class="ba-shot-frame"><img src="img/pred-po/ricica-shot.jpg" alt="" width="1200" height="795" loading="lazy" decoding="async"></div><div class="ba-shot-veil"></div></div></div>
         </figure>
       </div>
     </div>
@@ -894,7 +930,7 @@
         if (hasGsap && !reduced) {
           var o = { v: 50 };
           var upd = function () { set(o.v); };
-          hint = gsap.timeline({ scrollTrigger: { trigger: box, start: 'top 72%', once: true } })
+          hint = gsap.timeline({ scrollTrigger: { trigger: box, start: 'top 72%', toggleActions: 'play none none none' } })
             .to(o, { v: 70, duration: 0.8, ease: 'power2.inOut', onUpdate: upd })
             .to(o, { v: 32, duration: 1.0, ease: 'power2.inOut', onUpdate: upd })
             .to(o, { v: 50, duration: 0.7, ease: 'power2.out', onUpdate: upd });
@@ -904,7 +940,7 @@
       /* ─── Celé stránky: délka projetí podle výšky, na dotyku ťuknutím ─── */
       var touch = window.matchMedia && !window.matchMedia('(hover: hover)').matches;
       document.querySelectorAll('.ba-page').forEach(function (fig) {
-        var img = fig.querySelector('.ba-scroll img');
+        var img = fig.querySelector('.ba-scroll > img');
         var frame = fig.querySelector('.ba-scroll');
         var hintEl = fig.querySelector('.ba-hint');
         if (hintEl) hintEl.textContent = touch ? 'Klepněte pro projetí' : 'Najeďte pro projetí';
@@ -919,6 +955,36 @@
         fig.addEventListener('click', function () {
           if (touch) fig.classList.toggle('is-playing');
         });
+
+        // Živý úsek: fotku drží „přilepenou“ a otevírá ji podle toho, kam je stránka zrovna projetá
+        var shot = fig.querySelector('.ba-shot');
+        if (shot) {
+          var ease = function (t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; };
+          var paint = function () {
+            var H = img.getBoundingClientRect().height;
+            var F = frame.clientHeight;
+            var G = H * +shot.dataset.height;          // výška úseku
+            var top0 = H * +shot.dataset.top;          // začátek úseku
+            var scrolled = -new DOMMatrixReadOnly(getComputedStyle(img).transform).m42;
+            var stageH = Math.min(F, G);
+            var travel = G - stageH;
+            var boxTop = top0 - scrolled;
+            var t = (F - boxTop) / (F + travel * 0.4);
+            t = t < 0 ? 0 : t > 1 ? 1 : t;
+            shot.style.top = Math.min(Math.max(boxTop, 0), boxTop + G - stageH) + 'px';
+            shot.style.height = stageH + 'px';
+            shot.style.setProperty('--p', ease(t).toFixed(4));
+          };
+          var running = false;
+          var loop = function () { paint(); if (running) requestAnimationFrame(loop); };
+          img.addEventListener('transitionrun', function () {
+            if (!running) { running = true; requestAnimationFrame(loop); }
+          });
+          img.addEventListener('transitionend', function () { running = false; paint(); });
+          img.addEventListener('transitioncancel', function () { running = false; paint(); });
+          if (img.complete) paint(); else img.addEventListener('load', paint);
+          window.addEventListener('resize', paint, { passive: true });
+        }
       });
     })();
   </script>
