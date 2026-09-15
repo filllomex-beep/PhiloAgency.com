@@ -558,168 +558,118 @@
       background: rgba(255, 255, 255, 0.2);
     }
 
-    /* ─── SHOWCASE CAROUSEL ─── */
-    .showcase-viewport {
-      overflow: hidden;
-      position: relative;
+    /* ─── SHOWCASE GRID ─── */
+    .showcase-grid {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 64px 36px;
     }
 
-    .showcase-viewport::before,
-    .showcase-viewport::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      width: 90px;
-      height: 100%;
-      pointer-events: none;
-      z-index: 2;
-      transition: opacity 0.3s;
-    }
-
-    .showcase-viewport::before {
-      left: 0;
-      background: linear-gradient(to left, transparent, #f7f5f3);
-      opacity: 0;
-    }
-
-    .showcase-viewport::after {
-      right: 0;
-      background: linear-gradient(to right, transparent, #f7f5f3);
-    }
-
-    .showcase-viewport.has-prev::before {
-      opacity: 1;
-    }
-
-    .showcase-viewport.at-end::after {
-      opacity: 0;
-    }
-
-    .showcase-track {
-      display: flex;
-      gap: 20px;
-      transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: transform;
-    }
-
-    .showcase-card {
-      flex: 0 0 calc(44% - 10px);
-      border-radius: 20px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-
-    @media (max-width: 640px) {
-      .showcase-card {
-        flex: 0 0 85%;
+    @media (max-width: 767px) {
+      .showcase-grid {
+        grid-template-columns: 1fr;
+        gap: 44px;
       }
     }
 
-    .showcase-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
+    .showcase-card {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      outline: none;
     }
 
-    .showcase-img-wrap {
-      height: 240px;
+    .showcase-frame {
+      position: relative;
+      aspect-ratio: 9 / 8;
+      border-radius: 24px;
       overflow: hidden;
-      background: #ede8e4;
+      background: linear-gradient(150deg, #ffffff 0%, #f4f1ed 55%, #ece8e3 100%);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 40px rgba(0, 0, 0, 0.06);
+      perspective: 1700px;
+      transform: translateZ(0);
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Back "page" peeking out behind the screenshot */
+    .showcase-frame::before,
+    .showcase-img {
+      position: absolute;
+      width: 98%;
+      aspect-ratio: 16 / 10;
+      border-radius: 12px;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .showcase-frame::before {
+      content: '';
+      left: 50%;
+      top: 47%;
+      background: #fff;
+      box-shadow: -18px 26px 50px rgba(20, 16, 12, 0.12);
+      transform: translate(-50%, -50%) rotateX(40deg) rotateZ(-28deg);
     }
 
     .showcase-img {
-      width: 100%;
-      height: 100%;
+      left: 58%;
+      top: 57%;
+      height: auto;
+      max-width: none;
       object-fit: cover;
-      transition: transform 0.42s;
+      box-shadow: -26px 38px 60px rgba(20, 16, 12, 0.28);
+      transform: translate(-50%, -50%) rotateX(40deg) rotateZ(-28deg);
+    }
+
+    .showcase-card:hover .showcase-frame {
+      transform: translateY(-6px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 30px 64px rgba(0, 0, 0, 0.1);
+    }
+
+    .showcase-card:hover .showcase-frame::before {
+      transform: translate(-53%, -53%) rotateX(38deg) rotateZ(-27deg);
     }
 
     .showcase-card:hover .showcase-img {
-      transform: scale(1.04);
+      transform: translate(-50%, -52%) rotateX(34deg) rotateZ(-25deg) scale(1.04);
     }
 
-    .showcase-info {
-      padding: 20px 22px;
-      text-align: left;
-    }
-
-    .showcase-tag {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #c0392b;
+    .showcase-card:focus-visible .showcase-frame {
+      outline: 2px solid #c0392b;
+      outline-offset: 4px;
     }
 
     .showcase-title {
-      font-size: 15.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 22px;
+      font-size: 20px;
       font-weight: 700;
+      letter-spacing: -0.01em;
       color: #111;
-      margin: 5px 0 4px;
     }
 
-    .showcase-desc {
-      font-size: 12.5px;
-      color: #999;
-      line-height: 1.5;
+    .showcase-title svg {
+      opacity: 0;
+      transform: translate(-4px, 4px);
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      color: #c0392b;
     }
 
-    .showcase-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 28px;
+    .showcase-card:hover .showcase-title svg,
+    .showcase-card:focus-visible .showcase-title svg {
+      opacity: 1;
+      transform: none;
     }
 
-    .showcase-arrow {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      background: #111;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, opacity 0.2s;
-      flex-shrink: 0;
-    }
-
-    .showcase-arrow:hover {
-      background: #333;
-    }
-
-    .showcase-arrow:disabled {
-      opacity: 0.25;
-      cursor: default;
-      pointer-events: none;
-    }
-
-    .showcase-dots {
-      display: flex;
-      gap: 7px;
-      align-items: center;
-    }
-
-    .showcase-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.15);
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: background 0.2s, width 0.2s;
-    }
-
-    .showcase-dot.active {
-      background: #111;
-      width: 20px;
+    .showcase-tag {
+      margin-top: 2px;
+      font-size: 16px;
+      color: #6b6b6b;
     }
 
     /* ─── GLASS CARD HOVER ─── */
@@ -2173,83 +2123,38 @@
       <p class="text-gray-500 text-[16px] mb-16 reveal" data-i18n="port-sub">Inspirujte se ukázkami webů, které jsme
         vytvořili. Každý web děláme na míru.</p>
 
-      <!-- Showcase Carousel -->
-      <div class="mt-12 reveal">
-        <div class="showcase-viewport">
-          <div class="showcase-track" id="showcase-track">
+    </div>
 
-            <!-- Card 1 -->
-            <a href="https://www.emspulse.cz/" target="_blank" rel="noopener" class="showcase-card glass">
-              <div class="showcase-img-wrap">
-                <img src="img/emspulse.jpg" alt="EMS Pulse" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-              </div>
-              <div class="showcase-info">
-                <span class="showcase-tag" data-i18n="card1-tag">Fitness & zdraví</span>
-                <h3 class="showcase-title">EMS Pulse</h3>
-                <p class="showcase-desc" data-i18n="card1-desc">Prémiový web pro EMS studio s rezervací lekcí a ceníkem
-                  tréninků</p>
-              </div>
-            </a>
-
-            <!-- Card 2 -->
-            <a href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" class="showcase-card glass">
-              <div class="showcase-img-wrap">
-                <img src="img/absolutestudio.jpg" alt="Absolute Studio" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-              </div>
-              <div class="showcase-info">
-                <span class="showcase-tag" data-i18n="card4-tag">Fitness & wellness</span>
-                <h3 class="showcase-title">Absolute Studio</h3>
-                <p class="showcase-desc" data-i18n="card4-desc">Moderní web pro EMS & kryolipolýza studio s rezervací
-                  lekcí a ceníkem</p>
-              </div>
-            </a>
-
-            <!-- Card 3 -->
-            <a href="https://longvacation.eu/" target="_blank" rel="noopener" class="showcase-card glass">
-              <div class="showcase-img-wrap">
-                <img src="img/longvacation.jpg" alt="Long Vacation" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-              </div>
-              <div class="showcase-info">
-                <span class="showcase-tag" data-i18n="card3-tag">SaaS & produkty</span>
-                <h3 class="showcase-title">Long Vacation</h3>
-                <p class="showcase-desc" data-i18n="card3-desc">Chytrý plánovač dovolené — optimalizace volných dní
-                  podle svátků v 30+ zemích</p>
-              </div>
-            </a>
-
-            <!-- Card 4 -->
-            <a href="https://www.danenula.cz/" target="_blank" rel="noopener" class="showcase-card glass">
-              <div class="showcase-img-wrap">
-                <img src="img/danenula.jpg" alt="DaněNula.cz" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-              </div>
-              <div class="showcase-info">
-                <span class="showcase-tag" data-i18n="card2-tag">Účetnictví & daně</span>
-                <h3 class="showcase-title">DaněNula.cz</h3>
-                <p class="showcase-desc" data-i18n="card2-desc">Moderní web pro daňové přiznání OSVČ a s.r.o. —
-                  jednoduše a bez stresu</p>
-              </div>
-            </a>
-
-          </div>
+    <!-- Showcase grid — all projects visible at once -->
+    <div class="showcase-grid relative z-10">
+      <a href="https://www.emspulse.cz/" target="_blank" rel="noopener" class="showcase-card reveal">
+        <div class="showcase-frame">
+          <img src="img/emspulse.jpg" alt="EMS Pulse" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
         </div>
-
-        <!-- Navigation -->
-        <div class="showcase-nav">
-          <button class="showcase-arrow" id="showcase-prev" aria-label="Předchozí">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-          <div class="showcase-dots" id="showcase-dots"></div>
-          <button class="showcase-arrow" id="showcase-next" aria-label="Další">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </button>
+        <h3 class="showcase-title">EMS Pulse <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg></h3>
+        <p class="showcase-tag" data-i18n="card1-tag">Fitness & zdraví</p>
+      </a>
+      <a href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" class="showcase-card reveal" data-delay="0.12">
+        <div class="showcase-frame">
+          <img src="img/absolutestudio.jpg" alt="Absolute Studio" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
         </div>
-      </div>
+        <h3 class="showcase-title">Absolute Studio <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg></h3>
+        <p class="showcase-tag" data-i18n="card4-tag">Fitness & wellness</p>
+      </a>
+      <a href="https://longvacation.eu/" target="_blank" rel="noopener" class="showcase-card reveal">
+        <div class="showcase-frame">
+          <img src="img/longvacation.jpg" alt="Long Vacation" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+        </div>
+        <h3 class="showcase-title">Long Vacation <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg></h3>
+        <p class="showcase-tag" data-i18n="card3-tag">SaaS & produkty</p>
+      </a>
+      <a href="https://www.danenula.cz/" target="_blank" rel="noopener" class="showcase-card reveal" data-delay="0.12">
+        <div class="showcase-frame">
+          <img src="img/danenula.jpg" alt="DaněNula.cz" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+        </div>
+        <h3 class="showcase-title">DaněNula.cz <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg></h3>
+        <p class="showcase-tag" data-i18n="card2-tag">Účetnictví & daně</p>
+      </a>
     </div>
   </section>
 
@@ -2693,7 +2598,7 @@
       gsap.fromTo(el,
         { opacity: 0, y: 28 },
         {
-          opacity: 1, y: 0, duration: 0.65, ease: 'power2.out',
+          opacity: 1, y: 0, duration: 0.65, ease: 'power2.out', delay: +el.dataset.delay || 0,
           scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
         }
       );
@@ -2863,107 +2768,6 @@
         }
       });
     }, { passive: true });
-
-    // Showcase carousel
-    (function () {
-      const track = document.getElementById('showcase-track');
-      const prevBtn = document.getElementById('showcase-prev');
-      const nextBtn = document.getElementById('showcase-next');
-      const dotsEl = document.getElementById('showcase-dots');
-      if (!track) return;
-
-      const viewport = track.closest('.showcase-viewport');
-      const cards = [...track.children];
-      const GAP = 20;
-
-      // Mobile: one card per step. Desktop: skip card index 1 (2-up view).
-      function getSteps() {
-        return window.innerWidth < 640 ? [0, 1, 2, 3] : [0, 2, 3];
-      }
-
-      let STEPS = getSteps();
-      let current = STEPS[0];
-
-      function calcOffset(idx) {
-        const cardW = cards[0].offsetWidth;
-        const viewW = viewport.offsetWidth;
-        if (idx === 0) return 0;
-        const totalW = cards.length * (cardW + GAP) - GAP;
-        const raw = idx * (cardW + GAP) - (viewW - cardW) / 2;
-        return Math.max(0, Math.min(raw, totalW - viewW));
-      }
-
-      function buildDots() {
-        dotsEl.innerHTML = '';
-        STEPS.forEach((pos, i) => {
-          const d = document.createElement('button');
-          d.className = 'showcase-dot' + (pos === current ? ' active' : '');
-          d.setAttribute('aria-label', 'Přejít na ' + (i + 1));
-          d.addEventListener('click', () => goTo(pos));
-          dotsEl.appendChild(d);
-        });
-      }
-
-      function goTo(idx) {
-        current = idx;
-        track.style.transform = `translateX(-${calcOffset(current)}px)`;
-        const si = STEPS.indexOf(current);
-        prevBtn.disabled = si <= 0;
-        nextBtn.disabled = si >= STEPS.length - 1;
-        [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', STEPS[i] === current));
-        viewport.classList.toggle('has-prev', current > 0);
-        viewport.classList.toggle('at-end', si >= STEPS.length - 1);
-      }
-
-      buildDots();
-      goTo(STEPS[0]);
-
-      prevBtn.addEventListener('click', () => {
-        const i = STEPS.indexOf(current);
-        if (i > 0) goTo(STEPS[i - 1]);
-      });
-      nextBtn.addEventListener('click', () => {
-        const i = STEPS.indexOf(current);
-        if (i < STEPS.length - 1) goTo(STEPS[i + 1]);
-      });
-      window.addEventListener('resize', () => {
-        const newSteps = getSteps();
-        // Remap current to nearest valid step in new layout
-        if (JSON.stringify(newSteps) !== JSON.stringify(STEPS)) {
-          STEPS = newSteps;
-          const clamped = STEPS.reduce((prev, s) => Math.abs(s - current) < Math.abs(prev - current) ? s : prev, STEPS[0]);
-          current = clamped;
-          buildDots();
-        }
-        goTo(current);
-      }, { passive: true });
-
-      // Touch swipe support
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let swiping = false;
-      viewport.addEventListener('touchstart', e => {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        swiping = true;
-      }, { passive: true });
-      viewport.addEventListener('touchmove', e => {
-        if (!swiping) return;
-        const dx = e.touches[0].clientX - touchStartX;
-        const dy = e.touches[0].clientY - touchStartY;
-        // If scrolling vertically, cancel swipe detection
-        if (Math.abs(dy) > Math.abs(dx)) swiping = false;
-      }, { passive: true });
-      viewport.addEventListener('touchend', e => {
-        if (!swiping) return;
-        const dx = e.changedTouches[0].clientX - touchStartX;
-        swiping = false;
-        if (Math.abs(dx) < 40) return;
-        const i = STEPS.indexOf(current);
-        if (dx < 0 && i < STEPS.length - 1) goTo(STEPS[i + 1]);
-        else if (dx > 0 && i > 0) goTo(STEPS[i - 1]);
-      }, { passive: true });
-    })();
 
     // Services slider — sliding indicator
     (function () {
@@ -3147,10 +2951,10 @@
           'port-label': 'Naše práce',
           'port-title': 'Jak by mohl vypadat<br><span class="gradient-text">váš nový web</span>',
           'port-sub': 'Inspirujte se ukázkami webů, které jsme vytvořili. Každý web děláme na míru.',
-          'card1-tag': 'Fitness & zdraví', 'card1-desc': 'Prémiový web pro EMS studio s rezervací lekcí a ceníkem tréninků',
-          'card2-tag': 'Účetnictví & daně', 'card2-desc': 'Moderní web pro daňové přiznání OSVČ a s.r.o. — jednoduše a bez stresu',
-          'card3-tag': 'SaaS & produkty', 'card3-desc': 'Chytrý plánovač dovolené — optimalizace volných dní podle svátků v 30+ zemích',
-          'card4-tag': 'Fitness & wellness', 'card4-desc': 'Moderní web pro EMS & kryolipolýza studio s rezervací lekcí a ceníkem',
+          'card1-tag': 'Fitness & zdraví',
+          'card2-tag': 'Účetnictví & daně',
+          'card3-tag': 'SaaS & produkty',
+          'card4-tag': 'Fitness & wellness',
           'test-label': 'Reference',
           'test-title': 'Co říkají <span class="gradient-text">naši klienti</span>',
           'test-sub': 'Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili profesionální web.',
@@ -3243,10 +3047,10 @@
           'port-label': 'Our work',
           'port-title': 'What your new<br><span class="gradient-text">website could look like</span>',
           'port-sub': 'Get inspired by websites we\'ve created. Every website is made to measure.',
-          'card1-tag': 'Fitness & health', 'card1-desc': 'Premium website for an EMS studio with class booking and training price list',
-          'card2-tag': 'Accounting & tax', 'card2-desc': 'Modern website for tax returns for freelancers and companies — simple and stress-free',
-          'card3-tag': 'SaaS & products', 'card3-desc': 'Smart vacation planner — optimize days off based on public holidays in 30+ countries',
-          'card4-tag': 'Fitness & wellness', 'card4-desc': 'Modern website for an EMS & cryolipolysis studio with class booking and price list',
+          'card1-tag': 'Fitness & health',
+          'card2-tag': 'Accounting & tax',
+          'card3-tag': 'SaaS & products',
+          'card4-tag': 'Fitness & wellness',
           'test-label': 'Testimonials',
           'test-title': 'What our <span class="gradient-text">clients say</span>',
           'test-sub': 'Read the experiences of entrepreneurs for whom we created a professional website.',
@@ -3339,10 +3143,10 @@
           'port-label': 'Unsere Arbeit',
           'port-title': 'So könnte Ihre neue<br><span class="gradient-text">Website aussehen</span>',
           'port-sub': 'Lassen Sie sich von Websites inspirieren, die wir erstellt haben. Jede Website wird nach Maß gefertigt.',
-          'card1-tag': 'Fitness & Gesundheit', 'card1-desc': 'Premium-Website für ein EMS-Studio mit Kursbuchung und Trainingspreisliste',
-          'card2-tag': 'Buchhaltung & Steuern', 'card2-desc': 'Moderne Website für Steuererklärungen — einfach und stressfrei',
-          'card3-tag': 'SaaS & Produkte', 'card3-desc': 'Smarter Urlaubsplaner — freie Tage nach Feiertagen in 30+ Ländern optimieren',
-          'card4-tag': 'Fitness & Wellness', 'card4-desc': 'Moderne Website für ein EMS & Kryolipolyse-Studio mit Kursbuchung und Preisliste',
+          'card1-tag': 'Fitness & Gesundheit',
+          'card2-tag': 'Buchhaltung & Steuern',
+          'card3-tag': 'SaaS & Produkte',
+          'card4-tag': 'Fitness & Wellness',
           'test-label': 'Referenzen',
           'test-title': 'Was unsere <span class="gradient-text">Kunden sagen</span>',
           'test-sub': 'Lesen Sie die Erfahrungen von Unternehmern, für die wir eine professionelle Website erstellt haben.',
