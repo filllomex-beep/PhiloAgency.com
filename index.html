@@ -148,7 +148,7 @@
     .logo-track {
       display: flex;
       width: max-content;
-      animation: logo-marquee 10.7s linear infinite;
+      animation: logo-marquee 12.96s linear infinite;
     }
 
     .logo-row {
@@ -569,9 +569,7 @@
 
     @media (max-width: 767px) {
       .showcase-grid {
-        grid-template-columns: 1fr;
-        max-width: 440px;
-        gap: 28px;
+        gap: 30px 14px;
       }
     }
 
@@ -594,7 +592,7 @@
 
     @media (max-width: 767px) {
       .showcase-card:last-child:nth-child(odd) {
-        width: 100%;
+        width: calc(50% - 7px);
       }
     }
 
@@ -808,6 +806,82 @@
     .showcase-card:hover .showcase-go {
       background: #c0392b;
       transform: rotate(-45deg);
+    }
+
+    /* Phones: compact tiles — the stage is the card, name + category sit centered beneath */
+    @media (max-width: 767px) {
+      .showcase-inner.glass {
+        padding: 0;
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+
+      .showcase-inner::after,
+      .showcase-card::before,
+      .showcase-go,
+      .showcase-url {
+        display: none;
+      }
+
+      .showcase-stage {
+        aspect-ratio: 9 / 8;
+        border-radius: 18px;
+        background: linear-gradient(160deg, #ffffff 0%, #f3f0ec 100%);
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 10px 26px rgba(0, 0, 0, 0.07);
+      }
+
+      .showcase-window {
+        border-radius: 6px;
+      }
+
+      /* Bigger stack so the pages fill the tile and run off its edges */
+      .showcase-plane,
+      .showcase-card:hover .showcase-plane {
+        transform: translate(7%, 9%) rotateX(38deg) rotateZ(-26deg) scale(1.14);
+      }
+
+      .showcase-window--back {
+        width: 86%;
+      }
+
+      .showcase-window--front {
+        width: 88%;
+      }
+
+      .showcase-bar {
+        height: 12px;
+        padding: 0 5px;
+      }
+
+      .showcase-dots {
+        gap: 2px;
+      }
+
+      .showcase-dots i {
+        width: 3px;
+        height: 3px;
+      }
+
+      .showcase-meta {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0;
+        padding: 12px 4px 0;
+        text-align: center;
+      }
+
+      .showcase-title {
+        font-size: 15px;
+      }
+
+      .showcase-tag {
+        margin-top: 1px;
+        font-size: 13px;
+        color: #555;
+      }
     }
 
     /* ─── GLASS CARD HOVER ─── */
@@ -1987,6 +2061,10 @@
                 <img style="--w:142px" src="img/logos/studioitta.png" alt="Studio Itta" width="142" height="34"
                   loading="eager" decoding="async">
               </a>
+              <a class="logo-link" href="https://ebenist-net.vercel.app/" target="_blank" rel="noopener">
+                <img style="--w:170px" src="img/logos/ebenist.png" alt="Michal Řičica — ebenist & restaurátor" width="170" height="31"
+                  loading="eager" decoding="async">
+              </a>
               <a class="logo-link" href="https://longvacation.eu/" target="_blank" rel="noopener">
                 <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="Vacation Optimizer" width="205" height="21"
                   loading="eager" decoding="async">
@@ -2009,26 +2087,8 @@
                 <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
                   loading="eager" decoding="async">
               </a>
-              <a class="logo-link" href="https://longvacation.eu/" target="_blank" rel="noopener" tabindex="-1">
-                <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
-                  loading="eager" decoding="async">
-              </a>
-            </div>
-            <div class="logo-row" aria-hidden="true">
-              <a class="logo-link" href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" tabindex="-1">
-                <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
-                  loading="eager" decoding="async">
-              </a>
-              <a class="logo-link" href="https://www.danenula.cz/" target="_blank" rel="noopener" tabindex="-1">
-                <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
-                  loading="eager" decoding="async">
-              </a>
-              <a class="logo-link" href="https://www.emspulse.cz/" target="_blank" rel="noopener" tabindex="-1">
-                <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
-                  loading="eager" decoding="async">
-              </a>
-              <a class="logo-link" href="https://studio-itta.cz/" target="_blank" rel="noopener" tabindex="-1">
-                <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
+              <a class="logo-link" href="https://ebenist-net.vercel.app/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:170px" src="img/logos/ebenist.png" alt="" width="170" height="31"
                   loading="eager" decoding="async">
               </a>
               <a class="logo-link" href="https://longvacation.eu/" target="_blank" rel="noopener" tabindex="-1">
@@ -2051,6 +2111,36 @@
               </a>
               <a class="logo-link" href="https://studio-itta.cz/" target="_blank" rel="noopener" tabindex="-1">
                 <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://ebenist-net.vercel.app/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:170px" src="img/logos/ebenist.png" alt="" width="170" height="31"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://longvacation.eu/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:205px" src="img/logos/vacationoptimizer.png" alt="" width="205" height="21"
+                  loading="eager" decoding="async">
+              </a>
+            </div>
+            <div class="logo-row" aria-hidden="true">
+              <a class="logo-link" href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:125px" src="img/logos/absolutestudio.png" alt="" width="125" height="36"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.danenula.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:155px" src="img/logos/danenula.png" alt="" width="155" height="34"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://www.emspulse.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:165px" src="img/logos/emspulse.png" alt="" width="165" height="23"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://studio-itta.cz/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:142px" src="img/logos/studioitta.png" alt="" width="142" height="34"
+                  loading="eager" decoding="async">
+              </a>
+              <a class="logo-link" href="https://ebenist-net.vercel.app/" target="_blank" rel="noopener" tabindex="-1">
+                <img style="--w:170px" src="img/logos/ebenist.png" alt="" width="170" height="31"
                   loading="eager" decoding="async">
               </a>
               <a class="logo-link" href="https://longvacation.eu/" target="_blank" rel="noopener" tabindex="-1">
@@ -2914,7 +3004,7 @@
     (function () {
       const track = document.querySelector('.logo-track');
       if (!track || !track.getAnimations) return;
-      const NORMAL = 10700, SLOW = 16050;   // při najetí jen mírné přibrzdění, ne zastavení
+      const NORMAL = 12960, SLOW = 19440;   // při najetí jen mírné přibrzdění, ne zastavení
       let current = NORMAL;
 
       function retime(ms) {
