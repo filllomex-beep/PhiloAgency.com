@@ -585,6 +585,19 @@
       perspective: 1000px;
     }
 
+    /* Odd card left alone in the last row sits centered */
+    .showcase-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: calc(50% - 14px);
+    }
+
+    @media (max-width: 767px) {
+      .showcase-card:last-child:nth-child(odd) {
+        width: 100%;
+      }
+    }
+
     /* Brand-tinted ambient glow behind each card */
     .showcase-card::before {
       content: '';
@@ -2252,21 +2265,47 @@
 
     <!-- Showcase grid — all projects visible at once -->
     <div class="showcase-grid relative z-10">
-      <a href="https://www.emspulse.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 176, 141, 87">
+      <a href="https://studio-itta.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 104, 70, 110">
         <div class="showcase-inner glass">
           <div class="showcase-stage">
             <div class="showcase-plane">
-            <div class="showcase-window showcase-window--back" aria-hidden="true">
-              <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
-              <img src="img/emspulse-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-            </div>
-            <div class="showcase-window showcase-window--front">
-              <div class="showcase-bar" aria-hidden="true">
-                <span class="showcase-dots"><i></i><i></i><i></i></span>
-                <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>emspulse.cz</span>
+              <div class="showcase-window showcase-window--back" aria-hidden="true">
+                <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
+                <img src="img/studioitta-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
               </div>
-              <img src="img/emspulse.jpg" alt="EMS Pulse" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+              <div class="showcase-window showcase-window--front">
+                <div class="showcase-bar" aria-hidden="true">
+                  <span class="showcase-dots"><i></i><i></i><i></i></span>
+                  <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>studio-itta.cz</span>
+                </div>
+                <img src="img/studioitta.jpg" alt="Studio Itta" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+              </div>
             </div>
+          </div>
+          <div class="showcase-meta">
+            <div>
+              <h3 class="showcase-title">Studio Itta</h3>
+              <p class="showcase-tag" data-i18n="card5-tag">Kadeřnictví & beauty</p>
+            </div>
+            <span class="showcase-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.emspulse.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 176, 141, 87" data-delay="0.12">
+        <div class="showcase-inner glass">
+          <div class="showcase-stage">
+            <div class="showcase-plane">
+              <div class="showcase-window showcase-window--back" aria-hidden="true">
+                <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
+                <img src="img/emspulse-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+              </div>
+              <div class="showcase-window showcase-window--front">
+                <div class="showcase-bar" aria-hidden="true">
+                  <span class="showcase-dots"><i></i><i></i><i></i></span>
+                  <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>emspulse.cz</span>
+                </div>
+                <img src="img/emspulse.jpg" alt="EMS Pulse" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+              </div>
             </div>
           </div>
           <div class="showcase-meta">
@@ -2278,21 +2317,21 @@
           </div>
         </div>
       </a>
-      <a href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 43, 138, 128" data-delay="0.12">
+      <a href="https://www.absolutestudio.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 43, 138, 128">
         <div class="showcase-inner glass">
           <div class="showcase-stage">
             <div class="showcase-plane">
-            <div class="showcase-window showcase-window--back" aria-hidden="true">
-              <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
-              <img src="img/absolutestudio-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-            </div>
-            <div class="showcase-window showcase-window--front">
-              <div class="showcase-bar" aria-hidden="true">
-                <span class="showcase-dots"><i></i><i></i><i></i></span>
-                <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>absolutestudio.cz</span>
+              <div class="showcase-window showcase-window--back" aria-hidden="true">
+                <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
+                <img src="img/absolutestudio-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
               </div>
-              <img src="img/absolutestudio.jpg" alt="Absolute Studio" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-            </div>
+              <div class="showcase-window showcase-window--front">
+                <div class="showcase-bar" aria-hidden="true">
+                  <span class="showcase-dots"><i></i><i></i><i></i></span>
+                  <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>absolutestudio.cz</span>
+                </div>
+                <img src="img/absolutestudio.jpg" alt="Absolute Studio" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+              </div>
             </div>
           </div>
           <div class="showcase-meta">
@@ -2304,21 +2343,21 @@
           </div>
         </div>
       </a>
-      <a href="https://longvacation.eu/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 20, 112, 124">
+      <a href="https://longvacation.eu/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 20, 112, 124" data-delay="0.12">
         <div class="showcase-inner glass">
           <div class="showcase-stage">
             <div class="showcase-plane">
-            <div class="showcase-window showcase-window--back" aria-hidden="true">
-              <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
-              <img src="img/longvacation-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-            </div>
-            <div class="showcase-window showcase-window--front">
-              <div class="showcase-bar" aria-hidden="true">
-                <span class="showcase-dots"><i></i><i></i><i></i></span>
-                <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>longvacation.eu</span>
+              <div class="showcase-window showcase-window--back" aria-hidden="true">
+                <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
+                <img src="img/longvacation-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
               </div>
-              <img src="img/longvacation.jpg" alt="Long Vacation" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-            </div>
+              <div class="showcase-window showcase-window--front">
+                <div class="showcase-bar" aria-hidden="true">
+                  <span class="showcase-dots"><i></i><i></i><i></i></span>
+                  <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>longvacation.eu</span>
+                </div>
+                <img src="img/longvacation.jpg" alt="Long Vacation" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+              </div>
             </div>
           </div>
           <div class="showcase-meta">
@@ -2330,21 +2369,21 @@
           </div>
         </div>
       </a>
-      <a href="https://www.danenula.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 22, 184, 134" data-delay="0.12">
+      <a href="https://www.danenula.cz/" target="_blank" rel="noopener" class="showcase-card reveal" style="--accent: 22, 184, 134">
         <div class="showcase-inner glass">
           <div class="showcase-stage">
             <div class="showcase-plane">
-            <div class="showcase-window showcase-window--back" aria-hidden="true">
-              <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
-              <img src="img/danenula-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-            </div>
-            <div class="showcase-window showcase-window--front">
-              <div class="showcase-bar" aria-hidden="true">
-                <span class="showcase-dots"><i></i><i></i><i></i></span>
-                <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>danenula.cz</span>
+              <div class="showcase-window showcase-window--back" aria-hidden="true">
+                <div class="showcase-bar"><span class="showcase-dots"><i></i><i></i><i></i></span></div>
+                <img src="img/danenula-sub.jpg" alt="" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
               </div>
-              <img src="img/danenula.jpg" alt="DaněNula.cz" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
-            </div>
+              <div class="showcase-window showcase-window--front">
+                <div class="showcase-bar" aria-hidden="true">
+                  <span class="showcase-dots"><i></i><i></i><i></i></span>
+                  <span class="showcase-url"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>danenula.cz</span>
+                </div>
+                <img src="img/danenula.jpg" alt="DaněNula.cz" class="showcase-img" width="1000" height="625" loading="lazy" decoding="async">
+              </div>
             </div>
           </div>
           <div class="showcase-meta">
@@ -3178,6 +3217,7 @@
           'card2-tag': 'Účetnictví & daně',
           'card3-tag': 'SaaS & produkty',
           'card4-tag': 'Fitness & wellness',
+          'card5-tag': 'Kadeřnictví & beauty',
           'test-label': 'Reference',
           'test-title': 'Co říkají <span class="gradient-text">naši klienti</span>',
           'test-sub': 'Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili profesionální web.',
@@ -3274,6 +3314,7 @@
           'card2-tag': 'Accounting & tax',
           'card3-tag': 'SaaS & products',
           'card4-tag': 'Fitness & wellness',
+          'card5-tag': 'Hair & beauty',
           'test-label': 'Testimonials',
           'test-title': 'What our <span class="gradient-text">clients say</span>',
           'test-sub': 'Read the experiences of entrepreneurs for whom we created a professional website.',
@@ -3370,6 +3411,7 @@
           'card2-tag': 'Buchhaltung & Steuern',
           'card3-tag': 'SaaS & Produkte',
           'card4-tag': 'Fitness & Wellness',
+          'card5-tag': 'Friseur & Beauty',
           'test-label': 'Referenzen',
           'test-title': 'Was unsere <span class="gradient-text">Kunden sagen</span>',
           'test-sub': 'Lesen Sie die Erfahrungen von Unternehmern, für die wir eine professionelle Website erstellt haben.',
