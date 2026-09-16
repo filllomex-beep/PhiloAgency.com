@@ -1200,6 +1200,11 @@
       mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
     }
 
+    /* Statický výběr výhod místo pásů — jen mobil (viz MOBILE OVERRIDES) */
+    .mq-mobile {
+      display: none;
+    }
+
     /* ─── NAV BUTTON (30% smaller) ─── */
     .btn-nav {
       height: 34px;
@@ -1862,85 +1867,55 @@
         transform: scale(0.94);
       }
 
-      /* Pás výhod: místo dvou protisměrných pásů statický přehled ve dvou
-         sloupcích. Obálky pásů se rozpustí (display: contents), takže položky
-         obou pásů skládá přímo mřížka karty; dvojníky a tečky se skryjí. */
+      /* Blok výhod: místo dvou protisměrných pásů jen čtyři hlavní výhody
+         ve dvou sloupcích (seznam .mq-mobile). */
       #hero-marquee {
+        padding: 22px;
+      }
+
+      #hero-marquee > :not(.mq-mobile) {
+        display: none;
+      }
+
+      .mq-mobile {
         display: grid;
-        grid-auto-flow: column;
-        grid-template-rows: repeat(4, auto);
+        grid-template-columns: auto auto;
         justify-content: space-between;
-        gap: 13px 12px;
-        padding: 22px 22px;
+        gap: 14px 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
       }
 
-      #hero-marquee .mq-strip,
-      #hero-marquee .mq-strip > div {
-        display: contents;
-        animation: none;
-      }
-
-      #hero-marquee .mq-divider,
-      #hero-marquee .mq-dup,
-      #hero-marquee [aria-hidden="true"] {
-        display: none;
-      }
-
-      /* Na úzkých telefonech (pod ~385 px) se nejdelší položka zalomí,
-         fajfka pak zůstane u prvního řádku. */
-      #hero-marquee .mq-item {
-        align-items: baseline;
-        gap: 6px;
-        font-size: 12px;
-        line-height: 1.35;
-        white-space: normal;
-      }
-
-      /* Loga: statická mřížka místo nekonečného pásu, v šířce obsahu */
-      .hero-logos {
-        margin-left: 0;
-        margin-right: 0;
-        padding-top: 40px;
-      }
-
-      .logo-mask {
-        -webkit-mask-image: none;
-        mask-image: none;
-      }
-
-      .logo-track {
-        width: 100%;
-        animation: none;
-        --logo-scale: 0.62;
-      }
-
-      .logo-row {
-        flex: 1 1 auto;
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 26px 12px;
-        padding-right: 0;
-      }
-
-      .logo-row[aria-hidden="true"] {
-        display: none;
-      }
-
-      .logo-link {
+      .mq-mobile li {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 32px;
+        align-items: baseline;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.35;
+        color: #4b5563;
       }
 
-      /* Široká loga (Vacation Optimizer) by jinak přetekla buňku */
-      .logo-row img {
-        max-width: 100%;
+      /* Loga jedou v pásu jako na desktopu, jen menší */
+      .logo-track {
+        --logo-scale: 0.62;
       }
 
       .hero-bg {
         padding-top: 96px !important;
         padding-bottom: 48px !important;
+      }
+    }
+
+    /* Úzké telefony (375/360 px): menší písmo, ať se výhody nezalomí */
+    @media (max-width: 389px) {
+      #hero-marquee {
+        padding: 22px 16px;
+      }
+
+      .mq-mobile li {
+        font-size: 12px;
       }
     }
   </style>
@@ -2256,63 +2231,68 @@
           <!-- Trust Marquee Glass Card -->
           <div id="hero-marquee" class="glass rounded-3xl py-5 relative overflow-hidden flex flex-col justify-center" style="opacity:0">
 
-            <!-- Strip 1: Záruky → left.
-                 Druhá polovina pásu je jen dvojník pro plynulou smyčku a tečky jsou ozdoba,
-                 proto aria-hidden (na mobilu se podle toho i skryjí). mq-dup = položka,
-                 která už je v prvním pásu. Stejnou strukturu staví buildMarqueeStrip(). -->
-            <div class="mq-strip relative flex overflow-hidden mask-fade-r mb-5">
+            <!-- Strip 1: Záruky → left -->
+            <div class="relative flex overflow-hidden mask-fade-r mb-5">
               <div class="animate-marquee flex gap-8 whitespace-nowrap pl-4" id="marquee-strip-1">
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> První návrh zdarma</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Doručení do 14 dní</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> 50+ spokojených klientů</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> První návrh zdarma</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Doručení do 14 dní</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> 50+ spokojených klientů</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Responzivní design</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Základní SEO</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> První návrh zdarma</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Doručení do 14 dní</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> 50+ spokojených klientů</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> První návrh zdarma</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Doručení do 14 dní</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> 50+ spokojených klientů</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
+                <span class="text-gray-300">·</span>
               </div>
             </div>
 
             <!-- Divider -->
-            <div class="mq-divider mx-7 mb-5 h-px" style="background:rgba(0,0,0,0.06)"></div>
+            <div class="mx-7 mb-5 h-px" style="background:rgba(0,0,0,0.06)"></div>
 
             <!-- Strip 2: Spolupráce → right (reverse) -->
-            <div class="mq-strip relative flex overflow-hidden mask-fade-r">
+            <div class="relative flex overflow-hidden mask-fade-r">
               <div class="animate-marquee-reverse flex gap-10 whitespace-nowrap pl-4" id="marquee-strip-2">
-                <span class="mq-item mq-dup text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Až 5 podstránek</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item mq-dup text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Připojení domény</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Kontaktní formulář</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item mq-dup text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Responzivní design</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Až 5 podstránek</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item mq-dup text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Základní SEO</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Připojení domény</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
-                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Kontaktní formulář</span>
-                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Až 5 podstránek</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Připojení domény</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Kontaktní formulář</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Až 5 podstránek</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Připojení domény</span>
+                <span class="text-gray-300">·</span>
+                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Kontaktní formulář</span>
+                <span class="text-gray-300">·</span>
               </div>
             </div>
+
+            <!-- Jen mobil: místo pásů krátký statický výběr (překlady: marquee-items-mobile) -->
+            <ul class="mq-mobile" id="mq-mobile">
+              <li><span class="mq-check">✓</span> První návrh zdarma</li>
+              <li><span class="mq-check">✓</span> Základní SEO</li>
+              <li><span class="mq-check">✓</span> Připojení domény</li>
+              <li><span class="mq-check">✓</span> Responzivní design</li>
+            </ul>
 
           </div>
 
@@ -3574,6 +3554,7 @@
           'stat-first': 'První návrh', 'stat-delivery': 'Doručení', 'stat-price': 'Cena od', 'stat-price-val': '9900 Kč',
           'marquee-items-2': ['Responzivní design', 'Až 5 podstránek', 'Základní SEO', 'Připojení domény', 'Kontaktní formulář'],
           'marquee-items': ['První návrh zdarma', 'Doručení do 14 dní', '50+ spokojených klientů', 'Responzivní design', 'Základní SEO'],
+          'marquee-items-mobile': ['První návrh zdarma', 'Základní SEO', 'Připojení domény', 'Responzivní design'],
           'flip-words': ['moderní web.', 'online marketing.', 'automatizace.', 'ai agenty.', 'photo/video.'],
           'svc-segments': [
             { label: 'Weby', desc: 'Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru, od designu po spuštění do 14 dní.' },
@@ -3673,6 +3654,7 @@
           'stat-first': 'First design', 'stat-delivery': 'Delivery', 'stat-price': 'From', 'stat-price-val': '399 €',
           'marquee-items-2': ['Responsive design', 'Up to 5 subpages', 'Basic SEO', 'Domain connection', 'Contact form'],
           'marquee-items': ['First design free', 'Delivery in 14 days', '50+ satisfied clients', 'Responsive design', 'Basic SEO'],
+          'marquee-items-mobile': ['First design free', 'Basic SEO', 'Domain connection', 'Responsive design'],
           'flip-words': ['a modern website.', 'online marketing.', 'automation.', 'AI agents.', 'photo/video.'],
           'svc-segments': [
             { label: 'Websites', desc: 'We design and develop fast, modern websites tailored to you, from design to launch in 14 days.' },
@@ -3772,6 +3754,7 @@
           'stat-first': 'Erster Entwurf', 'stat-delivery': 'Lieferung', 'stat-price': 'Ab', 'stat-price-val': '399 €',
           'marquee-items-2': ['Responsives Design', 'Bis zu 5 Unterseiten', 'Basis-SEO', 'Domain-Verbindung', 'Kontaktformular'],
           'marquee-items': ['Erster Entwurf kostenlos', 'Lieferung in 14 Tagen', '50+ zufriedene Kunden', 'Responsives Design', 'Basis-SEO'],
+          'marquee-items-mobile': ['Erster Entwurf kostenlos', 'Basis-SEO', 'Domain-Verbindung', 'Responsives Design'],
           'flip-words': ['eine moderne Website.', 'Online-Marketing.', 'Automatisierung.', 'KI-Agenten.', 'Foto/Video.'],
           'svc-segments': [
             { label: 'Webseiten', desc: 'Wir entwerfen und entwickeln schnelle, moderne Webseiten nach Maß, vom Design bis zum Launch in 14 Tagen.' },
@@ -3854,12 +3837,11 @@
 
       const HTML_KEYS = new Set(['hero-sub', 'hiw-title', 'feat-title', 'feat-sub', 'port-title', 'test-title', 'cta-title']);
 
-      // dups = položky, které už obsahuje jiný pás — na mobilu, kde se pásy
-      // skládají do jednoho seznamu, se nemají opakovat.
-      function buildMarqueeStrip(items, dups = []) {
-        const item = (text, clone) =>
-          `<span class="mq-item${dups.includes(text) ? ' mq-dup' : ''} text-[13px] font-medium text-gray-600 flex items-center gap-2"${clone ? ' aria-hidden="true"' : ''}><span class="mq-check">✓</span> ${text}</span><span class="text-gray-300" aria-hidden="true">·</span>`;
-        return items.map(text => item(text, false)).join('') + items.map(text => item(text, true)).join('');
+      function buildMarqueeStrip(items) {
+        const doubled = [...items, ...items];
+        return doubled.map(text =>
+          `<span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> ${text}</span><span class="text-gray-300">·</span>`
+        ).join('');
       }
 
       function setLang(lang) {
@@ -3882,7 +3864,10 @@
         const strip1 = document.getElementById('marquee-strip-1');
         if (strip1 && t['marquee-items']) strip1.innerHTML = buildMarqueeStrip(t['marquee-items']);
         const strip2 = document.getElementById('marquee-strip-2');
-        if (strip2 && t['marquee-items-2']) strip2.innerHTML = buildMarqueeStrip(t['marquee-items-2'], t['marquee-items']);
+        if (strip2 && t['marquee-items-2']) strip2.innerHTML = buildMarqueeStrip(t['marquee-items-2']);
+        const mqMobile = document.getElementById('mq-mobile');
+        if (mqMobile && t['marquee-items-mobile']) mqMobile.innerHTML = t['marquee-items-mobile']
+          .map(text => `<li><span class="mq-check">✓</span> ${text}</li>`).join('');
 
         // Services slider
         const svcData = t['svc-segments'];
