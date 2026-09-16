@@ -514,6 +514,11 @@
       transition: opacity 0.15s ease, transform 0.18s ease;
     }
 
+    /* Šipka na stránku služby — jen mobil (viz MOBILE OVERRIDES) */
+    .svc-go {
+      display: none;
+    }
+
     /* ─── PROGRESS BAR ─── */
     .progress-bar {
       height: 6px;
@@ -1789,16 +1794,35 @@
 
     /* ─── MOBILE OVERRIDES ─── */
     @media (max-width: 767px) {
+      /* Služby: všech pět záložek naráz ve dvou řadách (3 + 2), nic neujíždí.
+         Šest sloupců, aby obě řady vyplnily celou šířku. */
+      .svc-block {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: 16px;
+      }
+
       .svc-track {
-        overflow: hidden;
-        flex-wrap: nowrap;
-        cursor: default;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 4px;
+        border-radius: 22px;
         user-select: none;
       }
 
       .svc-seg {
-        flex: 0 0 auto;
-        padding: 7px 16px;
+        grid-column: span 2;
+        font-size: 12.5px;
+        padding: 10px 4px;
+        color: #6b7280;
+        -webkit-tap-highlight-color: transparent;
+        transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
+      }
+
+      /* Indikátor je v dráze první, proto nth-of-type (počítá jen odkazy) */
+      .svc-seg:nth-of-type(n + 4) {
+        grid-column: span 3;
       }
 
       .svc-indicator {
@@ -1810,6 +1834,108 @@
         color: #c0392b !important;
         font-weight: 700 !important;
         box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .svc-desc-box {
+        margin-top: 16px;
+        font-size: 12.5px;
+        color: #6b7280;
+      }
+
+      .svc-go {
+        display: flex;
+        align-self: center;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin-top: 16px;
+        border-radius: 50%;
+        background: #111;
+        color: #fff;
+        -webkit-tap-highlight-color: transparent;
+        transition: background-color 0.2s, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .svc-go:active {
+        background: #c0392b;
+        transform: scale(0.94);
+      }
+
+      /* Pás výhod: místo dvou protisměrných pásů statický přehled ve dvou
+         sloupcích. Obálky pásů se rozpustí (display: contents), takže položky
+         obou pásů skládá přímo mřížka karty; dvojníky a tečky se skryjí. */
+      #hero-marquee {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-rows: repeat(4, auto);
+        justify-content: space-between;
+        gap: 13px 12px;
+        padding: 22px 22px;
+      }
+
+      #hero-marquee .mq-strip,
+      #hero-marquee .mq-strip > div {
+        display: contents;
+        animation: none;
+      }
+
+      #hero-marquee .mq-divider,
+      #hero-marquee .mq-dup,
+      #hero-marquee [aria-hidden="true"] {
+        display: none;
+      }
+
+      /* Na úzkých telefonech (pod ~385 px) se nejdelší položka zalomí,
+         fajfka pak zůstane u prvního řádku. */
+      #hero-marquee .mq-item {
+        align-items: baseline;
+        gap: 6px;
+        font-size: 12px;
+        line-height: 1.35;
+        white-space: normal;
+      }
+
+      /* Loga: statická mřížka místo nekonečného pásu, v šířce obsahu */
+      .hero-logos {
+        margin-left: 0;
+        margin-right: 0;
+        padding-top: 40px;
+      }
+
+      .logo-mask {
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+
+      .logo-track {
+        width: 100%;
+        animation: none;
+        --logo-scale: 0.62;
+      }
+
+      .logo-row {
+        flex: 1 1 auto;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 26px 12px;
+        padding-right: 0;
+      }
+
+      .logo-row[aria-hidden="true"] {
+        display: none;
+      }
+
+      .logo-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+      }
+
+      /* Široká loga (Vacation Optimizer) by jinak přetekla buňku */
+      .logo-row img {
+        max-width: 100%;
       }
 
       .hero-bg {
@@ -2077,7 +2203,7 @@
                   služby</div>
               </div>
               <!-- Services Slider -->
-              <div class="mb-7">
+              <div class="svc-block mb-7">
                 <div class="svc-track">
                   <a class="svc-seg active" href="/sluzby/tvorba-webu" data-svc="0"
                     data-desc="Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru, od designu po spuštění do 14 dní.">Weby</a>
@@ -2092,6 +2218,14 @@
                 </div>
                 <p class="svc-desc-box" id="svc-desc">Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru, od
                   designu po spuštění do 14 dní.</p>
+                <!-- Jen na mobilu: tam ťuknutí na záložku přepíná popisek, na stránku služby vede tahle šipka -->
+                <a class="svc-go" id="svc-go" href="/sluzby/tvorba-webu" aria-label="Weby">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17 17 7" />
+                  </svg>
+                </a>
               </div>
               <!-- Divider -->
               <div class="h-px w-full mb-6" style="background:rgba(0,0,0,0.06)"></div>
@@ -2122,58 +2256,61 @@
           <!-- Trust Marquee Glass Card -->
           <div id="hero-marquee" class="glass rounded-3xl py-5 relative overflow-hidden flex flex-col justify-center" style="opacity:0">
 
-            <!-- Strip 1: Záruky → left -->
-            <div class="relative flex overflow-hidden mask-fade-r mb-5">
+            <!-- Strip 1: Záruky → left.
+                 Druhá polovina pásu je jen dvojník pro plynulou smyčku a tečky jsou ozdoba,
+                 proto aria-hidden (na mobilu se podle toho i skryjí). mq-dup = položka,
+                 která už je v prvním pásu. Stejnou strukturu staví buildMarqueeStrip(). -->
+            <div class="mq-strip relative flex overflow-hidden mask-fade-r mb-5">
               <div class="animate-marquee flex gap-8 whitespace-nowrap pl-4" id="marquee-strip-1">
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> První návrh zdarma</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Doručení do 14 dní</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> 50+ spokojených klientů</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> První návrh zdarma</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Doručení do 14 dní</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> 50+ spokojených klientů</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
-                <span class="text-gray-300">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> První návrh zdarma</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Doručení do 14 dní</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> 50+ spokojených klientů</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> První návrh zdarma</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Doručení do 14 dní</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> 50+ spokojených klientů</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Responzivní design</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Základní SEO</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
               </div>
             </div>
 
             <!-- Divider -->
-            <div class="mx-7 mb-5 h-px" style="background:rgba(0,0,0,0.06)"></div>
+            <div class="mq-divider mx-7 mb-5 h-px" style="background:rgba(0,0,0,0.06)"></div>
 
             <!-- Strip 2: Spolupráce → right (reverse) -->
-            <div class="relative flex overflow-hidden mask-fade-r">
+            <div class="mq-strip relative flex overflow-hidden mask-fade-r">
               <div class="animate-marquee-reverse flex gap-10 whitespace-nowrap pl-4" id="marquee-strip-2">
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Až 5 podstránek</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Připojení domény</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Kontaktní formulář</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Až 5 podstránek</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Připojení domény</span>
-                <span class="text-gray-300">·</span>
-                <span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Kontaktní formulář</span>
-                <span class="text-gray-300">·</span>
+                <span class="mq-item mq-dup text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Responzivní design</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Až 5 podstránek</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item mq-dup text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Základní SEO</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Připojení domény</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> Kontaktní formulář</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item mq-dup text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Responzivní design</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Až 5 podstránek</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item mq-dup text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Základní SEO</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Připojení domény</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <span class="mq-item text-[13px] font-medium text-gray-600 flex items-center gap-2" aria-hidden="true"><span class="mq-check">✓</span> Kontaktní formulář</span>
+                <span class="text-gray-300" aria-hidden="true">·</span>
               </div>
             </div>
 
@@ -3330,9 +3467,36 @@
         }
       }
 
+      // Na mobilu jsou záložky vidět všechny naráz a chovají se jako záložky:
+      // ťuknutí přepne popisek, na stránku služby vede šipka vedle něj.
+      const mobileLayout = window.matchMedia('(max-width: 767px)');
+      const svcGo = document.getElementById('svc-go');
+
+      function syncGo(seg) {
+        if (!svcGo) return;
+        svcGo.setAttribute('href', seg.getAttribute('href'));
+        svcGo.setAttribute('aria-label', seg.textContent.trim());
+      }
+
+      // Popisky jsou různě dlouhé. Aby při přepnutí neposkočily statistiky
+      // a vše pod kartou, drží box na mobilu výšku toho nejdelšího.
+      function fitDesc() {
+        svcDesc.style.minHeight = '';
+        if (!mobileLayout.matches) return;
+        const shown = svcDesc.textContent;
+        let tallest = 0;
+        segs.forEach(s => {
+          svcDesc.textContent = s.dataset.desc;
+          tallest = Math.max(tallest, svcDesc.offsetHeight);
+        });
+        svcDesc.textContent = shown;
+        svcDesc.style.minHeight = tallest + 'px';
+      }
+
       window._svcRelayout = function () {
         const active = track.querySelector('.svc-seg.active') || segs[0];
-        if (active) moveToSeg(active);
+        if (active) { moveToSeg(active); syncGo(active); }
+        fitDesc();
       };
 
       // Init on first active
@@ -3345,14 +3509,9 @@
       });
 
       function activateSeg(seg) {
-        segs.forEach(s => s.classList.remove('active'));
-        // Also remove active from any clones
-        track.querySelectorAll('.svc-seg').forEach(s => s.classList.remove('active'));
-        seg.classList.add('active');
-        // Mirror active to original if clone clicked
-        const origSeg = segs.find(s => s.dataset.svc === seg.dataset.svc);
-        if (origSeg) origSeg.classList.add('active');
+        segs.forEach(s => s.classList.toggle('active', s === seg));
         moveToSeg(seg);
+        syncGo(seg);
         svcDesc.style.opacity = '0';
         svcDesc.style.transform = 'translateY(4px)';
         setTimeout(() => {
@@ -3363,81 +3522,29 @@
       }
 
       // Klik na segment vede na stránku služby. Aby karta nepřišla o svou roli
-      // rozcestníku, na desktopu si popisky prolistuješ pouhým přejetím myší;
-      // na dotyku hover neexistuje, tam ťuknutí rovnou otevře stránku.
+      // rozcestníku, na desktopu si popisky prolistuješ pouhým přejetím myší.
       if (!window.matchMedia || window.matchMedia('(hover: hover)').matches) {
         segs.forEach(seg => seg.addEventListener('mouseenter', () => activateSeg(seg)));
       }
 
-      // Mobile: CSS-transform marquee loop (works on iOS Safari)
-      if (window.innerWidth < 768) {
-        // Wrap original segs in an inner container
-        const inner = document.createElement('div');
-        inner.style.cssText = 'display:flex;gap:2px;will-change:transform;';
-        [...track.children].forEach(child => {
-          if (!child.classList.contains('svc-indicator')) inner.appendChild(child);
-        });
-        track.appendChild(inner);
+      // Na mobilu ťuknutí jen přepne popisek — stránku otevře šipka.
+      segs.forEach(seg => seg.addEventListener('click', e => {
+        if (!mobileLayout.matches) return;
+        e.preventDefault();
+        if (!seg.classList.contains('active')) activateSeg(seg);
+      }));
 
-        // Clone originals for seamless loop
-        [...inner.querySelectorAll('.svc-seg')].forEach(seg => {
-          const clone = seg.cloneNode(true);
-          // Klon je jen vizuální dvojník — čtečky ho mají přeskočit a nesmí se
-          // na něj dát tabulátorem, jinak by byl v pořadí dvakrát.
-          clone.setAttribute('aria-hidden', 'true');
-          clone.setAttribute('tabindex', '-1');
-          inner.appendChild(clone);
-        });
-
-        let offset = 0;
-        let paused = false;
-        let pauseTimer = null;
-
-        function pauseFor(ms) {
-          paused = true;
-          clearTimeout(pauseTimer);
-          pauseTimer = setTimeout(() => { paused = false; }, ms);
-        }
-
-        track.addEventListener('click', () => pauseFor(2500));
-        track.addEventListener('touchstart', () => pauseFor(3000), { passive: true });
-
-        // Šířku měříme jen při změně velikosti — čtení scrollWidth v každém snímku
-        // vynucovalo layout a marquee sekal.
-        let halfW = inner.scrollWidth / 2;
-        window.addEventListener('resize', () => { halfW = inner.scrollWidth / 2; }, { passive: true });
-
-        // Běží jen když je pruh vidět a záložka je aktivní.
-        let visible = true;
-        if ('IntersectionObserver' in window) {
-          new IntersectionObserver(entries => { visible = entries[0].isIntersecting; }, { threshold: 0 })
-            .observe(track);
-        }
-
-        let rafId = null;
-        function loop() {
-          if (!paused && visible && halfW > 0) {
-            offset += 0.5;
-            if (offset >= halfW) offset -= halfW;
-            inner.style.transform = 'translateX(-' + offset + 'px)';
-          }
-          rafId = requestAnimationFrame(loop);
-        }
-        loop();
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) {
-            if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
-          } else if (rafId === null) {
-            halfW = inner.scrollWidth / 2;
-            loop();
-          }
-        });
-      }
+      fitDesc();
+      if (document.fonts) document.fonts.ready.then(fitDesc);
 
       // Re-position on resize
+      // (iOS posílá resize i při schování lišty prohlížeče — popisky přeměřujeme
+      // jen když se změní šířka)
+      let lastWidth = window.innerWidth;
       window.addEventListener('resize', () => {
         const active = segs.find(s => s.classList.contains('active'));
         if (active) { indicator.style.transition = 'none'; moveToSeg(active); requestAnimationFrame(() => { indicator.style.transition = ''; }); }
+        if (window.innerWidth !== lastWidth) { lastWidth = window.innerWidth; fitDesc(); }
       }, { passive: true });
     })();
   </script>
@@ -3747,11 +3854,12 @@
 
       const HTML_KEYS = new Set(['hero-sub', 'hiw-title', 'feat-title', 'feat-sub', 'port-title', 'test-title', 'cta-title']);
 
-      function buildMarqueeStrip(items) {
-        const doubled = [...items, ...items];
-        return doubled.map(text =>
-          `<span class="text-[13px] font-medium text-gray-600 flex items-center gap-2"><span class="mq-check">✓</span> ${text}</span><span class="text-gray-300">·</span>`
-        ).join('');
+      // dups = položky, které už obsahuje jiný pás — na mobilu, kde se pásy
+      // skládají do jednoho seznamu, se nemají opakovat.
+      function buildMarqueeStrip(items, dups = []) {
+        const item = (text, clone) =>
+          `<span class="mq-item${dups.includes(text) ? ' mq-dup' : ''} text-[13px] font-medium text-gray-600 flex items-center gap-2"${clone ? ' aria-hidden="true"' : ''}><span class="mq-check">✓</span> ${text}</span><span class="text-gray-300" aria-hidden="true">·</span>`;
+        return items.map(text => item(text, false)).join('') + items.map(text => item(text, true)).join('');
       }
 
       function setLang(lang) {
@@ -3774,13 +3882,12 @@
         const strip1 = document.getElementById('marquee-strip-1');
         if (strip1 && t['marquee-items']) strip1.innerHTML = buildMarqueeStrip(t['marquee-items']);
         const strip2 = document.getElementById('marquee-strip-2');
-        if (strip2 && t['marquee-items-2']) strip2.innerHTML = buildMarqueeStrip(t['marquee-items-2']);
+        if (strip2 && t['marquee-items-2']) strip2.innerHTML = buildMarqueeStrip(t['marquee-items-2'], t['marquee-items']);
 
         // Services slider
         const svcData = t['svc-segments'];
         if (svcData) {
-          // Na mobilu jsou v pásu i klony, takže párujeme podle data-svc, ne podle
-          // pořadí v DOM — jinak by klonům zůstal text v původním jazyce.
+          // Párujeme podle data-svc, ne podle pořadí v DOM.
           document.querySelectorAll('.svc-seg').forEach(seg => {
             const d = svcData[+seg.dataset.svc];
             if (d) { seg.textContent = d.label; seg.dataset.desc = d.desc; }
