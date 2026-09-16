@@ -1817,11 +1817,12 @@
         margin-bottom: 20px;
       }
 
+      /* Nadpis uprostřed, šipka po obou stranách */
       .svc-menu-toggle {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 12px;
+        justify-content: center;
+        gap: 10px;
         width: 100%;
         padding: 0;
         border: 0;
@@ -1833,10 +1834,12 @@
       }
 
       .svc-menu-title {
-        font-size: 24px;
+        min-width: 0;
+        font-size: 22px;
         font-weight: 900;
         line-height: 1.2;
         letter-spacing: -0.025em;
+        text-align: center;
         color: #111827;
       }
 
@@ -1845,8 +1848,8 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         background: rgba(17, 24, 39, 0.06);
         color: #111827;
@@ -2028,6 +2031,15 @@
       #hero-card,
       #hero-marquee {
         padding: 22px 16px;
+      }
+
+      .svc-menu-toggle {
+        gap: 8px;
+      }
+
+      .svc-menu-chevron {
+        width: 28px;
+        height: 28px;
       }
 
       .svc-row {
@@ -2323,9 +2335,15 @@
                    Ikony a texty (nd-*) sdílí s menu Služby v navigaci. -->
               <div class="svc-menu">
                 <button type="button" class="svc-menu-toggle" aria-expanded="false" aria-controls="svc-menu-panel">
+                  <span class="svc-menu-chevron" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </span>
                   <span class="svc-menu-title" data-i18n="card-title">Objevte naše služby</span>
                   <span class="svc-menu-chevron" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                       <path d="m6 9 6 6 6-6" />
                     </svg>
