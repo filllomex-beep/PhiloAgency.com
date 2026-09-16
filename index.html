@@ -1995,6 +1995,22 @@
       }
 
       .mq-mobile {
+        display: block;
+      }
+
+      /* Popisek ve stylu nadpisků sekcí („Co dostanete“, „Naše práce“) */
+      .mq-mobile-label {
+        margin: 0 0 16px;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.4;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        text-align: center;
+        color: #c0392b;
+      }
+
+      .mq-mobile-list {
         display: grid;
         grid-template-columns: auto auto;
         justify-content: space-between;
@@ -2548,12 +2564,15 @@
             </div>
 
             <!-- Jen mobil: místo pásů krátký statický výběr (překlady: marquee-items-mobile) -->
-            <ul class="mq-mobile" id="mq-mobile">
-              <li><span class="mq-check">✓</span> První návrh zdarma</li>
-              <li><span class="mq-check">✓</span> Základní SEO</li>
-              <li><span class="mq-check">✓</span> Připojení domény</li>
-              <li><span class="mq-check">✓</span> Responzivní design</li>
-            </ul>
+            <div class="mq-mobile">
+              <p class="mq-mobile-label" data-i18n="mq-mobile-label">Co dostanete k webu</p>
+              <ul class="mq-mobile-list" id="mq-mobile">
+                <li><span class="mq-check">✓</span> První návrh zdarma</li>
+                <li><span class="mq-check">✓</span> Základní SEO</li>
+                <li><span class="mq-check">✓</span> Připojení domény</li>
+                <li><span class="mq-check">✓</span> Responzivní design</li>
+              </ul>
+            </div>
 
           </div>
 
@@ -3789,6 +3808,7 @@
           'marquee-items-2': ['Responzivní design', 'Až 5 podstránek', 'Základní SEO', 'Připojení domény', 'Kontaktní formulář'],
           'marquee-items': ['První návrh zdarma', 'Doručení do 14 dní', '50+ spokojených klientů', 'Responzivní design', 'Základní SEO'],
           'marquee-items-mobile': ['První návrh zdarma', 'Základní SEO', 'Připojení domény', 'Responzivní design'],
+          'mq-mobile-label': 'Co dostanete k webu',
           'flip-words': ['moderní web.', 'online marketing.', 'automatizace.', 'ai agenty.', 'photo/video.'],
           'svc-segments': [
             { label: 'Weby', desc: 'Navrhujeme a vyvíjíme rychlé, moderní weby přesně na míru, od designu po spuštění do 14 dní.' },
@@ -3889,6 +3909,7 @@
           'marquee-items-2': ['Responsive design', 'Up to 5 subpages', 'Basic SEO', 'Domain connection', 'Contact form'],
           'marquee-items': ['First design free', 'Delivery in 14 days', '50+ satisfied clients', 'Responsive design', 'Basic SEO'],
           'marquee-items-mobile': ['First design free', 'Basic SEO', 'Domain connection', 'Responsive design'],
+          'mq-mobile-label': 'What you get with your website',
           'flip-words': ['a modern website.', 'online marketing.', 'automation.', 'AI agents.', 'photo/video.'],
           'svc-segments': [
             { label: 'Websites', desc: 'We design and develop fast, modern websites tailored to you, from design to launch in 14 days.' },
@@ -3989,6 +4010,7 @@
           'marquee-items-2': ['Responsives Design', 'Bis zu 5 Unterseiten', 'Basis-SEO', 'Domain-Verbindung', 'Kontaktformular'],
           'marquee-items': ['Erster Entwurf kostenlos', 'Lieferung in 14 Tagen', '50+ zufriedene Kunden', 'Responsives Design', 'Basis-SEO'],
           'marquee-items-mobile': ['Erster Entwurf kostenlos', 'Basis-SEO', 'Domain-Verbindung', 'Responsives Design'],
+          'mq-mobile-label': 'Was Sie zur Website bekommen',
           'flip-words': ['eine moderne Website.', 'Online-Marketing.', 'Automatisierung.', 'KI-Agenten.', 'Foto/Video.'],
           'svc-segments': [
             { label: 'Webseiten', desc: 'Wir entwerfen und entwickeln schnelle, moderne Webseiten nach Maß, vom Design bis zum Launch in 14 Tagen.' },
