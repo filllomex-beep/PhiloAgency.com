@@ -1862,6 +1862,30 @@
         transform: rotate(180deg);
       }
 
+      /* Nápověda, že jde o rozbalovací menu: šipky občas dvakrát kývnou
+         dolů. Po prvním otevření (.used) už víc neposkakují. */
+      @keyframes svc-chevron-hint {
+        0%, 34%, 100% {
+          transform: translateY(0);
+        }
+
+        10% {
+          transform: translateY(4px);
+        }
+
+        20% {
+          transform: translateY(0);
+        }
+
+        27% {
+          transform: translateY(2px);
+        }
+      }
+
+      .svc-menu:not(.used) .svc-menu-chevron svg {
+        animation: svc-chevron-hint 2.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s infinite;
+      }
+
       /* Plynulé rozbalení bez měření výšky: řádek mřížky 0fr → 1fr.
          Zavřený panel má visibility: hidden, takže odkazy v něm nejdou
          vybrat tabulátorem a čtečka je přeskočí. */
@@ -2085,6 +2109,10 @@
       .svc-menu.open .svc-list li,
       .svc-menu-chevron {
         transition: none;
+      }
+
+      .svc-menu:not(.used) .svc-menu-chevron svg {
+        animation: none;
       }
     }
   </style>
@@ -3767,6 +3795,7 @@
       if (svcMenuToggle) {
         svcMenuToggle.addEventListener('click', () => {
           const open = svcMenu.classList.toggle('open');
+          svcMenu.classList.add('used');
           svcMenuToggle.setAttribute('aria-expanded', String(open));
         });
         // iOS Safari bez posluchače touchstart nezobrazí :active — řádky
