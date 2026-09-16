@@ -514,8 +514,8 @@
       transition: opacity 0.15s ease, transform 0.18s ease;
     }
 
-    /* Seznam služeb po řádcích — jen mobil (viz MOBILE OVERRIDES) */
-    .svc-list {
+    /* Rozbalovací menu služeb — jen mobil (viz MOBILE OVERRIDES) */
+    .svc-menu {
       display: none;
     }
 
@@ -1799,22 +1799,108 @@
 
     /* ─── MOBILE OVERRIDES ─── */
     @media (max-width: 767px) {
-      /* Služby: místo přepínače se záložkami každá služba na vlastním řádku
-         (seznam .svc-list), ťuknutí rovnou otevře její stránku. Odsazení
+      /* Služby: nadpis karty je tlačítko rozbalovacího menu (.svc-menu),
+         v panelu každá služba na vlastním řádku a ťuknutí otevře její
+         stránku. Přepínač se záložkami zůstává pro větší šířky. Odsazení
          karty stejné jako u bloku výhod pod ní, ať lícují. */
       #hero-card {
         padding: 22px;
       }
 
+      .svc-title,
       .svc-block {
         display: none;
       }
 
-      .svc-list {
+      .svc-menu {
         display: block;
-        margin: -12px 0 14px;
+        margin-bottom: 20px;
+      }
+
+      .svc-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
         padding: 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .svc-menu-title {
+        font-size: 24px;
+        font-weight: 900;
+        line-height: 1.2;
+        letter-spacing: -0.025em;
+        color: #111827;
+      }
+
+      .svc-menu-chevron {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(17, 24, 39, 0.06);
+        color: #111827;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .svc-menu.open .svc-menu-chevron {
+        background: #c0392b;
+        color: #fff;
+        transform: rotate(180deg);
+      }
+
+      /* Plynulé rozbalení bez měření výšky: řádek mřížky 0fr → 1fr.
+         Zavřený panel má visibility: hidden, takže odkazy v něm nejdou
+         vybrat tabulátorem a čtečka je přeskočí. */
+      .svc-menu-panel {
+        display: grid;
+        grid-template-rows: 0fr;
+        visibility: hidden;
+        transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.4s;
+      }
+
+      .svc-menu.open .svc-menu-panel {
+        grid-template-rows: 1fr;
+        visibility: visible;
+        transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+      }
+
+      /* Záporný okraj vyrovnaný odsazením: overflow tak neořízne
+         podbarvení řádků po ťuknutí */
+      .svc-menu-inner {
+        min-height: 0;
+        overflow: hidden;
+        margin: 0 -10px;
+        padding: 0 10px;
+      }
+
+      .svc-list {
+        margin: 0;
+        padding: 12px 0 0;
         list-style: none;
+      }
+
+      /* Řádky při rozbalení postupně nabíhají (zpoždění --d v HTML) */
+      .svc-list li {
+        opacity: 0;
+        transform: translateY(-6px);
+        transition: opacity 0.2s ease, transform 0.3s ease;
+      }
+
+      .svc-menu.open .svc-list li {
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.35s ease var(--d, 0s), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s);
       }
 
       .svc-list li + li {
@@ -1960,6 +2046,17 @@
 
       .mq-mobile li {
         font-size: 12px;
+      }
+    }
+
+    /* Omezené animace: menu služeb se rozbalí okamžitě, bez pohybu */
+    @media (prefers-reduced-motion: reduce) {
+      .svc-menu-panel,
+      .svc-menu.open .svc-menu-panel,
+      .svc-list li,
+      .svc-menu.open .svc-list li,
+      .svc-menu-chevron {
+        transition: none;
       }
     }
   </style>
@@ -2217,104 +2314,120 @@
           <div id="hero-card" class="glass rounded-3xl p-7 relative overflow-hidden" style="opacity:0;background-image:radial-gradient(circle 140px at calc(100% - 40px) 40px,rgba(192,57,43,0.11),rgba(192,57,43,0.055) 45%,transparent 72%)">
             <div class="relative z-10">
               <!-- Main stat -->
-              <div class="mb-7">
+              <div class="svc-title mb-7">
                 <div class="text-3xl font-black text-gray-900 tracking-tight" data-i18n="card-title">Objevte naše
                   služby</div>
               </div>
-              <!-- Jen mobil: každá služba na vlastním řádku, ťuknutí otevře její stránku.
+              <!-- Jen mobil: rozbalovací menu — nadpis je tlačítko, v panelu každá služba
+                   na vlastním řádku a ťuknutí otevře její stránku.
                    Ikony a texty (nd-*) sdílí s menu Služby v navigaci. -->
-              <ul class="svc-list">
-                <li>
-                  <a class="svc-row" href="/sluzby/tvorba-webu">
-                    <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                        stroke-linejoin="round" aria-hidden="true">
-                        <rect width="20" height="14" x="2" y="3" rx="2" />
-                        <path d="M8 21h8M12 17v4" />
-                      </svg></span>
-                    <span class="svc-row-text">
-                      <span class="svc-row-title" data-i18n="nd-web-t">Tvorba webu</span>
-                      <span class="svc-row-desc" data-i18n="nd-web-d">Weby na míru, první návrh zdarma</span>
-                    </span>
-                    <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                      fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
+              <div class="svc-menu">
+                <button type="button" class="svc-menu-toggle" aria-expanded="false" aria-controls="svc-menu-panel">
+                  <span class="svc-menu-title" data-i18n="card-title">Objevte naše služby</span>
+                  <span class="svc-menu-chevron" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m6 9 6 6 6-6" />
                     </svg>
-                  </a>
-                </li>
-                <li>
-                  <a class="svc-row" href="/sluzby/vykonnostni-marketing">
-                    <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                        stroke-linejoin="round" aria-hidden="true">
-                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                        <polyline points="16 7 22 7 22 13" />
-                      </svg></span>
-                    <span class="svc-row-text">
-                      <span class="svc-row-title" data-i18n="nd-mkt-t">Výkonnostní marketing</span>
-                      <span class="svc-row-desc" data-i18n="nd-mkt-d">Meta Ads kampaně zaměřené na tržby</span>
-                    </span>
-                    <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                      fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a class="svc-row" href="/sluzby/tvorba-kontentu">
-                    <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                        stroke-linejoin="round" aria-hidden="true">
-                        <path d="m22 8-6 4 6 4V8Z" />
-                        <rect width="14" height="12" x="2" y="6" rx="2" />
-                      </svg></span>
-                    <span class="svc-row-text">
-                      <span class="svc-row-title" data-i18n="nd-con-t">Tvorba kontentu</span>
-                      <span class="svc-row-desc" data-i18n="nd-con-d">Foto, video a texty pro sociální sítě</span>
-                    </span>
-                    <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                      fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a class="svc-row" href="/sluzby/automatizace">
-                    <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                        stroke-linejoin="round" aria-hidden="true">
-                        <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
-                      </svg></span>
-                    <span class="svc-row-text">
-                      <span class="svc-row-title" data-i18n="nd-aut-t">Automatizace</span>
-                      <span class="svc-row-desc" data-i18n="nd-aut-d">Propojíme nástroje, procesy běží samy</span>
-                    </span>
-                    <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                      fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a class="svc-row" href="/sluzby/ai-agenti">
-                    <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                        stroke-linejoin="round" aria-hidden="true">
-                        <path d="M12 8V4H8" />
-                        <rect width="16" height="12" x="4" y="8" rx="2" />
-                        <path d="M2 14h2M20 14h2M15 13v2M9 13v2" />
-                      </svg></span>
-                    <span class="svc-row-text">
-                      <span class="svc-row-title" data-i18n="nd-ai-t">AI agenti</span>
-                      <span class="svc-row-desc" data-i18n="nd-ai-d">Agenti pro podporu, prodej i obsah</span>
-                    </span>
-                    <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                      fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
+                  </span>
+                </button>
+                <div class="svc-menu-panel" id="svc-menu-panel">
+                  <div class="svc-menu-inner">
+                    <ul class="svc-list">
+                      <li style="--d:0.060s">
+                        <a class="svc-row" href="/sluzby/tvorba-webu">
+                          <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
+                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                              stroke-linejoin="round" aria-hidden="true">
+                              <rect width="20" height="14" x="2" y="3" rx="2" />
+                              <path d="M8 21h8M12 17v4" />
+                            </svg></span>
+                          <span class="svc-row-text">
+                            <span class="svc-row-title" data-i18n="nd-web-t">Tvorba webu</span>
+                            <span class="svc-row-desc" data-i18n="nd-web-d">Weby na míru, první návrh zdarma</span>
+                          </span>
+                          <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                          </svg>
+                        </a>
+                      </li>
+                      <li style="--d:0.105s">
+                        <a class="svc-row" href="/sluzby/vykonnostni-marketing">
+                          <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
+                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                              stroke-linejoin="round" aria-hidden="true">
+                              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                              <polyline points="16 7 22 7 22 13" />
+                            </svg></span>
+                          <span class="svc-row-text">
+                            <span class="svc-row-title" data-i18n="nd-mkt-t">Výkonnostní marketing</span>
+                            <span class="svc-row-desc" data-i18n="nd-mkt-d">Meta Ads kampaně zaměřené na tržby</span>
+                          </span>
+                          <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                          </svg>
+                        </a>
+                      </li>
+                      <li style="--d:0.150s">
+                        <a class="svc-row" href="/sluzby/tvorba-kontentu">
+                          <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
+                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                              stroke-linejoin="round" aria-hidden="true">
+                              <path d="m22 8-6 4 6 4V8Z" />
+                              <rect width="14" height="12" x="2" y="6" rx="2" />
+                            </svg></span>
+                          <span class="svc-row-text">
+                            <span class="svc-row-title" data-i18n="nd-con-t">Tvorba kontentu</span>
+                            <span class="svc-row-desc" data-i18n="nd-con-d">Foto, video a texty pro sociální sítě</span>
+                          </span>
+                          <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                          </svg>
+                        </a>
+                      </li>
+                      <li style="--d:0.195s">
+                        <a class="svc-row" href="/sluzby/automatizace">
+                          <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
+                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                              stroke-linejoin="round" aria-hidden="true">
+                              <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+                            </svg></span>
+                          <span class="svc-row-text">
+                            <span class="svc-row-title" data-i18n="nd-aut-t">Automatizace</span>
+                            <span class="svc-row-desc" data-i18n="nd-aut-d">Propojíme nástroje, procesy běží samy</span>
+                          </span>
+                          <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                          </svg>
+                        </a>
+                      </li>
+                      <li style="--d:0.240s">
+                        <a class="svc-row" href="/sluzby/ai-agenti">
+                          <span class="nav-drop-ico"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
+                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                              stroke-linejoin="round" aria-hidden="true">
+                              <path d="M12 8V4H8" />
+                              <rect width="16" height="12" x="4" y="8" rx="2" />
+                              <path d="M2 14h2M20 14h2M15 13v2M9 13v2" />
+                            </svg></span>
+                          <span class="svc-row-text">
+                            <span class="svc-row-title" data-i18n="nd-ai-t">AI agenti</span>
+                            <span class="svc-row-desc" data-i18n="nd-ai-d">Agenti pro podporu, prodej i obsah</span>
+                          </span>
+                          <svg class="svc-row-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                          </svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
               <!-- Services Slider -->
               <div class="svc-block mb-7">
                 <div class="svc-track">
@@ -3611,10 +3724,18 @@
         segs.forEach(seg => seg.addEventListener('mouseenter', () => activateSeg(seg)));
       }
 
-      // iOS Safari bez posluchače touchstart nezobrazí :active — řádky
-      // seznamu by po ťuknutí nedaly žádnou odezvu.
-      const svcList = document.querySelector('.svc-list');
-      if (svcList) svcList.addEventListener('touchstart', () => { }, { passive: true });
+      // Mobil: „Objevte naše služby“ jako rozbalovací menu
+      const svcMenu = document.querySelector('.svc-menu');
+      const svcMenuToggle = svcMenu && svcMenu.querySelector('.svc-menu-toggle');
+      if (svcMenuToggle) {
+        svcMenuToggle.addEventListener('click', () => {
+          const open = svcMenu.classList.toggle('open');
+          svcMenuToggle.setAttribute('aria-expanded', String(open));
+        });
+        // iOS Safari bez posluchače touchstart nezobrazí :active — řádky
+        // menu by po ťuknutí nedaly žádnou odezvu.
+        svcMenu.addEventListener('touchstart', () => { }, { passive: true });
+      }
 
       // Re-position on resize
       window.addEventListener('resize', () => {
