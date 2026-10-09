@@ -1165,19 +1165,152 @@
       background: radial-gradient(ellipse 70% 50% at 50% 110%, rgba(192, 57, 43, 0.28) 0%, transparent 60%), #0d0d0d;
     }
 
-    /* ─── REVIEW AVATAR (initials, no stock photos) ─── */
-    .review-avatar {
-      width: 48px;
-      height: 48px;
-      flex-shrink: 0;
-      border-radius: 9999px;
-      display: flex;
+    /* ─── REVIEWS CAROUSEL (card stack, auto-slides left) ─── */
+    .rv-badge {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 10px;
+      padding: 8px 16px 8px 12px;
+      border-radius: 9999px;
+      color: #374151;
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @media (hover: hover) {
+      .rv-badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      }
+    }
+
+    .rv-viewport {
+      overflow: hidden;
+      margin: 10px -24px 8px;
+      padding: 30px 24px 48px;
+      /* Odjíždějící karta mizí do okraje, ne do ostré hrany */
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+      mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+    }
+
+    .rv-track {
+      display: flex;
+      gap: 20px;
+      will-change: transform;
+    }
+
+    .rv-slide {
+      position: relative;
+      flex: 0 0 100%;
+      display: flex;
+    }
+
+    @media (min-width: 640px) {
+      .rv-slide { flex-basis: calc((100% - 20px) / 2); }
+    }
+
+    @media (min-width: 1024px) {
+      .rv-slide { flex-basis: calc((100% - 40px) / 3); }
+    }
+
+    /* Dvě karty „pod“ vrchní — efekt balíčku */
+    .rv-slide::before,
+    .rv-slide::after {
+      content: '';
+      position: absolute;
+      background: #fff;
+      border: 1px solid rgba(17, 17, 17, 0.07);
+      border-radius: 24px;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .rv-slide::before {
+      inset: -16px 24px 16px;
+      background: #fbfaf9;
+    }
+
+    .rv-slide::after {
+      inset: -8px 12px 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .rv-card {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 250px;
+      padding: 24px 24px 22px;
+      text-align: left;
+      background: #fff;
+      border: 1px solid rgba(17, 17, 17, 0.07);
+      border-radius: 24px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 18px 40px -16px rgba(0, 0, 0, 0.14);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @media (hover: hover) {
+      .rv-slide:hover .rv-card {
+        transform: translateY(-4px);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 26px 52px -18px rgba(0, 0, 0, 0.2);
+      }
+
+      .rv-slide:hover::after { transform: translateY(-6px); }
+      .rv-slide:hover::before { transform: translateY(-12px); }
+    }
+
+    .rv-stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 14px;
+      color: #f6c90e;
+    }
+
+    .rv-stars svg {
+      width: 15px;
+      height: 15px;
+      fill: currentColor;
+    }
+
+    .rv-text {
+      flex: 1;
+      color: #3f3f46;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .rv-text mark {
+      background: rgba(192, 57, 43, 0.09);
+      color: #b03a2e;
+      font-weight: 600;
+      padding: 1px 4px;
+      margin: 0 -1px;
+      border-radius: 6px;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
+    .rv-foot {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .rv-name {
+      color: #52525b;
+      font-size: 15.5px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .rv-src {
+      color: #a1a1aa;
       font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+      margin-top: 2px;
     }
 
     /* ─── REVEAL ─── */
@@ -3112,144 +3245,113 @@
       style="width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,0.06),transparent 65%);bottom:-60px;left:100px;filter:blur(80px)">
     </div>
 
-    <div class="max-w-5xl mx-auto text-center relative z-10">
+    <div class="max-w-6xl mx-auto text-center relative z-10">
       <p class="text-[11px] font-semibold uppercase tracking-[0.18em] mb-3 reveal" style="color:#c0392b"
         data-i18n="test-label">Reference</p>
       <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 reveal" style="line-height:1.08"
         data-i18n-html="test-title">
         Co říkají <span class="gradient-text">naši klienti</span>
       </h2>
-      <p class="text-gray-500 text-[16px] mb-16 reveal" data-i18n="test-sub">Přečtěte si zkušenosti podnikatelů, pro
+      <p class="text-gray-500 text-[16px] mb-7 reveal" data-i18n="test-sub">Přečtěte si zkušenosti podnikatelů, pro
         které jsme vytvořili profesionální web.</p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="ico-google" viewBox="0 0 48 48">
+          <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z" />
+          <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
+          <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.5-4.5 2.4-7.2 2.4-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z" />
+          <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z" />
+        </symbol>
+        <symbol id="ico-star" viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </symbol>
+      </svg>
 
-        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
-          <div class="flex items-start justify-between gap-4 mb-4">
-            <div class="flex items-center gap-3">
-              <div class="review-avatar" style="background:#e8d5b7;color:#a0784d" aria-hidden="true">MK</div>
-              <div>
-                <div class="font-semibold text-gray-900 text-[15px] leading-tight">Martin K.</div>
-                <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review1-prof">Kosmetický salón</div>
+      <div class="reveal">
+        <a href="https://www.google.com/maps/search/?api=1&query=Philo+Agency+Ocelkova+643%2F20+Praha" target="_blank"
+          rel="noopener"
+          class="rv-badge glass-sm">
+        <svg width="18" height="18" aria-hidden="true"><use href="#ico-google" /></svg>
+        <span class="rv-stars" style="margin:0" aria-hidden="true"><svg><use href="#ico-star" /></svg><svg><use
+              href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use
+              href="#ico-star" /></svg></span>
+        <span data-i18n="test-rating">5,0 na Googlu</span>
+        </a>
+      </div>
+
+      <div class="rv-viewport reveal" id="rv-carousel" aria-roledescription="carousel">
+        <div class="rv-track" id="rv-track">
+
+          <div class="rv-slide">
+            <article class="rv-card">
+              <div class="rv-stars" role="img" aria-label="5/5"><svg><use href="#ico-star" /></svg><svg><use
+                    href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use
+                    href="#ico-star" /></svg></div>
+              <p class="rv-text" data-i18n-html="review1">Nechala jsem si u Philo Agency udělat webové stránky pro svoje
+                EMS studio a jsem z nich <mark>nadšená</mark>.</p>
+              <div class="rv-foot">
+                <div>
+                  <div class="rv-name">Emspulseinfo</div>
+                  <div class="rv-src" data-i18n="review-src">Recenze z Google</div>
+                </div>
+                <svg width="22" height="22" aria-hidden="true"><use href="#ico-google" /></svg>
               </div>
-            </div>
-            <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <span>5.0</span>
-            </div>
+            </article>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review1">"Byl jsem velmi spokojený s prací.
-            První návrh přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2 týdny."</p>
-        </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
-          <div class="flex items-start justify-between gap-4 mb-4">
-            <div class="flex items-center gap-3">
-              <div class="review-avatar" style="background:#d4c4f0;color:#7c5cbf" aria-hidden="true">PS</div>
-              <div>
-                <div class="font-semibold text-gray-900 text-[15px] leading-tight">Petr S.</div>
-                <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review2-prof">Restaurace</div>
+          <div class="rv-slide">
+            <article class="rv-card">
+              <div class="rv-stars" role="img" aria-label="5/5"><svg><use href="#ico-star" /></svg><svg><use
+                    href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use
+                    href="#ico-star" /></svg></div>
+              <p class="rv-text" data-i18n-html="review2">Jsem <mark>velmi spokojená</mark> s prací pana Filipa. Nechala
+                jsem si zhotovit <mark>nové webové stránky</mark>.</p>
+              <div class="rv-foot">
+                <div>
+                  <div class="rv-name">Klárka S.</div>
+                  <div class="rv-src" data-i18n="review-src">Recenze z Google</div>
+                </div>
+                <svg width="22" height="22" aria-hidden="true"><use href="#ico-google" /></svg>
               </div>
-            </div>
-            <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <span>5.0</span>
-            </div>
+            </article>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review2">"Profesionální přístup od začátku
-            do konce. Vše jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."</p>
-        </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
-          <div class="flex items-start justify-between gap-4 mb-4">
-            <div class="flex items-center gap-3">
-              <div class="review-avatar" style="background:#fccb9e;color:#c05621" aria-hidden="true">ZM</div>
-              <div>
-                <div class="font-semibold text-gray-900 text-[15px] leading-tight">Zuzana M.</div>
-                <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review3-prof">Zubní klinika</div>
+          <div class="rv-slide">
+            <article class="rv-card">
+              <div class="rv-stars" role="img" aria-label="5/5"><svg><use href="#ico-star" /></svg><svg><use
+                    href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use
+                    href="#ico-star" /></svg></div>
+              <p class="rv-text" data-i18n-html="review3"><mark>Velká spokojenost!</mark> Ve velmi omezeném čase který
+                jsem měla, jsme zvládli nafotit a zpracovat <mark>velmi kvalitní produktové fotky</mark> mého salónu a
+                jako bonus vytvořit i videa na sociální sítě. Oceňuji <mark>rychlost a spolehlivost</mark>. Díky za
+                spolupráci!</p>
+              <div class="rv-foot">
+                <div>
+                  <div class="rv-name">Anastasia Lomex</div>
+                  <div class="rv-src" data-i18n="review-src">Recenze z Google</div>
+                </div>
+                <svg width="22" height="22" aria-hidden="true"><use href="#ico-google" /></svg>
               </div>
-            </div>
-            <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <span>5.0</span>
-            </div>
+            </article>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review3">"Velmi rychlé dodání a kvalitní
-            zpracování. Web nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"</p>
-        </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
-          <div class="flex items-start justify-between gap-4 mb-4">
-            <div class="flex items-center gap-3">
-              <div class="review-avatar" style="background:#c9f0e8;color:#276749" aria-hidden="true">LR</div>
-              <div>
-                <div class="font-semibold text-gray-900 text-[15px] leading-tight">Lukáš R.</div>
-                <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review4-prof">Autoservis</div>
+          <div class="rv-slide">
+            <article class="rv-card">
+              <div class="rv-stars" role="img" aria-label="5/5"><svg><use href="#ico-star" /></svg><svg><use
+                    href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use
+                    href="#ico-star" /></svg></div>
+              <p class="rv-text" data-i18n-html="review4"><mark>Skvělá spolupráce</mark>, doporučuji</p>
+              <div class="rv-foot">
+                <div>
+                  <div class="rv-name">Maksim Smith</div>
+                  <div class="rv-src" data-i18n="review-src">Recenze z Google</div>
+                </div>
+                <svg width="22" height="22" aria-hidden="true"><use href="#ico-google" /></svg>
               </div>
-            </div>
-            <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <span>5.0</span>
-            </div>
+            </article>
           </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review4">"Chtěl jsem moderní web, který bude
-            dohledatelný. Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."</p>
-        </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
-          <div class="flex items-start justify-between gap-4 mb-4">
-            <div class="flex items-center gap-3">
-              <div class="review-avatar" style="background:#fed7e2;color:#97266d" aria-hidden="true">JP</div>
-              <div>
-                <div class="font-semibold text-gray-900 text-[15px] leading-tight">Jana P.</div>
-                <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review5-prof">Fitness studio</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <span>5.0</span>
-            </div>
-          </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review5">"Skvělé! Web vypadá přesně tak, jak
-            jsem si představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"</p>
         </div>
-
-        <div class="glass glass-hover rounded-2xl p-6 text-left reveal">
-          <div class="flex items-start justify-between gap-4 mb-4">
-            <div class="flex items-center gap-3">
-              <div class="review-avatar" style="background:#cfe0f5;color:#2c5282" aria-hidden="true">MB</div>
-              <div>
-                <div class="font-semibold text-gray-900 text-[15px] leading-tight">Marek B.</div>
-                <div class="text-gray-500 text-[13px] mt-0.5" data-i18n="review6-prof">Stavební firma</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-1.5 font-bold text-[15px] text-gray-900 flex-shrink-0">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="#f6c90e" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <span>5.0</span>
-            </div>
-          </div>
-          <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="review6">"Výborná práce za rozumnou cenu.
-            Web funguje bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."</p>
-        </div>
-
       </div>
 
       <div class="reveal">
@@ -3735,6 +3837,58 @@
       });
     })();
 
+    // Reference — karty jedou doleva, první odjede a zařadí se na konec (nekonečná smyčka)
+    (function () {
+      const viewport = document.getElementById('rv-carousel');
+      const track = document.getElementById('rv-track');
+      if (!track || !window.gsap) return;
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const HOLD = reduce ? 5 : 1;   // s — pauza mezi posuny
+      const DUR = reduce ? 0 : 0.8;  // s — délka posunu
+      let timer = null, busy = false, held = false, inView = false;
+
+      const canPlay = () => inView && !held && !document.hidden;
+      const schedule = () => { if (!timer && !busy && canPlay()) timer = gsap.delayedCall(HOLD, slide); };
+      const halt = () => { if (timer) { timer.kill(); timer = null; } };
+
+      function slide() {
+        timer = null;
+        if (!canPlay()) return;
+        const first = track.firstElementChild;
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        const dist = first.offsetWidth + gap;
+        const entering = track.children[Math.round((track.clientWidth + gap) / dist)];
+        busy = true;
+        const tl = gsap.timeline({
+          onComplete() {
+            track.appendChild(first);
+            gsap.set(track, { x: 0 });
+            gsap.set(first, { clearProps: 'opacity,scale' });
+            busy = false;
+            schedule();
+          }
+        })
+          .to(track, { x: -dist, duration: DUR, ease: 'power3.inOut' }, 0)
+          .to(first, { opacity: 0, scale: 0.94, duration: DUR * 0.75, ease: 'power2.in' }, 0);
+        if (entering) tl.fromTo(entering, { opacity: 0 }, { opacity: 1, duration: DUR * 0.75, ease: 'power2.out' }, DUR * 0.25);
+      }
+
+      // Myš nad kartami nebo prst na displeji = pauza na čtení
+      const pause = () => { held = true; halt(); };
+      const resume = () => { held = false; schedule(); };
+      const isMouse = e => e.pointerType === 'mouse';
+      viewport.addEventListener('pointerenter', e => isMouse(e) && pause());
+      viewport.addEventListener('pointerleave', e => isMouse(e) && resume());
+      viewport.addEventListener('pointerdown', e => !isMouse(e) && pause());
+      ['pointerup', 'pointercancel'].forEach(t => viewport.addEventListener(t, e => !isMouse(e) && resume()));
+
+      new IntersectionObserver(([e]) => {
+        inView = e.isIntersecting;
+        inView ? schedule() : halt();
+      }, { threshold: 0.3 }).observe(viewport);
+      document.addEventListener('visibilitychange', () => document.hidden ? halt() : schedule());
+    })();
+
     // Services slider — sliding indicator
     (function () {
       const track = document.querySelector('.svc-track');
@@ -3873,18 +4027,12 @@
           'test-label': 'Reference',
           'test-title': 'Co říkají <span class="gradient-text">naši klienti</span>',
           'test-sub': 'Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili profesionální web.',
-          'review1': '"Byl jsem velmi spokojený s prací. První návrh přišel do 24 hodin a byl přesně takový, jaký jsem si představoval. Web spustili za 2 týdny."',
-          'review1-prof': 'Kosmetický salón',
-          'review2': '"Profesionální přístup od začátku do konce. Vše jsme vyřešili online a web běží spolehlivě. Doporučuji každému podnikateli."',
-          'review2-prof': 'Restaurace',
-          'review3': '"Velmi rychlé dodání a kvalitní zpracování. Web nám přinesl nové zákazníky hned po spuštění. Super zkušenost!"',
-          'review3-prof': 'Zubní klinika',
-          'review4': '"Chtěl jsem moderní web, který bude dohledatelný. Dostali jsme to a ještě více. Cena odpovídá kvalitě. Určitě spolupracuji znova."',
-          'review4-prof': 'Autoservis',
-          'review5': '"Skvělé! Web vypadá přesně tak, jak jsem si představovala. Komunikace byla rychlá a přátelská. Doporučuji všem!"',
-          'review5-prof': 'Fitness studio',
-          'review6': '"Výborná práce za rozumnou cenu. Web funguje bezchybně a klienti ho chválí. Určitě se vrátím u dalšího projektu."',
-          'review6-prof': 'Stavební firma',
+          'test-rating': '5,0 na Googlu',
+          'review-src': 'Recenze z Google',
+          'review1': 'Nechala jsem si u Philo Agency udělat webové stránky pro svoje EMS studio a jsem z nich <mark>nadšená</mark>.',
+          'review2': 'Jsem <mark>velmi spokojená</mark> s prací pana Filipa. Nechala jsem si zhotovit <mark>nové webové stránky</mark>.',
+          'review3': '<mark>Velká spokojenost!</mark> Ve velmi omezeném čase který jsem měla, jsme zvládli nafotit a zpracovat <mark>velmi kvalitní produktové fotky</mark> mého salónu a jako bonus vytvořit i videa na sociální sítě. Oceňuji <mark>rychlost a spolehlivost</mark>. Díky za spolupráci!',
+          'review4': '<mark>Skvělá spolupráce</mark>, doporučuji',
           'faq-title': 'Časté dotazy',
           'faq1-q': 'Jak dlouho trvá vytvoření webu?', 'faq1-a': 'První návrh dostanete do 24 hodin. Celý hotový web obvykle dokončíme do 7–14 dní od schválení designu.',
           'faq2-q': 'Proč poskytujete první návrh zdarma?', 'faq2-a': 'Chceme vám ukázat, jak váš web může vypadat, ještě předtím než nás objednáte. Věříme, že když uvidíte kvalitu, budete chtít pokračovat.',
@@ -3974,18 +4122,12 @@
           'test-label': 'Testimonials',
           'test-title': 'What our <span class="gradient-text">clients say</span>',
           'test-sub': 'Read the experiences of entrepreneurs for whom we created a professional website.',
-          'review1': '"I was very satisfied with the work. The first design arrived within 24 hours and was exactly what I had in mind. The website launched in 2 weeks."',
-          'review1-prof': 'Beauty salon',
-          'review2': '"Professional approach from start to finish. We handled everything online and the website runs reliably. I recommend it to every entrepreneur."',
-          'review2-prof': 'Restaurant',
-          'review3': '"Very fast delivery and high quality work. The website brought us new customers right after launch. Great experience!"',
-          'review3-prof': 'Dental clinic',
-          'review4': '"I wanted a modern, findable website. We got that and more. The price matches the quality. I\'ll definitely work with them again."',
-          'review4-prof': 'Auto repair shop',
-          'review5': '"Excellent! The website looks exactly as I imagined. Communication was fast and friendly. I recommend it to everyone!"',
-          'review5-prof': 'Fitness studio',
-          'review6': '"Outstanding work at a reasonable price. The website works flawlessly and clients love it. I\'ll definitely be back for the next project."',
-          'review6-prof': 'Construction company',
+          'test-rating': '5.0 on Google',
+          'review-src': 'Google review',
+          'review1': 'I had Philo Agency build a website for my EMS studio and I\'m <mark>thrilled</mark> with it.',
+          'review2': 'I\'m <mark>very satisfied</mark> with Filip\'s work. I had a <mark>brand-new website</mark> made.',
+          'review3': '<mark>Very satisfied!</mark> In the very limited time I had, we managed to shoot and edit <mark>high-quality product photos</mark> of my salon and, as a bonus, create videos for social media. I appreciate the <mark>speed and reliability</mark>. Thanks for the collaboration!',
+          'review4': '<mark>Great collaboration</mark>, I recommend them',
           'faq-title': 'Frequently Asked Questions',
           'faq1-q': 'How long does it take to create a website?', 'faq1-a': 'You\'ll receive the first design within 24 hours. The complete website is usually finished within 7–14 days of design approval.',
           'faq2-q': 'Why do you provide the first design for free?', 'faq2-a': 'We want to show you what your website could look like before you commit. We believe that once you see the quality, you\'ll want to proceed.',
@@ -4075,18 +4217,12 @@
           'test-label': 'Referenzen',
           'test-title': 'Was unsere <span class="gradient-text">Kunden sagen</span>',
           'test-sub': 'Lesen Sie die Erfahrungen von Unternehmern, für die wir eine professionelle Website erstellt haben.',
-          'review1': '"Ich war sehr zufrieden mit der Arbeit. Der erste Entwurf kam innerhalb von 24 Stunden und war genau das, was ich mir vorgestellt hatte. Die Website wurde in 2 Wochen fertig."',
-          'review1-prof': 'Kosmetiksalon',
-          'review2': '"Professioneller Ansatz von Anfang bis Ende. Wir haben alles online geregelt und die Website läuft zuverlässig. Ich empfehle es jedem Unternehmer."',
-          'review2-prof': 'Restaurant',
-          'review3': '"Sehr schnelle Lieferung und hochwertige Arbeit. Die Website hat uns gleich nach dem Launch neue Kunden gebracht. Tolle Erfahrung!"',
-          'review3-prof': 'Zahnklinik',
-          'review4': '"Ich wollte eine moderne, auffindbare Website. Das haben wir bekommen und noch mehr. Der Preis entspricht der Qualität. Ich arbeite definitiv wieder mit ihnen."',
-          'review4-prof': 'Autowerkstatt',
-          'review5': '"Ausgezeichnet! Die Website sieht genau so aus, wie ich es mir vorgestellt habe. Die Kommunikation war schnell und freundlich. Ich empfehle es allen!"',
-          'review5-prof': 'Fitness-Studio',
-          'review6': '"Hervorragende Arbeit zu einem vernünftigen Preis. Die Website funktioniert einwandfrei und Kunden loben sie. Ich komme beim nächsten Projekt definitiv wieder."',
-          'review6-prof': 'Bauunternehmen',
+          'test-rating': '5,0 auf Google',
+          'review-src': 'Google-Bewertung',
+          'review1': 'Ich habe mir bei Philo Agency eine Website für mein EMS-Studio erstellen lassen und bin <mark>begeistert</mark>.',
+          'review2': 'Ich bin mit Filips Arbeit <mark>sehr zufrieden</mark>. Ich habe mir eine <mark>neue Website</mark> erstellen lassen.',
+          'review3': '<mark>Große Zufriedenheit!</mark> In der sehr knappen Zeit, die ich hatte, haben wir <mark>hochwertige Produktfotos</mark> meines Salons aufgenommen und bearbeitet und als Bonus sogar Videos für Social Media erstellt. Ich schätze die <mark>Schnelligkeit und Zuverlässigkeit</mark>. Danke für die Zusammenarbeit!',
+          'review4': '<mark>Tolle Zusammenarbeit</mark>, empfehlenswert',
           'faq-title': 'Häufige Fragen',
           'faq1-q': 'Wie lange dauert die Erstellung einer Website?', 'faq1-a': 'Den ersten Entwurf erhalten Sie innerhalb von 24 Stunden. Die fertige Website wird in der Regel 7–14 Tage nach der Designgenehmigung fertiggestellt.',
           'faq2-q': 'Warum bieten Sie den ersten Entwurf kostenlos an?', 'faq2-a': 'Wir möchten Ihnen zeigen, wie Ihre Website aussehen könnte, bevor Sie uns beauftragen. Wir glauben, dass Sie die Qualität sehen und weitermachen möchten.',
