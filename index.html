@@ -1186,12 +1186,17 @@
     }
 
     .rv-viewport {
+      --rv-edge: 24px;
       overflow: hidden;
-      margin: 10px -24px 8px;
-      padding: 30px 24px 48px;
-      /* Odjíždějící karta mizí do okraje, ne do ostré hrany */
-      -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
-      mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+      margin: 10px calc(var(--rv-edge) * -1) 8px;
+      padding: 30px var(--rv-edge) 48px;
+      /* Karty mizí do okraje, ne do ostré hrany */
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--rv-edge), #000 calc(100% - var(--rv-edge)), transparent);
+      mask-image: linear-gradient(to right, transparent, #000 var(--rv-edge), #000 calc(100% - var(--rv-edge)), transparent);
+    }
+
+    @media (min-width: 1280px) {
+      .rv-viewport { --rv-edge: 64px; }
     }
 
     .rv-track {
@@ -3835,56 +3840,52 @@
       });
     })();
 
-    // Reference — karty jedou doleva, první odjede a zařadí se na konec (nekonečná smyčka)
+    // Reference — plynulý nekonečný pás: karty jedou doleva konstantní rychlostí,
+    // karta, která zmizí vlevo, se přesune na konec
     (function () {
       const viewport = document.getElementById('rv-carousel');
       const track = document.getElementById('rv-track');
       if (!track || !window.gsap) return;
-      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const HOLD = reduce ? 5 : 1;   // s — pauza mezi posuny
-      const DUR = reduce ? 0 : 0.8;  // s — délka posunu
-      let timer = null, busy = false, held = false, inView = false;
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const SPEED = 50;  // px/s
+      const rate = { v: 1 };
+      let x = 0, step = 0, edge = 0, running = false;
 
-      const canPlay = () => inView && !held && !document.hidden;
-      const schedule = () => { if (!timer && !busy && canPlay()) timer = gsap.delayedCall(HOLD, slide); };
-      const halt = () => { if (timer) { timer.kill(); timer = null; } };
+      // 4 recenze nezaplní šířku + rezervu na recyklaci — zdvojíme je
+      [...track.children].forEach(el => {
+        const c = el.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        track.appendChild(c);
+      });
 
-      function slide() {
-        timer = null;
-        if (!canPlay()) return;
-        const first = track.firstElementChild;
-        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-        const dist = first.offsetWidth + gap;
-        const entering = track.children[Math.round((track.clientWidth + gap) / dist)];
-        busy = true;
-        const tl = gsap.timeline({
-          onComplete() {
-            track.appendChild(first);
-            gsap.set(track, { x: 0 });
-            gsap.set(first, { clearProps: 'opacity,scale' });
-            busy = false;
-            schedule();
-          }
-        })
-          .to(track, { x: -dist, duration: DUR, ease: 'power3.inOut' }, 0)
-          .to(first, { opacity: 0, scale: 0.94, duration: DUR * 0.75, ease: 'power2.in' }, 0);
-        if (entering) tl.fromTo(entering, { opacity: 0 }, { opacity: 1, duration: DUR * 0.75, ease: 'power2.out' }, DUR * 0.25);
+      const measure = () => {
+        step = track.firstElementChild.offsetWidth + (parseFloat(getComputedStyle(track).columnGap) || 0);
+        edge = parseFloat(getComputedStyle(viewport).paddingLeft) || 0;
+      };
+
+      function tick(time, dt) {
+        x -= SPEED * rate.v * dt / 1000;
+        while (-x >= step + edge) {
+          track.appendChild(track.firstElementChild);
+          x += step;
+        }
+        track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
       }
 
-      // Myš nad kartami nebo prst na displeji = pauza na čtení
-      const pause = () => { held = true; halt(); };
-      const resume = () => { held = false; schedule(); };
-      const isMouse = e => e.pointerType === 'mouse';
-      viewport.addEventListener('pointerenter', e => isMouse(e) && pause());
-      viewport.addEventListener('pointerleave', e => isMouse(e) && resume());
-      viewport.addEventListener('pointerdown', e => !isMouse(e) && pause());
-      ['pointerup', 'pointercancel'].forEach(t => viewport.addEventListener(t, e => !isMouse(e) && resume()));
+      const start = () => { if (!running) { running = true; gsap.ticker.add(tick); } };
+      const stop = () => { if (running) { running = false; gsap.ticker.remove(tick); } };
 
-      new IntersectionObserver(([e]) => {
-        inView = e.isIntersecting;
-        inView ? schedule() : halt();
-      }, { threshold: 0.3 }).observe(viewport);
-      document.addEventListener('visibilitychange', () => document.hidden ? halt() : schedule());
+      // Myš nad kartami pás jen zpomalí, nezastaví
+      viewport.addEventListener('pointerenter', e => {
+        if (e.pointerType === 'mouse') gsap.to(rate, { v: 0.25, duration: 0.8, ease: 'power2.out', overwrite: true });
+      });
+      viewport.addEventListener('pointerleave', e => {
+        if (e.pointerType === 'mouse') gsap.to(rate, { v: 1, duration: 0.8, ease: 'power2.inOut', overwrite: true });
+      });
+
+      measure();
+      window.addEventListener('resize', measure, { passive: true });
+      new IntersectionObserver(([e]) => e.isIntersecting ? start() : stop()).observe(viewport);
     })();
 
     // Services slider — sliding indicator
