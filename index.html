@@ -1170,7 +1170,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 8px 16px 8px 12px;
+      padding: 6px 6px 6px 12px;
       border-radius: 9999px;
       color: #374151;
       font-size: 13.5px;
@@ -1178,11 +1178,42 @@
       transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    .rv-badge-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 2px;
+      padding: 6px 11px 6px 13px;
+      border-radius: 9999px;
+      background: #18181b;
+      color: #fff;
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+
+    .rv-badge-cta svg {
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
     @media (hover: hover) {
       .rv-badge:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
       }
+
+      .rv-badge:hover .rv-badge-cta svg { transform: translate(2px, -2px); }
+    }
+
+    .rv-badge { white-space: nowrap; }
+
+    /* Úzký displej: místo „5,0 na Googlu“ stačí hvězdičky, na nejužším jen G + tlačítko */
+    @media (max-width: 479px) {
+      .rv-badge { gap: 8px; }
+      .rv-badge-label { display: none; }
+    }
+
+    @media (max-width: 374px) {
+      .rv-badge .rv-stars { display: none; }
     }
 
     .rv-viewport {
@@ -3275,7 +3306,13 @@
         <span class="rv-stars" style="margin:0" aria-hidden="true"><svg><use href="#ico-star" /></svg><svg><use
               href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use href="#ico-star" /></svg><svg><use
               href="#ico-star" /></svg></span>
-        <span data-i18n="test-rating">5,0 na Googlu</span>
+        <span class="rv-badge-label" data-i18n="test-rating">5,0 na Googlu</span>
+        <span class="rv-badge-cta"><span data-i18n="test-rating-cta">Zobrazit Google recenze</span><svg width="12"
+            height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 7h10v10" />
+            <path d="M7 17 17 7" />
+          </svg></span>
         </a>
       </div>
 
@@ -4027,6 +4064,7 @@
           'test-title': 'Co říkají <span class="gradient-text">naši klienti</span>',
           'test-sub': 'Přečtěte si zkušenosti podnikatelů, pro které jsme vytvořili profesionální web.',
           'test-rating': '5,0 na Googlu',
+          'test-rating-cta': 'Zobrazit Google recenze',
           'review-src': 'Recenze z Google',
           'review1-src': 'Majitelka EMS pulse v Praze',
           'review2-src': 'Majitelka Absolute Studia',
@@ -4125,6 +4163,7 @@
           'test-title': 'What our <span class="gradient-text">clients say</span>',
           'test-sub': 'Read the experiences of entrepreneurs for whom we created a professional website.',
           'test-rating': '5.0 on Google',
+          'test-rating-cta': 'See Google reviews',
           'review-src': 'Google review',
           'review1-src': 'Owner of EMS pulse, Prague',
           'review2-src': 'Owner of Absolute Studio',
@@ -4223,6 +4262,7 @@
           'test-title': 'Was unsere <span class="gradient-text">Kunden sagen</span>',
           'test-sub': 'Lesen Sie die Erfahrungen von Unternehmern, für die wir eine professionelle Website erstellt haben.',
           'test-rating': '5,0 auf Google',
+          'test-rating-cta': 'Google-Bewertungen ansehen',
           'review-src': 'Google-Bewertung',
           'review1-src': 'Inhaberin von EMS pulse in Prag',
           'review2-src': 'Inhaberin von Absolute Studio',
