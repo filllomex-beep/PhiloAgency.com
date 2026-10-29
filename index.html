@@ -1042,7 +1042,7 @@
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
 
-    /* ─── FIGURE TILES („Responzivní design“, „Až 5 podstránek“) ─── */
+    /* ─── FIGURE TILES (dlaždice s Hairline animací v sekci „Co dostanete“) ─── */
     .fig-tile {
       position: relative;
       display: flex;
@@ -3051,33 +3051,43 @@
           </div>
         </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
-          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
-            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat3-title">Základní SEO</h3>
-            <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat3-desc">Optimalizace pro vyhledávače,
-              aby vás zákazníci snáze našli na Googlu.</p>
+        <!-- Základní SEO: web vyjede ve výsledcích vyhledávání ze 4. na 1. místo (assets/rank.js) -->
+        <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-rank>
+          <div class="fig-host" data-hairline="rank" data-hairline-theme="light" aria-hidden="true"></div>
+          <span class="fig-read" data-rank-place aria-hidden="true">#4</span>
+          <div class="flex gap-4 items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+              style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+              <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat3-title">Základní SEO</h3>
+              <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat3-desc">Optimalizace pro vyhledávače,
+                aby vás zákazníci snáze našli na Googlu.</p>
+            </div>
           </div>
         </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
-          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
-            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.1-1.1m-.757-4.9a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat4-title">Připojení domény</h3>
-            <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat4-desc">Pomůžeme vám připojit vlastní
-              doménu a nastavit hosting.</p>
+        <!-- Připojení domény: zástrčka (doména) se zasune do webu (assets/plug.js) -->
+        <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-plug>
+          <div class="fig-host" data-hairline="plug" data-hairline-theme="light" aria-hidden="true"></div>
+          <span class="fig-read" data-plug-state aria-hidden="true">offline</span>
+          <div class="flex gap-4 items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+              style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+              <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.1-1.1m-.757-4.9a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat4-title">Připojení domény</h3>
+              <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat4-desc">Pomůžeme vám připojit vlastní
+                doménu a nastavit hosting.</p>
+            </div>
           </div>
         </div>
 
@@ -3736,6 +3746,8 @@
   <script src="assets/hairline-kernel.js"></script>
   <script src="assets/unfold.js"></script>
   <script src="assets/pages.js"></script>
+  <script src="assets/rank.js"></script>
+  <script src="assets/plug.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
