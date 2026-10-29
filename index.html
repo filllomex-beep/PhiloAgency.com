@@ -1042,8 +1042,8 @@
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
 
-    /* ─── UNFOLD TILE („Responzivní design“) ─── */
-    .unfold-tile {
+    /* ─── FIGURE TILES („Responzivní design“, „Až 5 podstránek“) ─── */
+    .fig-tile {
       position: relative;
       display: flex;
       flex-direction: column;
@@ -1051,7 +1051,7 @@
     }
 
     /* Hairline paleta: zvýraznění ve značkové červené, linky o stupeň sytější kvůli sklu */
-    .unfold-fig {
+    .fig-host {
       width: 100%;
       aspect-ratio: 5 / 4;
       max-height: 280px;
@@ -1060,7 +1060,7 @@
       --hairline-stroke: 1;
     }
 
-    .unfold-px {
+    .fig-read {
       position: absolute;
       top: 20px;
       right: 22px;
@@ -1072,16 +1072,19 @@
       pointer-events: none;
     }
 
-    /* Od sm výš drží výšku pravý sloupec, animace vyplní, co zbude nad textem */
-    @media (min-width: 640px) {
-      .unfold-tile {
-        grid-row: span 3;
+    /* Na mobilu zůstávají dlaždice jako dřív: jen ikonka a text, bez animace */
+    @media (max-width: 639.98px) {
+      .fig-host,
+      .fig-read {
+        display: none;
       }
+    }
 
-      .unfold-fig {
+    /* Od sm výš stojí obě dlaždice vedle sebe, animace mají stejnou pevnou výšku */
+    @media (min-width: 640px) {
+      .fig-host {
         aspect-ratio: auto;
-        flex: 1 1 0;
-        min-height: 200px;
+        height: 240px;
         max-height: none;
       }
     }
@@ -3009,10 +3012,10 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-12">
 
-        <!-- Responzivní design: vysoká dlaždice přes 3 řádky, animace telefon → laptop (assets/unfold.js) -->
-        <div class="glass glass-hover rounded-2xl p-6 reveal unfold-tile" data-unfold>
-          <div class="unfold-fig" data-hairline="unfold" data-hairline-theme="light" aria-hidden="true"></div>
-          <span class="unfold-px" data-unfold-px aria-hidden="true">390 px</span>
+        <!-- Responzivní design: animace telefon → laptop (assets/unfold.js) -->
+        <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-unfold>
+          <div class="fig-host" data-hairline="unfold" data-hairline-theme="light" aria-hidden="true"></div>
+          <span class="fig-read" data-unfold-px aria-hidden="true">390 px</span>
           <div class="flex gap-4 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
               style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
@@ -3029,17 +3032,22 @@
           </div>
         </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
-          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
-            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat2-title">Až 5 podstránek</h3>
-            <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat2-desc">Hlavní stránka s podstránkami
-              podle vašich potřeb a obsahu.</p>
+        <!-- Až 5 podstránek: pět stránek webu v kaskádě, rozvějíří se (assets/pages.js) -->
+        <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-pages>
+          <div class="fig-host" data-hairline="pages" data-hairline-theme="light" aria-hidden="true"></div>
+          <span class="fig-read" data-pages-count aria-hidden="true">1 / 5</span>
+          <div class="flex gap-4 items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+              style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+              <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat2-title">Až 5 podstránek</h3>
+              <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat2-desc">Hlavní stránka s podstránkami
+                podle vašich potřeb a obsahu.</p>
+            </div>
           </div>
         </div>
 
@@ -3727,6 +3735,7 @@
   <script src="assets/ScrollTrigger.min.js"></script>
   <script src="assets/hairline-kernel.js"></script>
   <script src="assets/unfold.js"></script>
+  <script src="assets/pages.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger);
 

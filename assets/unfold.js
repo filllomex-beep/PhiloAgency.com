@@ -126,10 +126,12 @@
     face.classList.toggle("hi", w !== WMIN);
     B.wake();
   }
-  tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") setWidth(WMAX); });
+  // below sm the figure is hidden (the tile stays icon + text, as on mobile before), so it never plays there
+  const wide = matchMedia("(min-width: 640px)");
+  tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && wide.matches) setWidth(WMAX); });
   tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") setWidth(WMIN); });
   tile.addEventListener("pointerup", (e) => {
-    if (e.pointerType === "mouse" || W.to !== WMIN) return;
+    if (e.pointerType === "mouse" || !wide.matches || W.to !== WMIN) return;
     setWidth(WMAX);
     foldLater = setTimeout(() => setWidth(WMIN), OPEN + TAP_HOLD);
   });
