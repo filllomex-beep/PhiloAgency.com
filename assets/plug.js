@@ -77,8 +77,9 @@
     if (follow) follow(1 - gap.v / REST);
     return k < 1;
   });
-  // frame what is drawn, the plug out and home, and keep whichever is showing centred in the tile (hairline-frame.js)
-  follow = frameView(svg, [() => { gap.v = 0; draw(); }, () => { gap.v = REST; draw(); }]);
+  // frame what is drawn, the plug out and home, and keep whichever is showing centred in the tile (hairline-frame.js);
+  // it is wide, so a wider margin keeps it from outweighing the other tiles' figures
+  follow = frameView(svg, [() => { gap.v = 0; draw(); }, () => { gap.v = REST; draw(); }], 26);
 
   function setGap(to) {
     clearTimeout(pullLater);
