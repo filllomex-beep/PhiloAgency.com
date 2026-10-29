@@ -11,7 +11,7 @@
   const host = tile.querySelector("[data-hairline]"), readout = tile.querySelector("[data-unfold-px]");
   const {
     Cam, clamp, facing, fit, lerp, open, poly, prism, proj, rad, rings, rrect, seg,
-    spring, stepS, tween, tset, tval, tdone, mk, put, register, solid, flatDot, place, inject,
+    bezier, reducedMotion, tween, tset, tval, tdone, mk, put, register, solid, flatDot, place, inject,
   } = HL;
 
   const WMIN = 84, WMAX = 210, H = 150, CX = 105, TOP = 22, BOT = 19, BZ = 5, GAP = 4, N = 6, T = 4;
@@ -52,7 +52,15 @@
   // the dock that becomes the deck, its keyboard and trackpad
   const deck = solid(g), keys = mk("path", { class: "nf lo" }, g), trackpad = mk("path", { class: "nf lo" }, g);
 
-  const W = spring(WMIN, { eps: 0.05 });
+  // the width runs on one eased curve, soft at both ends, so the lid opens in a single motion;
+  // a shorter trip (folding back from halfway) takes proportionally less time
+  const OPEN = 1300, easeW = bezier(0.45, 0, 0.15, 1);
+  const W = { x: WMIN, from: WMIN, to: WMIN, t0: 0, dur: OPEN };
+  const stepW = (now) => {
+    const p = reducedMotion() ? 1 : clamp((now - W.t0) / W.dur, 0, 1);
+    W.x = lerp(W.from, W.to, easeW(p));
+    return p < 1;
+  };
   let cols = 1, drawnW = NaN, shown = NaN;
   const draw = (now) => {
     const w = W.x, t = smooth(clamp((w - WMIN) / (WMAX - WMIN), 0, 1)), x0 = CX - w / 2;
@@ -90,8 +98,9 @@
   };
 
   const B = register(tile, (dt, now) => {
-    const m = stepS(W, dt);
-    const c = colsAt(W.t);
+    const m = stepW(now);
+    // the page reflows as the screen actually passes each breakpoint, not when the target is set
+    const c = colsAt(W.x);
     if (c !== cols) {
       cols = c;
       cards.forEach((cd, i) => {
@@ -103,31 +112,26 @@
     return m || cards.some((cd) => !tdone(cd.fx, now) || !tdone(cd.top, now) || !tdone(cd.h, now) || !tdone(cd.fw, now));
   });
 
-  // one play per hover: phone → tablet, a beat to read it, → laptop; leaving folds it back to the phone.
+  // one play per hover: phone → laptop in a single motion; leaving folds it back to the phone.
   // A tap (no hover on touch) plays it the same way and folds back on its own.
-  const TABLET = WMIN + ((835 - 390) / 890) * (WMAX - WMIN), HOLD = 1000, TAP_HOLD = 2600;
-  let timers = [];
-  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  const TAP_HOLD = 2600;
+  let foldLater = 0;
   function setWidth(w) {
-    W.t = w;
+    clearTimeout(foldLater);
+    W.from = W.x;
+    W.to = w;
+    W.t0 = performance.now();
+    W.dur = Math.max(300, OPEN * Math.abs(w - W.x) / (WMAX - WMIN));
     cards[0].el.classList.toggle("hi", w === WMIN);
     face.classList.toggle("hi", w !== WMIN);
     B.wake();
   }
-  function play(then) {
-    timers.forEach(clearTimeout);
-    timers = [];
-    setWidth(TABLET);
-    later(() => setWidth(WMAX), HOLD);
-    if (then) later(then, HOLD + TAP_HOLD);
-  }
-  function fold() {
-    timers.forEach(clearTimeout);
-    timers = [];
-    setWidth(WMIN);
-  }
-  tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") play(); });
-  tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") fold(); });
-  tile.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse" && W.t === WMIN) play(fold); });
+  tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") setWidth(WMAX); });
+  tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") setWidth(WMIN); });
+  tile.addEventListener("pointerup", (e) => {
+    if (e.pointerType === "mouse" || W.to !== WMIN) return;
+    setWidth(WMAX);
+    foldLater = setTimeout(() => setWidth(WMIN), OPEN + TAP_HOLD);
+  });
   setWidth(WMIN);
 })();
