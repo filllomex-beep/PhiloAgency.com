@@ -3074,32 +3074,40 @@
           </div>
         </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
-          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
-            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat5-title">Kontaktní formulář</h3>
-            <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat5-desc">Zákazníci vás mohou jednoduše
-              kontaktovat přímo z webu.</p>
+        <!-- Kontaktní formulář: formulář se vyplní a odešle (assets/form.js) -->
+        <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-form>
+          <div class="fig-host" data-hairline="form" data-hairline-theme="light" aria-hidden="true"></div>
+          <div class="flex gap-4 items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+              style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+              <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat5-title">Kontaktní formulář</h3>
+              <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat5-desc">Zákazníci vás mohou jednoduše
+                kontaktovat přímo z webu.</p>
+            </div>
           </div>
         </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 flex gap-4 items-start reveal">
-          <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-            style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
-            <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat6-title">a další možnosti</h3>
-            <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat6-desc">Blog, galerie, rezervace a
-              další funkce podle vašich potřeb.</p>
+        <!-- a další možnosti: šuplíky s funkcemi webu se postupně vysunou (assets/drawers.js) -->
+        <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-drawers>
+          <div class="fig-host" data-hairline="drawers" data-hairline-theme="light" aria-hidden="true"></div>
+          <div class="flex gap-4 items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+              style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
+              <svg class="w-5 h-5" fill="none" stroke="#c0392b" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-1 text-[15px]" data-i18n="feat6-title">a další možnosti</h3>
+              <p class="text-gray-500 text-[13.5px] leading-relaxed" data-i18n="feat6-desc">Blog, galerie, rezervace a
+                další funkce podle vašich potřeb.</p>
+            </div>
           </div>
         </div>
 
@@ -3732,6 +3740,8 @@
   <script src="assets/pages.js"></script>
   <script src="assets/rank.js"></script>
   <script src="assets/plug.js"></script>
+  <script src="assets/form.js"></script>
+  <script src="assets/drawers.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
