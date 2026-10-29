@@ -3,12 +3,12 @@
  * A phone standing in its dock that becomes a laptop. Hovering the tile plays it once,
  * on a spring: the screen leans back on its hinge, the dock slides out into a keyboard
  * deck, and the page inside reflows from one column to two to three, staggered down
- * from the hero. The read-out in the corner counts the viewport width the device stands for.
+ * from the hero.
  */
 (() => {
   const tile = document.querySelector("[data-unfold]");
   if (!tile || !window.HL) return;
-  const host = tile.querySelector("[data-hairline]"), readout = tile.querySelector("[data-unfold-px]");
+  const host = tile.querySelector("[data-hairline]");
   const {
     Cam, clamp, facing, fit, lerp, open, poly, prism, proj, rad, rings, rrect, seg,
     bezier, reducedMotion, tween, tset, tval, tdone, mk, put, register, solid, flatDot, place, inject,
@@ -34,11 +34,7 @@
   fit(C, extent, 200, 160);
   const P = proj(C), front = facing(C);
 
-  // crop the viewBox to the most extreme poses, so the device fills the tile instead of the 400 × 320 plate
-  const ex = extent.map((p) => P(p[0], p[1], p[2])), pad = 6;
-  const vx = Math.min(...ex.map((q) => q[0])) - pad, vy = Math.min(...ex.map((q) => q[1])) - pad;
-  const vw = Math.max(...ex.map((q) => q[0])) + pad - vx, vh = Math.max(...ex.map((q) => q[1])) + pad - vy;
-  const svg = mk("svg", { viewBox: [vx, vy, vw, vh].map(Math.round).join(" "), "aria-hidden": "true" }, host);
+  const svg = mk("svg", { "aria-hidden": "true" }, host);
 
   const g = mk("g", {}, svg);
   const back = mk("path", { class: "lo" }, g), face = mk("path", { class: "sil" }, g);
@@ -61,7 +57,7 @@
     W.x = lerp(W.from, W.to, easeW(p));
     return p < 1;
   };
-  let cols = 1, drawnW = NaN, shown = NaN;
+  let cols = 1, drawnW = NaN;
   const draw = (now) => {
     const w = W.x, t = smooth(clamp((w - WMIN) / (WMAX - WMIN), 0, 1)), x0 = CX - w / 2;
     const th = rad(LEAN * t), sn = Math.sin(th), cs = Math.cos(th);
@@ -86,8 +82,6 @@
           [1, 2, 3, 4].map((j) => seg(P(k0 + 2, lerp(ky0, ky1, j / 5), kz), P(k1 - 2, lerp(ky0, ky1, j / 5), kz))).join(""));
         trackpad.setAttribute("d", poly(rrect(CX - w * 0.2, D * 0.58, CX + w * 0.2, D * 0.9, 4, 4).map((q) => P(q.u, q.v, kz))));
       } else { keys.setAttribute("d", ""); trackpad.setAttribute("d", ""); }
-      const p = px(w);
-      if (readout && p !== shown) { shown = p; readout.textContent = p + " px"; }
     }
     const iw = w - 2 * BZ - 2 * GAP, u0 = BZ + GAP;
     cards.forEach((c) => {
@@ -97,6 +91,7 @@
     });
   };
 
+  let follow = null;
   const B = register(tile, (dt, now) => {
     const m = stepW(now);
     // the page reflows as the screen actually passes each breakpoint, not when the target is set
@@ -109,8 +104,11 @@
       });
     }
     draw(now);
+    if (follow) follow((W.x - WMIN) / (WMAX - WMIN));
     return m || cards.some((cd) => !tdone(cd.fx, now) || !tdone(cd.top, now) || !tdone(cd.h, now) || !tdone(cd.fw, now));
   });
+  // frame what is drawn, phone and laptop both, and keep whichever is showing centred in the tile (hairline-frame.js)
+  follow = frameView(svg, [() => { W.x = WMAX; draw(performance.now()); }, () => { W.x = WMIN; draw(performance.now()); }]);
 
   // one play per hover: phone → laptop in a single motion; leaving folds it back to the phone.
   // A tap (no hover on touch) plays it the same way and folds back on its own.

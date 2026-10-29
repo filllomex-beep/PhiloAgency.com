@@ -4,12 +4,11 @@
  * by its layout: a hero, an about with a portrait, a grid of services, a gallery, a
  * contact form. Hovering the tile plays it once: the stack fans out in one smooth
  * motion, front to back, so every page shows itself; leaving gathers it again.
- * The read-out in the corner counts the pages as they come out, 1 / 5 to 5 / 5.
  */
 (() => {
   const tile = document.querySelector("[data-pages]");
   if (!tile || !window.HL) return;
-  const host = tile.querySelector("[data-hairline]"), readout = tile.querySelector("[data-pages-count]");
+  const host = tile.querySelector("[data-hairline]");
   const { Cam, bezier, clamp, fit, lerp, open, poly, proj, reducedMotion, rrect, seg, mk, register, flatDot, place, inject } = HL;
 
   const N = 5, PW = 112, PH = 82, G = 16, DX = 12, ZS = [0, 13, 24, 33, 40], TH = 2.4, BAR = 11;
@@ -37,11 +36,7 @@
   fit(C, ext, 200, 160);
   const P = proj(C);
 
-  // crop the viewBox to the stack, closed and fanned, so it fills the tile instead of the 400 × 320 plate
-  const ex = ext.map((p) => P(p[0], p[1], p[2])), pad = 6;
-  const vx = Math.min(...ex.map((q) => q[0])) - pad, vy = Math.min(...ex.map((q) => q[1])) - pad;
-  const vw = Math.max(...ex.map((q) => q[0])) + pad - vx, vh = Math.max(...ex.map((q) => q[1])) + pad - vy;
-  const svg = mk("svg", { viewBox: [vx, vy, vw, vh].map(Math.round).join(" "), "aria-hidden": "true" }, host);
+  const svg = mk("svg", { "aria-hidden": "true" }, host);
 
   // painted back to front, so a nearer page covers a farther one
   const g = mk("g", {}, svg), pages = [];
@@ -72,6 +67,7 @@
   // each page runs on the same soft curve as the laptop, one after another, so the fan opens as one motion
   const OPEN = 1100, STAGGER = 90, ease = bezier(0.45, 0, 0.15, 1);
   let count = 0;
+  let follow = null;
   const B = register(tile, (_dt, now) => {
     let moving = false;
     pages.forEach((p, i) => {
@@ -85,10 +81,12 @@
     if (n !== count) {
       count = n;
       pages.forEach((p, i) => p.face.classList.toggle("hi", i === n - 1));
-      if (readout) readout.textContent = n + " / " + N;
     }
+    if (follow) follow(pages[N - 1].f);
     return moving;
   });
+  // frame what is drawn, the stack closed and fanned, and keep whichever is showing centred in the tile (hairline-frame.js)
+  follow = frameView(svg, [() => pages.forEach((_, i) => draw(i, 1)), () => pages.forEach((p, i) => draw(i, p.f))]);
 
   // one play per hover: the stack fans out front to back; leaving gathers it back to front.
   // A tap (no hover on touch) plays it the same way and gathers on its own.

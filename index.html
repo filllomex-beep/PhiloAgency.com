@@ -1060,22 +1060,9 @@
       --hairline-stroke: 1;
     }
 
-    .fig-read {
-      position: absolute;
-      top: 20px;
-      right: 22px;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      font-variant-numeric: tabular-nums;
-      color: #9ca3af;
-      pointer-events: none;
-    }
-
     /* Na mobilu zůstávají dlaždice jako dřív: jen ikonka a text, bez animace */
     @media (max-width: 639.98px) {
-      .fig-host,
-      .fig-read {
+      .fig-host {
         display: none;
       }
     }
@@ -3015,7 +3002,6 @@
         <!-- Responzivní design: animace telefon → laptop (assets/unfold.js) -->
         <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-unfold>
           <div class="fig-host" data-hairline="unfold" data-hairline-theme="light" aria-hidden="true"></div>
-          <span class="fig-read" data-unfold-px aria-hidden="true">390 px</span>
           <div class="flex gap-4 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
               style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
@@ -3035,7 +3021,6 @@
         <!-- Až 5 podstránek: pět stránek webu v kaskádě, rozvějíří se (assets/pages.js) -->
         <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-pages>
           <div class="fig-host" data-hairline="pages" data-hairline-theme="light" aria-hidden="true"></div>
-          <span class="fig-read" data-pages-count aria-hidden="true">1 / 5</span>
           <div class="flex gap-4 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
               style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
@@ -3054,7 +3039,6 @@
         <!-- Základní SEO: web vyjede ve výsledcích vyhledávání ze 4. na 1. místo (assets/rank.js) -->
         <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-rank>
           <div class="fig-host" data-hairline="rank" data-hairline-theme="light" aria-hidden="true"></div>
-          <span class="fig-read" data-rank-place aria-hidden="true">#4</span>
           <div class="flex gap-4 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
               style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
@@ -3074,7 +3058,6 @@
         <!-- Připojení domény: zástrčka (doména) se zasune do webu (assets/plug.js) -->
         <div class="glass glass-hover rounded-2xl p-6 reveal fig-tile" data-plug>
           <div class="fig-host" data-hairline="plug" data-hairline-theme="light" aria-hidden="true"></div>
-          <span class="fig-read" data-plug-state aria-hidden="true">offline</span>
           <div class="flex gap-4 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
               style="background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.1)">
@@ -3744,6 +3727,7 @@
   <script src="assets/gsap.min.js"></script>
   <script src="assets/ScrollTrigger.min.js"></script>
   <script src="assets/hairline-kernel.js"></script>
+  <script src="assets/hairline-frame.js"></script>
   <script src="assets/unfold.js"></script>
   <script src="assets/pages.js"></script>
   <script src="assets/rank.js"></script>

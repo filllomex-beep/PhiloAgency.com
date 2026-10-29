@@ -3,13 +3,13 @@
  * A search box and five results lying under it, one of them the site, raised and
  * bright, in fourth place at rest. Hovering the tile plays it once: the site climbs
  * to first place in one smooth motion while the results it passes step down one
- * place, staggered; leaving lets it sink back. The read-out counts its place, #4 to #1.
+ * place, staggered; leaving lets it sink back.
  * Every result stands as a block from the ground, a step lower each place down.
  */
 (() => {
   const tile = document.querySelector("[data-rank]");
   if (!tile || !window.HL) return;
-  const host = tile.querySelector("[data-hairline]"), readout = tile.querySelector("[data-rank-place]");
+  const host = tile.querySelector("[data-hairline]");
   const {
     Cam, bezier, clamp, facing, fit, lerp, poly, prism, proj, reducedMotion, rings, seg,
     mk, put, register, solid, flatDot, place, inject,
@@ -26,11 +26,7 @@
   fit(C, extent, 200, 166);
   const P = proj(C), front = facing(C);
 
-  // crop the viewBox to the list and its search box, so it fills the tile instead of the 400 × 320 plate
-  const ex = extent.map((p) => P(p[0], p[1], p[2])), pad = 6;
-  const vx = Math.min(...ex.map((q) => q[0])) - pad, vy = Math.min(...ex.map((q) => q[1])) - pad;
-  const vw = Math.max(...ex.map((q) => q[0])) + pad - vx, vh = Math.max(...ex.map((q) => q[1])) + pad - vy;
-  const svg = mk("svg", { viewBox: [vx, vy, vw, vh].map(Math.round).join(" "), "aria-hidden": "true" }, host);
+  const svg = mk("svg", { "aria-hidden": "true" }, host);
   const g = mk("g", {}, svg);
 
   // the search box: a pill with a lens set into its top, a caret after it and a round button
@@ -73,17 +69,18 @@
     r.lines.setAttribute("d", seg(P(8, y + 14.5, t), P(L - 14, y + 14.5, t)) + seg(P(8, y + 19, t), P(L - 36 - r.k * 6, y + 19, t)));
   }
 
-  let order = [], shown = 0;
+  let order = [];
   const B = register(tile, (_dt, now) => {
     let m = false;
     res.forEach((r) => { if (step(r.y, now)) m = true; if (step(r.z, now)) m = true; draw(r, r.y.v, r.z.v); });
     // keep paint order far to near as rows pass each other; the raised site stays above its neighbours
     const by = res.slice().sort((a, b) => a.y.v + (a.k === ME ? 6 : 0) - (b.y.v + (b.k === ME ? 6 : 0)));
     if (by.some((r, i) => order[i] !== r)) { by.forEach((r) => g.appendChild(r.grp)); order = by; }
-    const n = clamp(Math.round((res[ME].y.v - Y0) / STEP), 0, N - 1) + 1;
-    if (readout && n !== shown) { shown = n; readout.textContent = "#" + n; }
     return m;
   });
+  // frame what is drawn, so the list and its search box sit centred in the tile (hairline-frame.js);
+  // it is wide and flat, so a wider margin keeps it from outweighing the other tiles' figures
+  frameView(svg, [], 34);
 
   // the site's place, and the others keep their order around it, each shifting out from the place it takes
   function setRank(want) {

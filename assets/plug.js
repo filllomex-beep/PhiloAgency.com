@@ -3,12 +3,12 @@
  * A socket block with a website on its lid, and a plug on a cable, the domain,
  * standing off from it, its prongs bright. Hovering the tile plays it once: the plug
  * slides home in one smooth motion and, as it seats, the website's frame takes the
- * bright stroke; leaving pulls it back out. The read-out says offline / online.
+ * bright stroke; leaving pulls it back out.
  */
 (() => {
   const tile = document.querySelector("[data-plug]");
   if (!tile || !window.HL) return;
-  const host = tile.querySelector("[data-hairline]"), readout = tile.querySelector("[data-plug-state]");
+  const host = tile.querySelector("[data-hairline]");
   const {
     Cam, bezier, clamp, facing, fit, lerp, open, poly, prism, proj, reducedMotion, rings, rrect, seg,
     mk, put, register, solid, inject,
@@ -23,11 +23,7 @@
   fit(C, extent, 200, 166);
   const P = proj(C), front = facing(C);
 
-  // crop the viewBox to the socket, the plug at rest and its cable, so it fills the tile
-  const ex = extent.map((p) => P(p[0], p[1], p[2])), pad = 8;
-  const vx = Math.min(...ex.map((q) => q[0])) - pad, vy = Math.min(...ex.map((q) => q[1])) - pad;
-  const vw = Math.max(...ex.map((q) => q[0])) + pad - vx, vh = Math.max(...ex.map((q) => q[1])) + pad - vy;
-  const svg = mk("svg", { viewBox: [vx, vy, vw, vh].map(Math.round).join(" "), "aria-hidden": "true" }, host);
+  const svg = mk("svg", { "aria-hidden": "true" }, host);
   const g = mk("g", {}, svg);
 
   // the socket: a rounded block, two holes in its near face, a website on its lid
@@ -70,16 +66,19 @@
       live = on;
       site.classList.toggle("hi", on);
       prongs.forEach((p) => p.sil.classList.toggle("hi", !on));
-      if (readout) readout.textContent = on ? "online" : "offline";
     }
   }
 
+  let follow = null;
   const B = register(tile, (_dt, now) => {
     const k = reducedMotion() ? 1 : clamp((now - gap.t0) / gap.dur, 0, 1);
     gap.v = lerp(gap.from, gap.to, ease(k));
     draw();
+    if (follow) follow(1 - gap.v / REST);
     return k < 1;
   });
+  // frame what is drawn, the plug out and home, and keep whichever is showing centred in the tile (hairline-frame.js)
+  follow = frameView(svg, [() => { gap.v = 0; draw(); }, () => { gap.v = REST; draw(); }]);
 
   function setGap(to) {
     clearTimeout(pullLater);
