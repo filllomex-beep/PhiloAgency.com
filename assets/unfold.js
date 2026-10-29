@@ -1,10 +1,9 @@
 /*
  * Unfold: the figure in the „Responzivní design“ tile, drawn with HL (hairline-kernel.js).
- * A phone standing in its dock that becomes a laptop. The pointer's place across the
- * tile sets the width on a spring: the screen leans back on its hinge, the dock slides
- * out into a keyboard deck, and the page inside reflows from one column to two to
- * three, staggered down from the hero. Nobody pointing: an unseen pointer tours it.
- * The read-out in the corner counts the viewport width the device stands for.
+ * A phone standing in its dock that becomes a laptop. Hovering the tile plays it once,
+ * on a spring: the screen leans back on its hinge, the dock slides out into a keyboard
+ * deck, and the page inside reflows from one column to two to three, staggered down
+ * from the hero. The read-out in the corner counts the viewport width the device stands for.
  */
 (() => {
   const tile = document.querySelector("[data-unfold]");
@@ -12,7 +11,7 @@
   const host = tile.querySelector("[data-hairline]"), readout = tile.querySelector("[data-unfold-px]");
   const {
     Cam, clamp, facing, fit, lerp, open, poly, prism, proj, rad, rings, rrect, seg,
-    spring, stepS, tween, tset, tval, tdone, mk, pointer, put, register, solid, flatDot, place, inject, tour,
+    spring, stepS, tween, tset, tval, tdone, mk, put, register, solid, flatDot, place, inject,
   } = HL;
 
   const WMIN = 84, WMAX = 210, H = 150, CX = 105, TOP = 22, BOT = 19, BZ = 5, GAP = 4, N = 6, T = 4;
@@ -104,18 +103,31 @@
     return m || cards.some((cd) => !tdone(cd.fx, now) || !tdone(cd.top, now) || !tdone(cd.h, now) || !tdone(cd.fw, now));
   });
 
-  // the pointer's x across the whole tile sets the width (pointer() reports it as 0–400);
-  // the middle 64 % of the tile is the travel, so both ends are easy to reach
-  function setOver(p) {
-    const over = !!p;
-    W.t = p ? lerp(WMIN, WMAX, clamp((p[0] / 400 - 0.18) / 0.64, 0, 1)) : WMIN;
-    cards[0].el.classList.toggle("hi", !over);
-    face.classList.toggle("hi", over);
+  // one play per hover: phone → tablet, a beat to read it, → laptop; leaving folds it back to the phone.
+  // A tap (no hover on touch) plays it the same way and folds back on its own.
+  const TABLET = WMIN + ((835 - 390) / 890) * (WMAX - WMIN), HOLD = 1000, TAP_HOLD = 2600;
+  let timers = [];
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  function setWidth(w) {
+    W.t = w;
+    cards[0].el.classList.toggle("hi", w === WMIN);
+    face.classList.toggle("hi", w !== WMIN);
     B.wake();
   }
-  pointer(tile, { move: setOver, leave: () => setOver(null) });
-  setOver(null);
-
-  // nobody pointing: tablet, then laptop, then back to the phone; a real pointer takes over at once
-  tour(tile, [[200, 160], [345, 160], null]);
+  function play(then) {
+    timers.forEach(clearTimeout);
+    timers = [];
+    setWidth(TABLET);
+    later(() => setWidth(WMAX), HOLD);
+    if (then) later(then, HOLD + TAP_HOLD);
+  }
+  function fold() {
+    timers.forEach(clearTimeout);
+    timers = [];
+    setWidth(WMIN);
+  }
+  tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") play(); });
+  tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") fold(); });
+  tile.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse" && W.t === WMIN) play(fold); });
+  setWidth(WMIN);
 })();
