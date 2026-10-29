@@ -91,15 +91,20 @@
   }
 
   // one play per hover: the plug slides home; leaving pulls it back out.
-  // A tap (no hover on touch) plays it the same way and pulls out on its own.
   // Below sm the figure is hidden (the tile stays icon + text, as on mobile before), so it never plays there.
-  const TAP_HOLD = 2600, wide = matchMedia("(min-width: 640px)");
+  const HOLD = 2000, wide = matchMedia("(min-width: 640px)");
   let pullLater = 0;
   tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && wide.matches) setGap(0); });
   tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") setGap(REST); });
-  tile.addEventListener("pointerup", (e) => {
-    if (e.pointerType === "mouse" || !wide.matches || gap.to !== REST) return;
+  // one play on its own, then back to rest: on a tap (no hover on touch), and for the scroll showcase
+  // (tiles-scroll.js), which plays the tiles one after another as they scroll into view; never under the mouse
+  let hovered = false;
+  tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hovered = true; });
+  tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hovered = false; });
+  tile.hairlineShow = () => {
+    if (!wide.matches || hovered || gap.to !== REST) return;
     setGap(0);
-    pullLater = setTimeout(() => setGap(REST), SLIDE + TAP_HOLD);
-  });
+    pullLater = setTimeout(() => setGap(REST), SLIDE + HOLD);
+  };
+  tile.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse") tile.hairlineShow(); });
 })();

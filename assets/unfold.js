@@ -111,8 +111,7 @@
   follow = frameView(svg, [() => { W.x = WMAX; draw(performance.now()); }, () => { W.x = WMIN; draw(performance.now()); }]);
 
   // one play per hover: phone → laptop in a single motion; leaving folds it back to the phone.
-  // A tap (no hover on touch) plays it the same way and folds back on its own.
-  const TAP_HOLD = 2600;
+  const HOLD = 2000;
   let foldLater = 0;
   function setWidth(w) {
     clearTimeout(foldLater);
@@ -128,10 +127,16 @@
   const wide = matchMedia("(min-width: 640px)");
   tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && wide.matches) setWidth(WMAX); });
   tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") setWidth(WMIN); });
-  tile.addEventListener("pointerup", (e) => {
-    if (e.pointerType === "mouse" || !wide.matches || W.to !== WMIN) return;
+  // one play on its own, then back to rest: on a tap (no hover on touch), and for the scroll showcase
+  // (tiles-scroll.js), which plays the tiles one after another as they scroll into view; never under the mouse
+  let hovered = false;
+  tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hovered = true; });
+  tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hovered = false; });
+  tile.hairlineShow = () => {
+    if (!wide.matches || hovered || W.to !== WMIN) return;
     setWidth(WMAX);
-    foldLater = setTimeout(() => setWidth(WMIN), OPEN + TAP_HOLD);
-  });
+    foldLater = setTimeout(() => setWidth(WMIN), OPEN + HOLD);
+  };
+  tile.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse") tile.hairlineShow(); });
   setWidth(WMIN);
 })();

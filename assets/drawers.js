@@ -101,15 +101,21 @@
     B.wake();
   }
 
-  // one play per hover; leaving settles it back. A tap (no hover on touch) plays it the same way and settles on its own.
+  // one play per hover; leaving settles it back.
   // Below sm the figure is hidden (the tile stays icon + text, as on mobile before), so it never plays there.
-  const TAP_HOLD = 2600, wide = matchMedia("(min-width: 640px)");
+  const HOLD = 2000, wide = matchMedia("(min-width: 640px)");
   let settleLater = 0;
   tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && wide.matches) { clearTimeout(settleLater); setMode("play"); } });
   tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { clearTimeout(settleLater); setMode("rest"); } });
-  tile.addEventListener("pointerup", (e) => {
-    if (e.pointerType === "mouse" || !wide.matches || mode === "play") return;
+  // one play on its own, then back to rest: on a tap (no hover on touch), and for the scroll showcase
+  // (tiles-scroll.js), which plays the tiles one after another as they scroll into view; never under the mouse
+  let hovered = false;
+  tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hovered = true; });
+  tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hovered = false; });
+  tile.hairlineShow = () => {
+    if (!wide.matches || hovered || mode === "play") return;
     setMode("play");
-    settleLater = setTimeout(() => setMode("rest"), (N - 1) * GAP + SWING + TAP_HOLD);
-  });
+    settleLater = setTimeout(() => setMode("rest"), (N - 1) * GAP + SWING + HOLD);
+  };
+  tile.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse") tile.hairlineShow(); });
 })();

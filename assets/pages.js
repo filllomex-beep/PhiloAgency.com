@@ -89,8 +89,7 @@
   follow = frameView(svg, [() => pages.forEach((_, i) => draw(i, 1)), () => pages.forEach((p, i) => draw(i, p.f))]);
 
   // one play per hover: the stack fans out front to back; leaving gathers it back to front.
-  // A tap (no hover on touch) plays it the same way and gathers on its own.
-  const TAP_HOLD = 2600;
+  const HOLD = 2000;
   let gatherLater = 0;
   function setFan(to) {
     clearTimeout(gatherLater);
@@ -108,9 +107,15 @@
   const wide = matchMedia("(min-width: 640px)");
   tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && wide.matches) setFan(1); });
   tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") setFan(0); });
-  tile.addEventListener("pointerup", (e) => {
-    if (e.pointerType === "mouse" || !wide.matches || pages[1].to !== 0) return;
+  // one play on its own, then back to rest: on a tap (no hover on touch), and for the scroll showcase
+  // (tiles-scroll.js), which plays the tiles one after another as they scroll into view; never under the mouse
+  let hovered = false;
+  tile.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hovered = true; });
+  tile.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hovered = false; });
+  tile.hairlineShow = () => {
+    if (!wide.matches || hovered || pages[1].to !== 0) return;
     setFan(1);
-    gatherLater = setTimeout(() => setFan(0), OPEN + (N - 2) * STAGGER + TAP_HOLD);
-  });
+    gatherLater = setTimeout(() => setFan(0), OPEN + (N - 2) * STAGGER + HOLD);
+  };
+  tile.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse") tile.hairlineShow(); });
 })();
